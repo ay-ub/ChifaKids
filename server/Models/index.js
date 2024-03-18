@@ -32,11 +32,11 @@ doctor.belongsToMany(patient, {
   },
 });
 
-user.hasOne(patient);
-patient.belongsTo(user);
-
 user.hasOne(doctor);
 doctor.belongsTo(user);
+
+user.hasOne(nurse);
+nurse.belongsTo(user);
 
 nurse.hasMany(appointment);
 appointment.belongsTo(nurse);
@@ -55,7 +55,7 @@ ordonnance.belongsTo(consultation);
 //   },
 // });
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => console.log("db synced"))
   .catch((err) => console.log(err));
 
