@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  --gap-15: 10px;
+  --transition: 0.3s;
+  --primaryColor: #7c3aed;
+  /* 7c3aed */
+  --primaryColorHover: #7b2fff;
+  --borderRadius: 10px;
+  --borderRadiusLinks: 8px;
+  --btnPadding: 10px 20px;
+  --padding-10: 10px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  --darkBg: #f5f5f5;
+  --lightDarkBg: #e5e5e5;
+  --fontColor: black;
+}
+body.dark {
+  --darkBg: #030712;
+  --lightDarkBg: #1f2437;
+  --fontColor: rgb(255, 255, 255);
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: var(--lightDarkBg);
+  color: var(--fontColor);
+  max-height: 100vh;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  user-select: none;
+  text-wrap: nowrap;
+}
+.transition {
+  transition: var(--transition);
+}
+li {
+  list-style: none;
+}
+
+.lightBg {
+  background-color: var(--lightDarkBg);
+}
+
+.darkBg {
+  background-color: var(--darkBg);
+}
+
+/* .br {
+  border-radius: var(--borderRadius);
+} */
+
+.gap {
+  gap: var(--gap-15);
+}
+
+.pad-10 {
+  padding: var(--padding-10);
+}
+
+.bg-p {
+  background-color: var(--primaryColor);
+}
+.bg-ph:hover {
+  background-color: var(--primaryColorHover);
+}
+
+.pc-f {
+  color: var(--primaryColorFont);
+}
+
+input {
+  color: var(--fontColor);
+  outline: none;
+  border: none;
+}
+::placeholder {
+  transition: var(--transition);
+}
+input:focus::placeholder {
+  opacity: 0;
+}
+
+input.inValid {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+button[type="submit"] {
+  background-color: var(--primaryColor);
+}
+
+label {
+  text-transform: capitalize;
+}
+
+.bg-lightDark {
+  background-color: var(--lightDarkBg);
+  color: var(--fontColor);
+}
+
+.border {
+  border: 2px solid var(--lightDarkBg);
+}
+
+/* ===== Scrollbar CSS ===== */
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ccc;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primaryColor);
+  border-radius: 2px;
+  border: 0px none #ffffff;
+}
+
+.operationList ul li:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+
+/* table styling start */
+
+.dataTable table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 7px;
+}
+.dataTable table th {
+  background-color: var(--primaryColor);
+  text-transform: capitalize;
+  user-select: none;
+  color: white;
+}
+.dataTable table tr {
+  background-color: transparent;
+  &:hover {
+    background-color: var(--lightDarkBg);
+  }
+}
+
+.dataTable table tr td.action {
+  cursor: default;
+  & span {
+    font-size: 25px;
+    cursor: pointer;
+  }
+}
+.dataTable table td,
+.dataTable table th {
+  text-align: center;
+  padding: 8px;
+}
+
+/* .dataTable table tr:nth-child(even) {
+  background-color: var(--lightDarkBg);
+} */
+.dataTable table tr td:first-child,
+.dataTable table tr th:first-child {
+  border-radius: 7px 0 0 7px;
+}
+.dataTable table tr td:last-child,
+.dataTable table tr th:last-child {
+  border-radius: 0 7px 7px 0;
+}
+
+.dataTable table tbody {
+  display: inline-block;
+  width: fit-content;
+  height: 530px;
+  overflow: auto;
+}
+
+.dataTable table thead,
+.dataTable table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* table styling end */

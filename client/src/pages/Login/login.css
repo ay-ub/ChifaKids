@@ -1,0 +1,148 @@
+.form-container {
+  width: 370px;
+  border-radius: 0.75rem;
+  background-color: var(--darkBg);
+  padding: 2rem;
+  color: var(--fontColor);
+  min-height: 470px;
+}
+
+.title {
+  font-size: 35px;
+  line-height: 2rem;
+  font-weight: 700;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 2px;
+    background-color: var(--primaryColor);
+  }
+}
+
+.form {
+  margin-top: 2rem;
+}
+
+.input-group {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  font-size: 16px;
+  color: var(--fontColor);
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+.input-group input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid var(--primaryColor);
+  outline: 0;
+  background-color: var(--darkBg);
+  padding: 0.75rem 1rem;
+  color: var(--fontColor);
+}
+
+.input-group input:focus {
+  border-color: var(--primaryColor);
+}
+
+.forgot {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--fontColor);
+  margin: 8px 0 14px 0;
+}
+
+.forgot a,
+.signup a {
+  color: var(--fontColor);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot a:hover,
+.signup a:hover {
+  text-decoration: underline rgba(167, 139, 250, 1);
+}
+
+.sign,
+.btn {
+  display: block;
+  width: 100%;
+  background-color: var(--primaryColor);
+  padding: 0.75rem;
+  text-align: center;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  transition: var(--transition);
+  &:hover {
+    background-color: var(--primaryColorHover);
+  }
+}
+
+.social-message {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.line {
+  height: 1px;
+  flex: 1 1 0%;
+  background-color: var(--lightDarkBg);
+}
+
+.social-message .message {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--fontColor);
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons .icon {
+  border-radius: 0.125rem;
+  padding: 0.75rem;
+  border: none;
+  background-color: transparent;
+  margin-left: 8px;
+}
+
+.social-icons .icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  fill: var(--fontColor);
+}
+
+.signup {
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--fontColor);
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 100%;
+  }
+  .imageBox {
+    display: none;
+  }
+}
