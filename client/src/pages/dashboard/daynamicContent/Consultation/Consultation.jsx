@@ -1,9 +1,11 @@
+import Entecedent from "./entecedent/Entecedent.jsx";
 import { SectionTitle, NavBar, Chart } from "components";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { readFile } from "utils";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 function Consultation() {
   const [excelData, setExcelData] = useState();
   const [data, setData] = useState([]);
@@ -40,10 +42,17 @@ function Consultation() {
 
   return (
     <div className="Consultation ">
-      <SectionTitle title="Consultation" />
+      <div className="flex items-center justify-between">
+        <SectionTitle title="Consultation" />
+        <div className="user-data text-xl">
+          ayoub hadj youcef <span> 12/12/2021</span>
+        </div>
+      </div>
       <Tabs defaultValue="Antécédents" className="w-full  mt-7 ">
         <NavBar />
-        <TabsContent value="Antécédents">FROM 1</TabsContent>
+        <TabsContent value="Antécédents">
+          <Entecedent name={"younes"} />
+        </TabsContent>
         <TabsContent value="Consultation">from 2</TabsContent>
         <TabsContent value="Ordonnance">FROM 3</TabsContent>
         <TabsContent value="Compte">FROM 4</TabsContent>

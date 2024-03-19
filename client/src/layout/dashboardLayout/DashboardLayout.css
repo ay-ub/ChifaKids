@@ -101,9 +101,7 @@
 }
 
 .switch-name {
-  --dark-sky: #7c3aed;
   --moon: #ffd365;
-  --light-sky: #7c3aed;
   --sun: #ffed89;
   display: inline-block;
   position: relative;
@@ -116,7 +114,7 @@
 }
 
 .switch-name .back {
-  background-color: var(--dark-sky);
+  background-color: var(--primaryColor);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -130,7 +128,7 @@
 }
 
 .switch-name .checkbox:checked ~ .back {
-  background-color: var(--light-sky);
+  background-color: var(--primaryColor);
 }
 
 .switch-name .checkbox:checked ~ .moon {
