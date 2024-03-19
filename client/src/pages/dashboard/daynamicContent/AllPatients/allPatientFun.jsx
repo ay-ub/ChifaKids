@@ -83,7 +83,7 @@ const mapPatients = (patients, search, setPatients, user) => {
           <td className="action flex justify-center items-center gap-4">
             {user.typeUser === "ADMIN" || user.typeUser === "DOCTOR" ? (
               <Link
-                // to={`/dashboard/consultation/${patient.id}`}
+                to={`/dashboard/consultation/${patient.id}`}
                 className="select-none"
               >
                 <FaStethoscope />

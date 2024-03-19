@@ -182,7 +182,9 @@ function PatientForm({ patient, subFun }) {
         </div>
       </div>
       <button type="submit" className="sign bg-[#8b63e9] mt-5">
-        {patient.firstName === "" ? "Ajouter patient" : "update Patient"}
+        {patient.firstName === ""
+          ? "Ajouter patient"
+          : "mettre à jour le patient"}
       </button>
     </form>
   );

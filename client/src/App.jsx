@@ -35,7 +35,7 @@ function App() {
         <Route path="edit-patient/:id" element={<EditPatient />} />
         <Route path="waiting" element={<Waiting />} />
         <Route
-          path="consultation"
+          path="consultation/:id"
           element={
             <DoctorAuth>
               <Consultation />

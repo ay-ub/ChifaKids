@@ -2,7 +2,6 @@ import {
   MdGroups,
   FaSackDollar,
   FaChartLine,
-  FaStethoscope,
   FaBriefcaseMedical,
   FaUserClock,
   IoMdSettings,
@@ -20,12 +19,6 @@ const SideLinkData = [
     path: "/dashboard/waiting",
     icon: FaUserClock,
     permission: ["ADMIN", "DOCTOR", "NURSE"],
-  },
-  {
-    name: "consultation",
-    path: "/dashboard/consultation",
-    icon: FaStethoscope,
-    permission: ["ADMIN", "DOCTOR"],
   },
   {
     name: "Règlement",

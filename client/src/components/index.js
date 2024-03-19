@@ -14,6 +14,8 @@ import Chart from "./Chart.jsx";
 import InputError from "./InputError.jsx";
 import Alert from "./Alert";
 import Table from "./Table.jsx";
+import SubTitle from "./SubTitle.jsx";
+import PopUp from "./PopUp.jsx";
 
 export {
   SectionTitle,
@@ -32,4 +34,6 @@ export {
   InputError,
   Alert,
   Table,
+  SubTitle,
+  PopUp,
 };

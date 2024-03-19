@@ -111,7 +111,7 @@ function MedicamentForm({ medicament, submitFun }) {
         </div>
       </div>
       <button type="submit" className="btn bg-[#8b63e9] mt-5">
-        {medicament.name ? "Edit Medicament" : "Add Medicament"}
+        {medicament.name ? "Modifier le médicament" : "Ajouter le médicament"}
       </button>
     </form>
   );

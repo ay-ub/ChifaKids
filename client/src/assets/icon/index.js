@@ -12,6 +12,7 @@ import {
   FaStethoscope,
   FaUserClock,
   FaBell,
+  FaBed,
 } from "react-icons/fa";
 import { TbUserSearch } from "react-icons/tb";
 import { BsFileEarmarkTextFill } from "react-icons/bs";
@@ -44,4 +45,5 @@ export {
   IoIosArrowDown,
   IoMdSettings,
   SiMicrosoftexcel,
+  FaBed,
 };

@@ -1,8 +1,14 @@
 import { InputError } from "components";
-function PeymentForm({ totalPrice, handleSubmit, register, errors }) {
+function PeymentForm({
+  totalPrice,
+  RestPrice,
+  // setVersementPrice,
+  register,
+  errors,
+}) {
   return (
     <div className="py-4 px-8 ">
-      <form onSubmit={handleSubmit()} className="flex flex-col  gap-y-1 ">
+      <form className="flex flex-col  gap-y-1 ">
         <div className="input-group flex-1  mb-5">
           <label htmlFor="previousdebts" className="text-nowrap">
             Dettes antérieures :
@@ -11,7 +17,6 @@ function PeymentForm({ totalPrice, handleSubmit, register, errors }) {
             type="text"
             id="previousdebts"
             placeholder="0000 DA"
-            readOnly
             {...register("previousDebts", {
               pattern: {
                 value: /^[0-9]+$/,
@@ -57,6 +62,7 @@ function PeymentForm({ totalPrice, handleSubmit, register, errors }) {
             type="text"
             id="payment"
             placeholder="0000 DA"
+            // onChange={(e) => setVersementPrice(e.target.value)}
             {...register("payment", {
               pattern: {
                 value: /^[0-9]+$/,
@@ -66,7 +72,9 @@ function PeymentForm({ totalPrice, handleSubmit, register, errors }) {
                 value: true,
                 message: "Règlement est nécessaire",
               },
+              // onChange: (e) => setVersementPrice(e.target.value),
             })}
+            autoComplete="off"
             className={`${errors.payment ? "inValid" : null}`}
           />
           {<InputError error={errors.payment} />}
@@ -79,6 +87,7 @@ function PeymentForm({ totalPrice, handleSubmit, register, errors }) {
             type="text"
             id="leftToPay"
             placeholder="0000 DA"
+            value={RestPrice}
             {...register("leftToPay", {
               pattern: {
                 value: /^[0-9]+$/,
