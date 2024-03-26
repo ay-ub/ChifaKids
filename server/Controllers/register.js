@@ -19,6 +19,7 @@ const register = async (req, res) => {
         lastName,
         typeUser,
       });
+
       return res.status(201).json({
         status: "success",
         data: { user: NewUser },
