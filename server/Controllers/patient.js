@@ -1,5 +1,4 @@
 const { patient } = require("../Models/index.js");
-const io = require("../index.js");
 
 const addPatient = async (req, res) => {
   try {
@@ -115,6 +114,18 @@ const gattWaitingPatient = async (req, res) => {
 
 const addToWaitinRom = async (req, res) => {
   try {
+    const isWaiting = await patient.findAll({
+      where: {
+        id: req.params.id,
+        isWaiting: true,
+      },
+    });
+    if (isWaiting.length !== 0) {
+      return res.status(404).json({
+        status: "error",
+        message: "patient déjà en salle d’attente",
+      });
+    }
     const updatePatient = await patient.update(
       {
         isWaiting: true,
@@ -131,10 +142,6 @@ const addToWaitinRom = async (req, res) => {
         message: "patient not found",
       });
     } else {
-      // io.emit("newWaitingPatien", { id: req.params.id });
-      req.app
-        .get("io")
-        .emit("userStatusChanged", { userId, status: "waiting" });
       return res.status(200).json({
         status: "success",
         massage: "patient added to waiting room",

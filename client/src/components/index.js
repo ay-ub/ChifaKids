@@ -9,7 +9,6 @@ import DoctorAuth from "./auth/DoctorAuth";
 import Loader from "./loader/Loader";
 import Header from "./Header.jsx";
 import SideBar from "./sideBar/SideBar";
-import NavBar from "./navBar/NavBar";
 import Chart from "./Chart.jsx";
 import InputError from "./InputError.jsx";
 import Alert from "./Alert";
@@ -29,7 +28,6 @@ export {
   Loader,
   Header,
   SideBar,
-  NavBar,
   Chart,
   InputError,
   Alert,

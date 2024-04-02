@@ -6,7 +6,7 @@ import {
 } from "assets/icon";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Notify } from "utils";
+import { Notify, handleWaitingRom, calculateAge } from "utils";
 import { Alert } from "components";
 
 const getPatients = async (setPatients) => {
@@ -14,8 +14,6 @@ const getPatients = async (setPatients) => {
   const data = await res.json();
   if (data.status === "success" && data.data.patient.length > 0) {
     setPatients(data.data.patient);
-  } else {
-    setPatients([]);
   }
 };
 
@@ -41,17 +39,7 @@ const handleDelete = async (id, patients, setPatients) => {
   }
 };
 
-const calculateAge = (date) => {
-  const today = new Date();
-  const birthDate = new Date(date);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const month = today.getMonth() - birthDate.getMonth();
-  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate()))
-    age--;
-  return age;
-};
-
-const mapPatients = (patients, search, setPatients, user) => {
+const mapPatients = (patients, search, setPatients, user, socket) => {
   return patients
     .filter(
       (patient) =>
@@ -73,8 +61,8 @@ const mapPatients = (patients, search, setPatients, user) => {
           key={patient.id}
         >
           <td className="select-none">{index + 1}</td>
-          <td className="select-none">{patient.firstName}</td>
           <td className="select-none">{patient.lastName}</td>
+          <td className="select-none">{patient.firstName}</td>
           <td className="select-none">{patient.gender}</td>
           <td className="select-none">{patient.dateOfBirth}</td>
           <td className="select-none">{calculateAge(patient.dateOfBirth)}</td>
@@ -89,7 +77,17 @@ const mapPatients = (patients, search, setPatients, user) => {
                 <FaStethoscope />
               </Link>
             ) : (
-              <span className="select-none">
+              <span
+                className="select-none"
+                onClick={() => {
+                  handleWaitingRom(
+                    patient.id,
+                    "enterWaitingRoom",
+                    setPatients,
+                    socket
+                  );
+                }}
+              >
                 <FaUserClock />
               </span>
             )}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SectionTitle, SearchInput, Btn, Table } from "components";
 import { getPatients, mapPatients } from "./allPatientFun";
 import { writeFile } from "utils";
-import { useAuth } from "hooks";
+import { useAuth, useContxt } from "hooks";
 import { FaUserPlus, SiMicrosoftexcel } from "assets/icon";
 
 const tableHeader = [
@@ -22,6 +22,7 @@ function AllPatients() {
   const [patients, setPatients] = useState([]);
   const [search, setSearch] = useState("");
   const { user } = useAuth();
+  const { socket } = useContxt();
 
   // get all patients in first render
   useEffect(() => {
@@ -29,7 +30,7 @@ function AllPatients() {
   }, []);
 
   // map patients
-  const patientList = mapPatients(patients, search, setPatients, user);
+  const patientList = mapPatients(patients, search, setPatients, user, socket);
 
   return (
     <div className="allPatient">

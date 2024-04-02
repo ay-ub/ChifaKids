@@ -1,11 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { createServer } = require("node:http");
-const { Server } = require("socket.io");
-const app = express();
-const server = createServer(app);
-const io = new Server(server);
 const {
   loginRoute,
   registerRoute,
@@ -13,17 +8,27 @@ const {
   medicamentRoute,
   consultationRoute,
   doctorRoute,
+  antecedentRoute,
 } = require("./routes/index.js");
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
+const app = express();
+const server = createServer(app);
+app.use(cors());
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+app.set("socketio", io);
 
 app.use(express.json());
-app.use(cors());
 
 const db = require("./config/dbConfig.js");
 db.authenticate()
   .then(() => console.log("db connected"))
   .catch((err) => console.log(err));
-
-//==============================db Connect END ===========================
 
 app.use("/login", loginRoute);
 app.use("/regester", registerRoute);
@@ -31,21 +36,21 @@ app.use("/patients", patientRoute);
 app.use("/medicaments", medicamentRoute);
 app.use("/consultations", consultationRoute);
 app.use("/doctor", doctorRoute);
+app.use("/antecedent", antecedentRoute);
 
-//============================== Routes END   ============================
-
-//============================== Server START ============================
-
-// io.on("connection", (socket) => {
-//   console.log("a user connected");
-//   socket.on("chat message", (msg) => {
-//     console.log("message: " + msg);
-//   });
-// });
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+  });
+  socket.on("sendNotification", (notification) => {
+    console.log("Received notification:", notification);
+    // socket.emit("notification", notification);
+    socket.broadcast.emit("notification", notification);
+  });
+});
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`listen at port num ${port}`);
 });
-
-//============================== Server END   ============================

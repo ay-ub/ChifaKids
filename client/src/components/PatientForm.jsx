@@ -1,7 +1,5 @@
 import { useForm } from "react-hook-form";
 
-// const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
 import {
   Select,
   SelectContent,
@@ -50,20 +48,20 @@ function PatientForm({ patient, subFun }) {
     >
       <div className="flex items-center gap-4 ">
         <div className="input-group flex-1">
-          <label htmlFor="firstName">first Name :</label>
+          <label htmlFor="firstName">Prénom: :</label>
           <input
             type="text"
             id="firstName"
-            placeholder="Enter your firstName"
+            placeholder="Entrez votre prénom :"
             {...register("firstName", {
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Invalid first name",
+                message: "Prénom non valide",
               },
-              required: { value: true, message: "first Name is required" },
+              required: { value: true, message: "Prénom est nécessaire" },
               lenghth: {
                 value: 3,
-                message: "first Name is too short",
+                message: "Le prénom est trop court",
               },
             })}
             className={`${errors.firstName ? "inValid" : null}`}
@@ -71,20 +69,20 @@ function PatientForm({ patient, subFun }) {
           {<InputError error={errors.firstName} />}
         </div>
         <div className="input-group flex-1">
-          <label htmlFor="lastName">last Name :</label>
+          <label htmlFor="lastName">Nom :</label>
           <input
             type="text"
             id="lastName"
-            placeholder="Enter your last Name"
+            placeholder="Entrez votre Nom :"
             {...register("lastName", {
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Invalid last Name",
+                message: "Nom non valide",
               },
-              required: { value: true, message: "last Name is required" },
+              required: { value: true, message: "Nom est nécessaire" },
               lenghth: {
                 value: 3,
-                message: "last Name is too short",
+                message: "Le nom est trop court",
               },
             })}
             className={`${errors.lastName ? "inValid" : null}`}
@@ -98,22 +96,17 @@ function PatientForm({ patient, subFun }) {
         }}
         value={gender}
       >
-        <label htmlFor="">gender : </label>
+        <label>sexe : </label>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select gender" />
+          <SelectValue placeholder="Sélectionner le sexe :" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="MALE">MALE</SelectItem>
-          <SelectItem value="FEMALE">
-            <span>
-              {/* <FaFemale /> */}
-              FEMALE
-            </span>
-          </SelectItem>
+          <SelectItem value="FEMALE">FEMALE</SelectItem>
         </SelectContent>
       </Select>
       <div className="flex flex-col gap-1">
-        <label htmlFor="date"> date of birth :</label>
+        <label htmlFor="date"> date de naissance :</label>
         <Popover id="date">
           <PopoverTrigger asChild>
             <Button
@@ -124,7 +117,11 @@ function PatientForm({ patient, subFun }) {
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "yyyy-MM-dd") : <span>date of birth</span>}
+              {date ? (
+                format(date, "yyyy-MM-dd")
+              ) : (
+                <span>date de naissance</span>
+              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-full p-0">
@@ -139,20 +136,23 @@ function PatientForm({ patient, subFun }) {
       </div>
       <div className="flex gap-4">
         <div className="input-group flex-1">
-          <label htmlFor="parent">parent Name :</label>
+          <label htmlFor="parent">le nom du père :</label>
           <input
             type="text"
             id="parent"
-            placeholder="Enter parent Name"
+            placeholder="Entrez le nom du père :"
             {...register("parent", {
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Invalid parent Name",
+                message: "Nom du père non valide",
               },
-              required: { value: true, message: "parent Name is required" },
+              required: {
+                value: true,
+                message: "le nom du père est nécessaire",
+              },
               lenghth: {
                 value: 3,
-                message: "parent Name is too short",
+                message: "Le nom du père est trop court",
               },
             })}
             className={`${errors.parent ? "inValid" : null}`}
@@ -160,7 +160,7 @@ function PatientForm({ patient, subFun }) {
           {<InputError error={errors.parent} />}
         </div>
         <div className="input-group flex-1">
-          <label htmlFor="numberPhone">Phone number :</label>
+          <label htmlFor="numberPhone">numéro de téléphone :</label>
           <input
             type="text"
             id="numberPhone"
@@ -168,12 +168,15 @@ function PatientForm({ patient, subFun }) {
             {...register("numberPhone", {
               pattern: {
                 value: /^0[5-7]{1}[0-9]{8}$/,
-                message: "Invalid phone number",
+                message: "Numéro de téléphone non valide",
               },
-              required: { value: true, message: "Phone number is required" },
+              required: {
+                value: true,
+                message: "numéro de téléphone est nécessaire",
+              },
               lenghth: {
                 value: 10,
-                message: "Phone number is too short",
+                message: "Le numéro de téléphone est trop court",
               },
             })}
             className={`${errors.numberPhone ? "inValid" : null}`}

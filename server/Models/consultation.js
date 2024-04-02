@@ -15,11 +15,6 @@ module.exports = (db, type) => {
       allowNull: false,
       defaultValue: "Pas de motif",
     },
-    diagnostic: {
-      type: type.STRING,
-      allowNull: false,
-      defaultValue: "Pas de diagnostic",
-    },
     height: {
       type: type.FLOAT,
       allowNull: false,
@@ -27,6 +22,11 @@ module.exports = (db, type) => {
     weight: {
       type: type.FLOAT,
       allowNull: false,
+    },
+    generalCondition: {
+      type: type.TEXT,
+      allowNull: false,
+      defaultValue: "Pas d'etat general",
     },
     doctorId: {
       type: type.INTEGER,

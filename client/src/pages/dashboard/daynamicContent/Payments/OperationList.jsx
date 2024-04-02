@@ -4,7 +4,7 @@ function OperationList({ operationList, totalPrice }) {
       <ul className="h-full">
         <li className="flex justify-around select-non bg-p bg-ph text-white p-2">
           <span>operation : </span>
-          <span className=" inline-block w-16">prix :</span>
+          <span className="inline-block w-16">prix :</span>
         </li>
         <div className=" h-[382px] overflow-y-auto py-2">
           {operationList.map((operation, index) => (

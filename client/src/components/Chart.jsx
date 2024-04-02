@@ -2,7 +2,7 @@ import { ResponsiveLine } from "@nivo/line";
 // import { chartTheme } from "data";
 import { useTheme } from "hooks";
 
-export default function Chart({ data }) {
+export default function Chart({ data, xTitle, yTitle }) {
   const { theme } = useTheme();
   return (
     <div className="h-[400px] w-full ">
@@ -118,7 +118,7 @@ export default function Chart({ data }) {
         }}
         data={data}
         curve="natural"
-        colors={["red", "orange", "green", "orange", "red"]}
+        colors={["red", "orange", "green", "orange", "red", "blue"]}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         xScale={{ type: "point" }}
         yScale={{
@@ -135,7 +135,7 @@ export default function Chart({ data }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "transportation",
+          legend: xTitle,
           legendOffset: 36,
           legendPosition: "middle",
           truncateTickAt: 0,
@@ -144,7 +144,7 @@ export default function Chart({ data }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "count",
+          legend: yTitle,
           legendOffset: -40,
           legendPosition: "middle",
           truncateTickAt: 0,
