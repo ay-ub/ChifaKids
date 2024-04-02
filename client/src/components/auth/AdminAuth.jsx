@@ -1,12 +1,12 @@
 import { useAuth } from "hooks";
-import { Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
-function AdminAuth({ children }) {
+function AdminAuth() {
   const auth = useAuth();
   if (auth.user.typeUser !== "ADMIN") {
     return <Navigate to="/dashboard/patietns" />;
   }
-  return children;
+  return <Outlet />;
 }
 
 export default AdminAuth;

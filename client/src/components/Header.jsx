@@ -2,17 +2,35 @@ import { handleTheme } from "../layout/dashboardLayout/DushFun";
 import { useAuth } from "hooks";
 import { FaBell, IoIosArrowDown } from "assets/icon/index";
 import { PopUp } from "components";
-
-import { useTheme } from "hooks";
+import { useTheme, useContxt } from "hooks";
+import { useState } from "react";
 
 function Header() {
   const auth = useAuth();
   const { theme, setTheme } = useTheme();
+  const { notification, setNotification, socket } = useContxt();
+  const [newNotification, setNewNotification] = useState(false);
+  socket.on("notification", (message) => {
+    setNotification(() => [...notification, message]);
+    setNewNotification(true);
+    setTimeout(() => {
+      setNewNotification(false);
+    }, 30000);
+  });
 
   return (
     <header className="flex gap-5 ">
-      <span className="notification text-[20px] text-[#f6b800] bell">
-        <FaBell />
+      <span className="notification text-[20px] text-[#f6b800] relative  w-7 h-7">
+        {notification.length > 0 && (
+          <span className="bg-red-500 w-4 h-4 flex items-center justify-center rounded-full absolute top-[-5px] right-[-5px] z-10 text-sm">
+            {notification.length}
+          </span>
+        )}
+        <FaBell
+          className={`absolute top-0 left-0 w-full h-full bell ${
+            newNotification ? "animate" : ""
+          }`}
+        />
       </span>
       <label className="switch-name">
         <input

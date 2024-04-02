@@ -39,7 +39,7 @@ const SideLinkData = [
     permission: ["ADMIN"],
   },
   {
-    name: "Settings",
+    name: "paramètres",
     path: "/dashboard/Settings",
     icon: IoMdSettings,
     permission: ["ADMIN"],

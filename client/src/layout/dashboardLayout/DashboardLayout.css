@@ -164,6 +164,7 @@
 
 /* bell animation */
 
+.bell.animate,
 .bell:hover {
   -webkit-animation: ring 4s ease-in-out infinite;
   -webkit-transform-origin: 50% 4px;

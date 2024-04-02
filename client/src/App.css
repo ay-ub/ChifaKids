@@ -4,7 +4,6 @@
   --gap-15: 10px;
   --transition: 0.3s;
   --primaryColor: #7c3aed;
-  /* 7c3aed */
   --primaryColorHover: #7b2fff;
   --borderRadius: 10px;
   --borderRadiusLinks: 8px;
@@ -12,7 +11,7 @@
   --padding-10: 10px;
 }
 
-* {
+*{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -54,10 +53,6 @@ li {
 .darkBg {
   background-color: var(--darkBg);
 }
-
-/* .br {
-  border-radius: var(--borderRadius);
-} */
 
 .gap {
   gap: var(--gap-15);
@@ -121,6 +116,10 @@ input.inValid {
 
 button[type="submit"] {
   background-color: var(--primaryColor);
+}
+
+button {
+  user-select: none;
 }
 
 label {
@@ -218,3 +217,7 @@ label {
 }
 
 /* table styling end */
+
+[contenteditable] {
+  outline: 0 solid var(--primaryColor);
+}

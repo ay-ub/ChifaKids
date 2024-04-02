@@ -8,6 +8,7 @@ const consultationModel = require("./consultation.js");
 const doctorModel = require("./doctor.js");
 const nurseModel = require("./nurse.js");
 const heightNormModel = require("./heightNorm.js");
+const antecedentModel = require("./antecedent.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -17,11 +18,12 @@ const consultation = consultationModel(db, DataTypes);
 const doctor = doctorModel(db, DataTypes);
 const nurse = nurseModel(db, DataTypes);
 const heightNorm = heightNormModel(db, DataTypes);
+const antecedent = antecedentModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
 
-db.sync({ force: true })
+db.sync({ force: false })
   .then(() => console.log("db synced"))
   .catch((err) => console.log(err));
 
@@ -34,5 +36,6 @@ module.exports = {
   doctor,
   nurse,
   heightNorm,
+  antecedent,
 };
 //========================  export models END     ========================

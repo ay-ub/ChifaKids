@@ -13,7 +13,10 @@ import {
   FaUserClock,
   FaBell,
   FaBed,
+  FaPlusCircle,
+  FaLaptop,
 } from "react-icons/fa";
+
 import { TbUserSearch } from "react-icons/tb";
 import { BsFileEarmarkTextFill } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -46,4 +49,6 @@ export {
   IoMdSettings,
   SiMicrosoftexcel,
   FaBed,
+  FaPlusCircle,
+  FaLaptop,
 };

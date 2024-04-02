@@ -24,7 +24,6 @@ function Payments() {
   });
 
   useEffect(() => {
-    console.log("VersementPrice", VersementPrice);
     setRestPrice(() => totalPrice - VersementPrice);
   }, [VersementPrice, totalPrice]);
 

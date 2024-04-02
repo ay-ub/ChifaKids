@@ -1,8 +1,9 @@
 import { SectionTitle, SearchInput, Table } from "components";
 import { useEffect, useState } from "react";
 import { useAuth } from "hooks";
-import { getPatients, mapPatients } from "./waitingFun";
+import { mapPatients } from "./waitingFun";
 import { tableHeader } from "data";
+import { getPatients } from "utils";
 
 function Waiting() {
   const [patients, setPatients] = useState([]);

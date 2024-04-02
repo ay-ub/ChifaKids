@@ -21,68 +21,25 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route
-        path="/dashboard"
-        element={
-          <RequireAuth>
-            <DashboardLayout />
-          </RequireAuth>
-        }
-      >
-        <Route index element={<Navigate to={"patietns"} />} />
-        <Route path="patietns" element={<AllPatients />} />
-        <Route path="new-patient" element={<NewPatient />} />
-        <Route path="edit-patient/:id" element={<EditPatient />} />
-        <Route path="waiting" element={<Waiting />} />
-        <Route
-          path="consultation/:id"
-          element={
-            <DoctorAuth>
-              <Consultation />
-            </DoctorAuth>
-          }
-        />
-        <Route path="payments" element={<Payments />} />
-        <Route
-          path="medicament"
-          element={
-            <DoctorAuth>
-              <Medicament />
-            </DoctorAuth>
-          }
-        />
-        <Route
-          path="new-medicament"
-          element={
-            <DoctorAuth>
-              <NewMedicament />
-            </DoctorAuth>
-          }
-        />
-        <Route
-          path="Edit-medicament/:id"
-          element={
-            <DoctorAuth>
-              <EditMedicament />
-            </DoctorAuth>
-          }
-        />
-        <Route
-          path="statistics"
-          element={
-            <AdminAuth>
-              <Statistics />
-            </AdminAuth>
-          }
-        />
-        <Route
-          path="Settings"
-          element={
-            <AdminAuth>
-              <Settings />
-            </AdminAuth>
-          }
-        />
+      <Route element={<RequireAuth />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Navigate to={"patietns"} />} />
+          <Route path="patietns" element={<AllPatients />} />
+          <Route path="new-patient" element={<NewPatient />} />
+          <Route path="edit-patient/:id" element={<EditPatient />} />
+          <Route path="waiting" element={<Waiting />} />
+          <Route path="payments" element={<Payments />} />
+          <Route element={<DoctorAuth />}>
+            <Route path="consultation/:patientId" element={<Consultation />} />
+            <Route path="medicament" element={<Medicament />} />
+            <Route path="new-medicament" element={<NewMedicament />} />
+            <Route path="Edit-medicament/:id" element={<EditMedicament />} />
+          </Route>
+          <Route element={<AdminAuth />}>
+            <Route path="statistics" element={<Statistics />} />
+            <Route path="Settings" element={<Settings />} />
+          </Route>
+        </Route>
       </Route>
     </Routes>
   );

@@ -14,6 +14,7 @@ function EditPatient() {
   }, []);
 
   const updatePatient = async (patientData) => {
+    console.log(patientData);
     try {
       const res = await fetch(`http://localhost:3000/patients/${id}`, {
         method: "PATCH",

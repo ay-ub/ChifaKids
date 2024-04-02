@@ -45,7 +45,7 @@ function MedicamentForm({ medicament, submitFun }) {
               value: /^[a-zA-Z\s]+$/,
               message: "Invalid name",
             },
-            required: { value: true, message: "name is required" },
+            required: { value: true, message: "nom est nécessaire" },
             lenghth: {
               value: 3,
               message: "full name is too short",
@@ -81,7 +81,7 @@ function MedicamentForm({ medicament, submitFun }) {
             id="dosage"
             placeholder="Entrer le dosage"
             {...register("dosage", {
-              required: { value: true, message: "dosage is required" },
+              required: { value: true, message: "dosage est nécessaire" },
               pattern: {
                 value: /^[0-9]+$/,
                 message: "valeur incorrecte",
