@@ -11,7 +11,7 @@
   --padding-10: 10px;
 }
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -36,6 +36,7 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+  -webkit-user-select: none;
   user-select: none;
   text-wrap: nowrap;
 }
@@ -119,7 +120,13 @@ button[type="submit"] {
 }
 
 button {
+  -webkit-user-select: none;
   user-select: none;
+}
+
+button[type="reset"] {
+  border: 1px solid var(--primaryColor);
+  transition: var(--transition);
 }
 
 label {
@@ -167,6 +174,7 @@ label {
 .dataTable table th {
   background-color: var(--primaryColor);
   text-transform: capitalize;
+  -webkit-user-select: none;
   user-select: none;
   color: white;
 }
@@ -204,6 +212,7 @@ label {
 
 .dataTable table tbody {
   display: inline-block;
+  width: -moz-fit-content;
   width: fit-content;
   height: 530px;
   overflow: auto;
@@ -220,4 +229,23 @@ label {
 
 [contenteditable] {
   outline: 0 solid var(--primaryColor);
+}
+
+@media print {
+  @page {
+    size: auto;
+    height: 100vh;
+    margin: 0;
+  }
+  .Toastify,
+  .dashboard .rightContent header,
+  .dashboard .sideBar,
+  .dashboard .rightContent .daynamicContent .Consultation .tabs,
+  .dashboard .rightContent .daynamicContent .Consultation .consultationHeader,
+  .dashboard .rightContent .daynamicContent .Consultation .ordonnanceMain {
+    display: none;
+  }
+  .dashboard .rightContent .daynamicContent .Consultation .ordonnanceDocument {
+    display: block;
+  }
 }

@@ -7,8 +7,8 @@ const {
   patientRoute,
   medicamentRoute,
   consultationRoute,
-  doctorRoute,
   antecedentRoute,
+  ordonnanceRoute,
 } = require("./routes/index.js");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
@@ -35,8 +35,8 @@ app.use("/regester", registerRoute);
 app.use("/patients", patientRoute);
 app.use("/medicaments", medicamentRoute);
 app.use("/consultations", consultationRoute);
-app.use("/doctor", doctorRoute);
 app.use("/antecedent", antecedentRoute);
+app.use("/ordonnance", ordonnanceRoute);
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);

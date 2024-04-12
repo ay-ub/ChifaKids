@@ -3,8 +3,9 @@ import {
   IoIosArrowDropleftCircle,
   IoIosArrowDown,
   IoMdSettings,
+  IoIosList,
 } from "react-icons/io";
-import { MdGroups } from "react-icons/md";
+import { MdGroups, MdDescription } from "react-icons/md";
 import { FaSackDollar, FaUserPlus } from "react-icons/fa6";
 import {
   FaChartLine,
@@ -51,4 +52,6 @@ export {
   FaBed,
   FaPlusCircle,
   FaLaptop,
+  IoIosList,
+  MdDescription,
 };

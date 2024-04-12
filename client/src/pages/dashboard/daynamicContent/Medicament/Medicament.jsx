@@ -1,14 +1,15 @@
 import { SectionTitle, SearchInput, Btn, Table } from "components";
 import { useEffect, useState } from "react";
-import { getMedicament, mapMedicament } from "./medicamentFun";
-
+import { mapMedicament } from "./medicamentFun";
+import { getAllMedicament } from "utils";
+import { FaPlusCircle } from "assets/icon";
 const tableHeader = ["N°", "Designation", "Forme", "Dosage", "Action"];
 function Medicament() {
   const [medicaments, setMedicaments] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getMedicament(setMedicaments);
+    getAllMedicament(setMedicaments);
   }, []);
 
   const medicamentList = mapMedicament(medicaments, search, setMedicaments);
@@ -20,7 +21,11 @@ function Medicament() {
           {medicaments.length > 0 && (
             <SearchInput setSearch={setSearch} search={search} />
           )}
-          <Btn path="/dashboard/new-medicament" text="Ajouter" />
+          <Btn
+            path="/dashboard/new-medicament"
+            text="Ajouter"
+            icon={<FaPlusCircle />}
+          />
         </div>
       </div>
       <Table

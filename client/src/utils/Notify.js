@@ -9,6 +9,7 @@ const toastConfig = {
   draggable: true,
   progress: undefined,
 };
+// import { toast } from "sonner";
 
 function Notify({ type, message }) {
   toastConfig.theme = localStorage.getItem("theme") || "light";
@@ -22,6 +23,13 @@ function Notify({ type, message }) {
     default:
       return toast(message, toastConfig);
   }
+  // return toast("Event has been created.", {
+  //   description: "Sunday, December 03, 2023 at 9:00 AM",
+  //   action: {
+  //     label: "Undo",
+  //     onClick: () => console.log("Undo"),
+  //   },
+  // });
 }
 
 export default Notify;

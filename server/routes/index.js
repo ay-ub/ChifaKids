@@ -3,8 +3,8 @@ const patientRoute = require("./patient.js");
 const registerRoute = require("./register.js");
 const medicamentRoute = require("./medicament.js");
 const consultationRoute = require("./consultation.js");
-const doctorRoute = require("./doctor.js");
 const antecedentRoute = require("./antecedent.js");
+const ordonnanceRoute = require("./ordonnance.js");
 
 module.exports = {
   loginRoute,
@@ -12,6 +12,6 @@ module.exports = {
   patientRoute,
   medicamentRoute,
   consultationRoute,
-  doctorRoute,
   antecedentRoute,
+  ordonnanceRoute,
 };

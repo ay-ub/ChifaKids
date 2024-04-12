@@ -1,4 +1,4 @@
-const { user } = require("../Models/index");
+const { user, doctor, nurse } = require("../Models/index");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
@@ -8,7 +8,7 @@ const register = async (req, res) => {
     if (userExist) {
       return res.status(500).json({
         status: "fail",
-        massege: "password or email invalid",
+        data: { massege: "email already exist" },
       });
     } else {
       const passwordHash = await bcrypt.hash(password, 10);
@@ -19,6 +19,12 @@ const register = async (req, res) => {
         lastName,
         typeUser,
       });
+      if (NewUser.typeUser === "DOCTOR") {
+        await doctor.create({ userEmail: NewUser.email });
+      }
+      if (NewUser.typeUser === "NURSE") {
+        await nurse.create({ userEmail: NewUser.email });
+      }
 
       return res.status(201).json({
         status: "success",
