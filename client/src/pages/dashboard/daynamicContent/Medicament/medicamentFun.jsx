@@ -4,20 +4,6 @@ import { Link } from "react-router-dom";
 import { Notify } from "utils";
 import { Alert } from "components";
 
-const getMedicament = async (setMedicaments) => {
-  try {
-    const res = await fetch("http://localhost:3000/medicaments/", {
-      method: "GET",
-    });
-    const data = await res.json();
-    if (data.status === "success" && data.data.medicament.length > 0) {
-      setMedicaments(data.data.medicament);
-    }
-  } catch (error) {
-    Notify({ type: "error", message: "J’ai pas eu de médicaments." });
-  }
-};
-
 const handleDelete = async (id, medicaments, setMedicaments) => {
   // delete patient
   try {
@@ -90,4 +76,4 @@ const mapMedicament = (medicaments, search, setMedicaments) => {
     });
 };
 
-export { getMedicament, mapMedicament };
+export { mapMedicament };

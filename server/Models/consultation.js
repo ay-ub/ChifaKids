@@ -1,10 +1,5 @@
 module.exports = (db, type) => {
   return db.define("consultation", {
-    id: {
-      type: type.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     date: {
       type: type.DATEONLY,
       allowNull: false,

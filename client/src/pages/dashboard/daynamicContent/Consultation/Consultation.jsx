@@ -7,11 +7,13 @@ import { useState, useEffect } from "react";
 import { TabsList, TabsTrigger, Tabs, TabsContent } from "@/components/ui/tabs";
 import { useParams } from "react-router-dom";
 import ExamenClinique from "./examenClinique.jsx";
+import Ordonnance from "./ordonnance/Ordonnance.jsx";
 
 function Consultation() {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState();
   const [consultationData, setConsultationData] = useState([]);
+  const [consultationId, setConsultationId] = useState();
 
   //get patient data
   useEffect(() => {
@@ -55,19 +57,19 @@ function Consultation() {
   return (
     (patientData && (
       <div className="Consultation ">
-        <div className="flex items-center justify-between">
+        <div className="consultationHeader flex items-center justify-between">
           <SectionTitle title="Consultation" />
           <div className="user-data text-xl capitalize">
             {`${patientData.firstName} ${patientData.lastName}`}{" "}
             <span> {patientData.dateOfBirth}</span>
           </div>
         </div>
-        <Tabs defaultValue="Antécédents" className="w-full  mt-3 ">
-          <TabsList>
+        <Tabs defaultValue="Traitement" className="w-full  mt-3 ">
+          <TabsList className="tabs">
             <TabsTrigger value="Antécédents">Antécédents</TabsTrigger>
             <TabsTrigger value="consultation">consultation </TabsTrigger>
             <TabsTrigger value="Courbes">Courbes graphiques</TabsTrigger>
-            <TabsTrigger value="Ordonnance">Ordonnance</TabsTrigger>
+            <TabsTrigger value="Traitement">Traitement</TabsTrigger>
             <TabsTrigger value="Compte">Compte rendu</TabsTrigger>
             <TabsTrigger value="Certificat">Certificat et Courrier</TabsTrigger>
           </TabsList>
@@ -75,17 +77,17 @@ function Consultation() {
             <Entecedent />
           </TabsContent>
           <TabsContent value="consultation">
-            <Tabs defaultValue="interrogatoire" className="w-full">
+            <Tabs defaultValue="consultationForm" className="w-full">
               <TabsList>
+                <TabsTrigger value="consultationForm">
+                  Ajouter consultation
+                </TabsTrigger>
                 <TabsTrigger value="interrogatoire">interrogatoire</TabsTrigger>
                 <TabsTrigger value="examenClinique">
                   Examen clinique
                 </TabsTrigger>
                 <TabsTrigger value="examenParaclinique">
                   Examen paraclinique
-                </TabsTrigger>
-                <TabsTrigger value="consultationForm">
-                  Ajouter consultation
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="interrogatoire">
@@ -98,11 +100,16 @@ function Consultation() {
                 examenParaclinique
               </TabsContent>
               <TabsContent value="consultationForm">
-                <ConsultationForm />
+                <ConsultationForm setConsultationId={setConsultationId} />
               </TabsContent>
             </Tabs>
           </TabsContent>
-          <TabsContent value="Ordonnance">FROM 3</TabsContent>
+          <TabsContent value="Traitement">
+            <Ordonnance
+              consultationId={consultationId}
+              patientData={patientData}
+            />
+          </TabsContent>
           <TabsContent value="Compte">FROM 4</TabsContent>
           <TabsContent value="Certificat">FROM 5</TabsContent>
           <TabsContent value="Courbes">

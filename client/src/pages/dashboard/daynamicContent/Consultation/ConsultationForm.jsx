@@ -3,7 +3,7 @@ import { InputError } from "components";
 import { useParams } from "react-router-dom";
 import { Notify } from "utils";
 
-function ConsultationForm() {
+function ConsultationForm({ setConsultationId }) {
   const { patientId } = useParams();
   const {
     register,
@@ -25,6 +25,8 @@ function ConsultationForm() {
       });
       const resData = await res.json();
       if (resData.status === "success") {
+        console.log(resData);
+        setConsultationId(resData.data.id);
         Notify({ type: "success", message: "Consultation ajoutée." });
       } else {
         Notify({

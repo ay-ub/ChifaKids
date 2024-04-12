@@ -4,11 +4,12 @@ const patientModel = require("./Patient.js");
 const medicamentModel = require("./Medicament.js");
 const ordonnanceModel = require("./Ordonnance.js");
 const userModel = require("./User.js");
-const consultationModel = require("./consultation.js");
-const doctorModel = require("./doctor.js");
-const nurseModel = require("./nurse.js");
-const heightNormModel = require("./heightNorm.js");
-const antecedentModel = require("./antecedent.js");
+const consultationModel = require("./Consultation.js");
+const doctorModel = require("./Doctor.js");
+const nurseModel = require("./Nurse.js");
+// const heightNormModel = require("./heightNorm.js");
+const antecedentModel = require("./Antecedent.js");
+const prescriptionModel = require("./Prescription.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -17,11 +18,21 @@ const user = userModel(db, DataTypes);
 const consultation = consultationModel(db, DataTypes);
 const doctor = doctorModel(db, DataTypes);
 const nurse = nurseModel(db, DataTypes);
-const heightNorm = heightNormModel(db, DataTypes);
+// const heightNorm = heightNormModel(db, DataTypes);
 const antecedent = antecedentModel(db, DataTypes);
+const prescription = prescriptionModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
+
+user.hasMany(doctor);
+doctor.belongsTo(user);
+
+consultation.hasMany(ordonnance);
+ordonnance.belongsTo(consultation);
+
+ordonnance.belongsToMany(medicament, { through: prescription });
+medicament.belongsToMany(ordonnance, { through: prescription });
 
 db.sync({ force: false })
   .then(() => console.log("db synced"))
@@ -35,7 +46,8 @@ module.exports = {
   consultation,
   doctor,
   nurse,
-  heightNorm,
+  // heightNorm,
   antecedent,
+  prescription,
 };
 //========================  export models END     ========================

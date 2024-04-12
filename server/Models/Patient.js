@@ -1,10 +1,5 @@
 module.exports = (db, type) => {
-  return db.define("patients", {
-    id: {
-      type: type.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
+  return db.define("patient", {
     firstName: {
       type: type.STRING,
       allowNull: false,

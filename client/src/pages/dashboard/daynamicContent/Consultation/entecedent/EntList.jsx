@@ -21,7 +21,7 @@ function EntList({
             whileInView={{ opacity: 1, x: 0 }}
             transition={({ duration: 0.3 }, { delay: 0.1 * index })}
             key={entecedent.id}
-            className="flex items-start justify-between darkBg p-2 rounded-sm mt-1 select-none hover:text-white cursor-text"
+            className="flex items-start justify-between darkBg p-2 rounded-sm mt-1 select-none cursor-text"
           >
             <span
               className="text-[18px] flex-1"

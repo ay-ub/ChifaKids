@@ -3,6 +3,72 @@ const { medicament } = require("../Models/index.js");
 const addMedicament = async (req, res) => {
   try {
     const newMedicament = await medicament.create(req.body);
+    // const deleteMedicament = await medicament.destroy({
+    //   where: {},
+    // });
+    // const medications = [
+    //   {
+    //     name: "Metformin",
+    //     type: "Antidiabetic",
+    //     dosage: "1000",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Lisinopril",
+    //     type: "Antihypertensive",
+    //     dosage: "10",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Atorvastatin",
+    //     type: "Lipid-lowering agent",
+    //     dosage: "20",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Levothyroxine",
+    //     type: "Thyroid hormone replacement",
+    //     dosage: "50",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Paracetamol",
+    //     type: "Analgesic",
+    //     dosage: "500",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Omeprazole",
+    //     type: "Proton pump inhibitor",
+    //     dosage: "20",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Ciprofloxacin",
+    //     type: "Antibiotic",
+    //     dosage: "500",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Fluoxetine",
+    //     type: "Antidepressant",
+    //     dosage: "20",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Amlodipine",
+    //     type: "Antihypertensive",
+    //     dosage: "5",
+    //     dosageUnit: "mg",
+    //   },
+    //   {
+    //     name: "Warfarin",
+    //     type: "Anticoagulant",
+    //     dosage: "2.5",
+    //     dosageUnit: "mg",
+    //   },
+    // ];
+    // const newMedicament = await medicament.bulkCreate(medications);
     return res.status(201).json({
       status: "success",
       data: { medicament: newMedicament },

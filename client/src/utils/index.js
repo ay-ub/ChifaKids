@@ -3,7 +3,7 @@ import handleSideBar from "./handleSideBar";
 import Notify from "./Notify";
 import { readFile, writeFile } from "./excelFileHandle";
 import { getPatients, handleWaitingRom } from "./waitingRom";
-import calculateAge from "./globalFunction";
+import { calculateAge, getAllMedicament } from "./globalFunction";
 
 export {
   handleTheme,
@@ -14,4 +14,5 @@ export {
   handleWaitingRom,
   getPatients,
   calculateAge,
+  getAllMedicament,
 };
