@@ -1,14 +1,15 @@
 import { Chart } from "components";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { readFile } from "utils";
+import { readFile, calculateAge } from "utils";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { convertExcelToJson } from "./ConsultationFun";
+
 function Courbes() {
   const [excelData, setExcelData] = useState();
   const [data, setData] = useState([]);
   const { patientId } = useParams();
-
   const [patientHeight, setpatientHeight] = useState(null);
 
   useEffect(() => {
@@ -27,8 +28,9 @@ function Courbes() {
           obj.id = "Height";
           obj.data = [];
           resData.data.forEach((cell) => {
+            let month = calculateAge(new Date(), cell.date);
             obj.data.push({
-              x: cell.month,
+              x: month,
               y: cell.height,
             });
           });
@@ -40,35 +42,9 @@ function Courbes() {
     };
     getPatientHeight();
   }, [patientId]);
+
   useEffect(() => {
-    if (excelData) {
-      const headers = [
-        { title: "SD3neg" },
-        { title: "SD2neg" },
-        { title: "SD0" },
-        { title: "SD2" },
-        { title: "SD3" },
-      ];
-      let data = [];
-      excelData[0].forEach((cell, indexRow) => {
-        if (headers.find((header) => header.title === cell)) {
-          let obj = {};
-          obj.id = cell;
-          obj.data = [];
-          for (let i = 0; i < excelData.length - 1; i++) {
-            obj.data.push({
-              x: i,
-              y: excelData[i + 1][indexRow],
-            });
-          }
-          data.push(obj);
-        }
-      });
-      if (patientHeight.data.length !== 0) {
-        data.push(patientHeight);
-      }
-      setData(data);
-    }
+    convertExcelToJson(excelData, setData, patientHeight);
   }, [excelData, patientHeight]);
   return (
     <>

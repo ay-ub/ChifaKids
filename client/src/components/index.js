@@ -15,6 +15,7 @@ import Alert from "./Alert";
 import Table from "./Table.jsx";
 import SubTitle from "./SubTitle.jsx";
 import PopUp from "./PopUp.jsx";
+import DateRangeComponent from "./DateRangeComponent.jsx";
 
 export {
   SectionTitle,
@@ -34,4 +35,5 @@ export {
   Table,
   SubTitle,
   PopUp,
+  DateRangeComponent,
 };

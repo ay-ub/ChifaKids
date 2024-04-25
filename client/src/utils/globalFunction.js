@@ -1,21 +1,12 @@
 import { Notify } from "utils";
 
-// const calculateAge = (date) => {
-//   const today = new Date();
-//   const birthDate = new Date(date);
-//   let age = today.getFullYear() - birthDate.getFullYear();
-//   const month = today.getMonth() - birthDate.getMonth();
-//   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate()))
-//     age--;
-//   return age;
-// };
-const calculateAge = (date) => {
-  const currentDate = new Date();
+const calculateAge = (firstDate, lastDate) => {
+  const currentDate = new Date(firstDate);
   const currentMonth = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();
   const currentDay = currentDate.getDate();
 
-  const birthDate = new Date(date);
+  const birthDate = new Date(lastDate);
   const birthMonth = birthDate.getMonth() + 1;
   const birthYear = birthDate.getFullYear();
   const birthDay = birthDate.getDate();
@@ -30,7 +21,7 @@ const calculateAge = (date) => {
     ageMonth += 12;
     ageYear--;
   }
-  return ageYear * 12 + ageMonth + " Mois";
+  return ageYear * 12 + ageMonth;
 };
 
 const getAllMedicament = async (setMedicaments) => {
@@ -46,4 +37,5 @@ const getAllMedicament = async (setMedicaments) => {
     Notify({ type: "error", message: "J’ai pas eu de médicaments." });
   }
 };
+
 export { calculateAge, getAllMedicament };

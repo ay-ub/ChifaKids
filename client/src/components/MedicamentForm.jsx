@@ -27,7 +27,11 @@ function MedicamentForm({ medicament, submitFun }) {
   });
 
   const onSubmit = (medicamentData) => {
-    submitFun({ ...medicamentData, dosageUnit, type: typeOfDrug });
+    submitFun({
+      ...medicamentData,
+      dosage: `${medicamentData.dosage} ${dosageUnit}`,
+      type: typeOfDrug,
+    });
   };
   return (
     <form

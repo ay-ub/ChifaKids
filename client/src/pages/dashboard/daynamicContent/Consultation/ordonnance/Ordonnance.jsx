@@ -4,10 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import {
   IoIosList,
   FaPlusCircle,
@@ -16,20 +14,21 @@ import {
 } from "assets/icon";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-
 import { useForm } from "react-hook-form";
 import { InputError, Alert } from "components";
-
 import { getAllMedicament, Notify } from "utils";
 import SelectMedicament from "./SelectMedicament";
-
 import OrdonnanceModel from "./OrdonnanceModel";
+
+import { useAuth } from "hooks";
 
 function Ordonnance({ consultationId, patientData }) {
   const [selectedMed, setSelectedMed] = useState({
     id: "",
     name: "",
   });
+
+  const auth = useAuth();
 
   const [medicamentList, setMedicamentList] = useState([]);
   useEffect(() => {
@@ -69,7 +68,7 @@ function Ordonnance({ consultationId, patientData }) {
         Notify({ type: "error", message: "aucun traitement" });
         return;
       }
-      window.print();
+
       const res = await fetch(`http://localhost:3000/ordonnance`, {
         method: "POST",
         headers: {
@@ -77,15 +76,19 @@ function Ordonnance({ consultationId, patientData }) {
         },
         body: JSON.stringify({
           consultationId,
+          consultationData: {
+            doctorId: auth.user.id,
+            patientId: patientData.id,
+          },
           medicamentData: traitmentDetails,
         }),
       });
       const data = await res.json();
-      console.log(data);
       if (data.status === "success") {
         Notify({ type: "success", message: "ordonnance a été ajouté." });
+        window.print();
       } else {
-        Notify({ type: "error", message: "N’a pas ajouté de ordonnance." });
+        Notify({ type: "error", message: data.message });
       }
     } catch (error) {
       Notify({ type: "error", message: "N’a pas ajouté de ordonnance." });
@@ -290,7 +293,7 @@ function Ordonnance({ consultationId, patientData }) {
                             <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
                               {index + 1}
                             </span>
-                            {`${traitment.name} ${traitment.dosage}${traitment.dosageUnit} `}
+                            {`${traitment.name} ${traitment.dosage}`}
                           </div>
                           {`${traitment.duration}`}
                         </div>
