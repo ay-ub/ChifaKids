@@ -19,7 +19,7 @@ const register = async (req, res) => {
         lastName,
         typeUser,
       });
-      if (NewUser.typeUser === "DOCTOR") {
+      if (NewUser.typeUser === "DOCTOR" || NewUser.typeUser === "ADMIN") {
         await doctor.create({ userEmail: NewUser.email });
       }
       if (NewUser.typeUser === "NURSE") {

@@ -17,7 +17,9 @@ const addPatient = async (req, res) => {
 
 const getAllPatients = async (req, res) => {
   try {
-    const allPatient = await patient.findAll();
+    const allPatient = await patient.findAll({
+      order: [["id", "DESC"]],
+    });
     return res.status(200).json({
       status: "success",
       data: { patient: allPatient },

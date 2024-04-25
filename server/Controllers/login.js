@@ -1,4 +1,4 @@
-const { user } = require("../Models/index");
+const { user, doctor, nurse } = require("../Models/index");
 const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
@@ -31,12 +31,63 @@ const login = async (req, res) => {
           secretKey,
           { expiresIn: "1h" }
         );
-        console.log(token);
+        // const refreshToken = jwt.sign(
+        //   {
+        //     email: userInfo.email,
+        //     firstName: userInfo.firstName,
+        //     lastName: userInfo.lastName,
+        //     typeUser: userInfo.typeUser,
+        //   },
+        //   secretKey,
+        //   { expiresIn: "24h" }
+        // );
+        // res.cookie("refreshToken", refreshToken, {
+        //   httpOnly: true,
+        //   secure: true,
+        //   sameSite: "none",
+        // });
+
+        if (userInfo.typeUser === "DOCTOR" || userInfo.typeUser === "ADMIN") {
+          const doctorInfo = await doctor.findOne({
+            where: { userEmail: email },
+          });
+          return res.status(200).json({
+            status: "success",
+            data: {
+              token: token,
+              user: {
+                id: doctorInfo.id,
+                email: userInfo.email,
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                typeUser: userInfo.typeUser,
+              },
+            },
+          });
+        }
+        const nurseInfo = await nurse.findOne({
+          where: { userEmail: email },
+        });
         return res.status(200).json({
           status: "success",
           data: {
             token: token,
             user: {
+              id: nurseInfo.id,
+              email: userInfo.email,
+              firstName: userInfo.firstName,
+              lastName: userInfo.lastName,
+              typeUser: userInfo.typeUser,
+            },
+          },
+        });
+
+        return res.status(200).json({
+          status: "success",
+          data: {
+            token: token,
+            user: {
+              id: user.userId,
               email: userInfo.email,
               firstName: userInfo.firstName,
               lastName: userInfo.lastName,

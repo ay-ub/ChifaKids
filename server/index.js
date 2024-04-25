@@ -9,6 +9,7 @@ const {
   consultationRoute,
   antecedentRoute,
   ordonnanceRoute,
+  curveRoute,
 } = require("./routes/index.js");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
@@ -37,6 +38,7 @@ app.use("/medicaments", medicamentRoute);
 app.use("/consultations", consultationRoute);
 app.use("/antecedent", antecedentRoute);
 app.use("/ordonnance", ordonnanceRoute);
+app.use("/curve", curveRoute);
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);

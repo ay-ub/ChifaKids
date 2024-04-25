@@ -5,6 +5,7 @@ const medicamentRoute = require("./medicament.js");
 const consultationRoute = require("./consultation.js");
 const antecedentRoute = require("./antecedent.js");
 const ordonnanceRoute = require("./ordonnance.js");
+const curveRoute = require("./curve.js");
 
 module.exports = {
   loginRoute,
@@ -14,4 +15,5 @@ module.exports = {
   consultationRoute,
   antecedentRoute,
   ordonnanceRoute,
+  curveRoute,
 };

@@ -1,5 +1,10 @@
 module.exports = (db, type) => {
   return db.define("medicaments", {
+    id: {
+      type: type.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
       type: type.STRING,
       allowNull: false,
@@ -10,10 +15,6 @@ module.exports = (db, type) => {
     },
     dosage: {
       type: type.STRING,
-      allowNull: false,
-    },
-    dosageUnit: {
-      type: type.ENUM("mL", "mg", "g"),
       allowNull: false,
     },
   });
