@@ -1,33 +1,29 @@
 import { PopUp } from "components";
 import { FaBriefcaseMedical, MdGroups, FaBed, FaPlusCircle } from "assets/icon";
 import { Notify } from "utils";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import EntList from "./EntList";
-
+import { useParams } from "react-router-dom";
 function Entecedent() {
-  const { patientId } = useParams();
   const [entecedentData, setEntecedentData] = useState([]);
+  const { patientId } = useParams();
+  const [tmp, setTemp] = useState("");
   const [entecedentObg, setEntecedentObg] = useState({
     name: "",
     type: "",
     patientId,
   });
-  const [tmp, setTemp] = useState("");
-  // GET patient antecedents
+  // GET antecedents
   useEffect(() => {
     const getAntecedents = async () => {
-      const antecedents = await fetch(
-        `http://localhost:3000/antecedent/${patientId}`
-      );
-      const entecedentOfPatient = await antecedents.json();
-      if (entecedentOfPatient.status === "success") {
-        setEntecedentData(entecedentOfPatient.data);
+      const allAntecedents = await fetch(`http://localhost:3000/antecedent`);
+      const newEntecedent = await allAntecedents.json();
+      if (newEntecedent.status === "success") {
+        setEntecedentData(newEntecedent.data);
       }
     };
     getAntecedents();
-  }, [patientId]);
+  }, []);
 
   const createEntecedent = async (event) => {
     event.preventDefault();
@@ -66,7 +62,6 @@ function Entecedent() {
       Notify({ type: "error", message: "Impossible d’ajouter L'entecedent." });
     }
   };
-
   const deleteEntecedent = async (id) => {
     try {
       const deleteEntecedent = await fetch(
@@ -154,9 +149,9 @@ function Entecedent() {
 
   return (
     <div className="mt-[-20px] p-4 flex gap-4 flex-wrap">
-      <div className="flex-1 bg-lightDark  rounded-md h-[530px]">
+      <div className="flex-1 bg-lightDark  rounded-md h-[480px]">
         <div className="flex items-center  text-2xl bg-p rounded-md  p-2 text-white select-none">
-          <span className="flex flex-1 gap-2 items-center justify-center">
+          <span className=" flex-1 flex gap-2 items-center justify-center">
             <span className="icon">
               <MdGroups />
             </span>
@@ -199,7 +194,7 @@ function Entecedent() {
           setTemp={setTemp}
         />
       </div>
-      <div className="flex-1 bg-lightDark  rounded-md h-[530px]">
+      <div className="flex-1 bg-lightDark  rounded-md h-[480px]">
         <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
           <span className="flex flex-1 gap-2 items-center justify-center">
             <span className="icon">
@@ -243,7 +238,7 @@ function Entecedent() {
           setTemp={setTemp}
         />
       </div>
-      <div className="flex-1 bg-lightDark  rounded-md h-[530px]">
+      <div className="flex-1 bg-lightDark  rounded-md h-[480px]">
         <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
           <span className="flex flex-1 gap-2 items-center justify-center">
             <span className="icon">

@@ -49,7 +49,7 @@ const mapMedicament = (medicaments, search, setMedicaments) => {
           <td className="select-none">{index + 1}</td>
           <td className="select-none">{medicament.name}</td>
           <td>{medicament.type}</td>
-          <td>{`${medicament.dosage} ${medicament.dosageUnit}`}</td>
+          <td>{medicament.dosage}</td>
           <td className="action flex justify-center items-center gap-4">
             <Alert
               title="Vous êtes sûr de vouloir supprimer ce médicament !"

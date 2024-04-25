@@ -1,8 +1,7 @@
 import { handleTheme } from "../layout/dashboardLayout/DushFun";
-import { useAuth } from "hooks";
 import { FaBell, IoIosArrowDown } from "assets/icon/index";
 import { PopUp } from "components";
-import { useTheme, useContxt } from "hooks";
+import { useTheme, useContxt, useAuth } from "hooks";
 import { useState } from "react";
 
 function Header() {

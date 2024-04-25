@@ -90,49 +90,54 @@ function PatientForm({ patient, subFun }) {
           {<InputError error={errors.lastName} />}
         </div>
       </div>
-      <Select
-        onValueChange={(e) => {
-          setGender(e);
-        }}
-        value={gender}
-      >
-        <label>sexe : </label>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Sélectionner le sexe :" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="MALE">MALE</SelectItem>
-          <SelectItem value="FEMALE">FEMALE</SelectItem>
-        </SelectContent>
-      </Select>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="date"> date de naissance :</label>
-        <Popover id="date">
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? (
-                format(date, "yyyy-MM-dd")
-              ) : (
-                <span>date de naissance</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col">
+          <Select
+            onValueChange={(e) => {
+              setGender(e);
+            }}
+            value={gender}
+          >
+            <label>sexe : </label>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sélectionner le sexe :" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="MALE">MALE</SelectItem>
+              <SelectItem value="FEMALE">FEMALE</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="date"> date de naissance :</label>
+          <Popover id="date">
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[280px] justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date ? (
+                  format(date, "yyyy-MM-dd")
+                ) : (
+                  <span>date de naissance</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                toDate={new Date()}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
       <div className="flex gap-4">
         <div className="input-group flex-1">
@@ -184,7 +189,7 @@ function PatientForm({ patient, subFun }) {
           {<InputError error={errors.numberPhone} />}
         </div>
       </div>
-      <button type="submit" className="sign bg-[#8b63e9] mt-5">
+      <button type="submit" className="sign bg-p mt-5">
         {patient.firstName === ""
           ? "Ajouter patient"
           : "mettre à jour le patient"}

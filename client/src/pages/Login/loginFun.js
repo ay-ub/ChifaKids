@@ -10,7 +10,6 @@ const login = async (data, auth, navigate, redirectPath) => {
     if (resData.status === "success") {
       auth.login(resData.data.user);
       localStorage.setItem("token", resData.data.token);
-      console.log(resData.data.token);
       Notify({
         type: "success",
         message: `bienvenue ${resData.data.user.firstName} ${resData.data.user.lastName}`,

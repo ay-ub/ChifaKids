@@ -4,6 +4,7 @@
   --gap-15: 10px;
   --transition: 0.3s;
   --primaryColor: #7c3aed;
+  /* --primaryColor: #637bff; */
   --primaryColorHover: #7b2fff;
   --borderRadius: 10px;
   --borderRadiusLinks: 8px;
@@ -247,5 +248,20 @@ label {
   }
   .dashboard .rightContent .daynamicContent .Consultation .ordonnanceDocument {
     display: block;
+  }
+  .dashboard .rightContent .daynamicContent .Consultation .CertificatModel {
+    width: 100%;
+  }
+  .dashboard
+    .rightContent
+    .daynamicContent
+    .Consultation
+    .CertificatModel
+    .model-content {
+    align-items: center;
+    justify-content: center;
+  }
+  .dashboard .rightContent .daynamicContent .Consultation .btnContent {
+    display: none;
   }
 }

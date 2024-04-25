@@ -1,11 +1,6 @@
-import { useEffect } from "react";
 import { calculateAge } from "utils";
 
 function OrdonnanceModel({ traitmentDetails, patientData }) {
-  useEffect(() => {
-    console.log("traitmentDetails: ", patientData);
-  }, []);
-
   return (
     <div className="ordonnanceDocument hidden">
       <div className=" bg-white text-black p-5 pb-10 relative flex flex-col gap-5 justify-between h-screen">

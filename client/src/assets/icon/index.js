@@ -1,4 +1,4 @@
-import { CiLogout, CiLogin } from "react-icons/ci";
+import { CiLogout, CiLogin, CiCalendarDate } from "react-icons/ci";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDown,
@@ -16,6 +16,8 @@ import {
   FaBed,
   FaPlusCircle,
   FaLaptop,
+  FaDna,
+  FaXRay,
 } from "react-icons/fa";
 
 import { TbUserSearch } from "react-icons/tb";
@@ -54,4 +56,7 @@ export {
   FaLaptop,
   IoIosList,
   MdDescription,
+  FaDna,
+  FaXRay,
+  CiCalendarDate,
 };

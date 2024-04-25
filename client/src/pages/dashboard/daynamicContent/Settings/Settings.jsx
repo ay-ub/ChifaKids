@@ -1,5 +1,11 @@
+import { SectionTitle } from "components";
+
 function Settings() {
-  return <div>settigns</div>;
+  return (
+    <div>
+      <SectionTitle title="Settings" />
+    </div>
+  );
 }
 
 export default Settings;

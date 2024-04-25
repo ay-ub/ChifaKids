@@ -2,7 +2,6 @@ import { Notify } from "utils";
 
 const addPatient = async (newPatient) => {
   try {
-    console.log(newPatient);
     const res = await fetch(`http://localhost:3000/patients`, {
       method: "POST",
       headers: {
