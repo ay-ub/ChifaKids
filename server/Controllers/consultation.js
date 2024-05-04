@@ -1,49 +1,6 @@
 const { consultation, doctor, patient } = require("../Models");
 const { Op } = require("sequelize");
-const data = [
-  {
-    motif: "regular checkup",
-    date: "2022-01-01",
-    height: 170.2,
-    weight: 65.4,
-    generalCondition: "healthy",
-    urogenital: "No abnormalities detected",
-    genital: "Normal",
-    abdominal: "No pain",
-    glycemie: 4.8,
-    urea: 26.1,
-    creatine: 0.9,
-    fns: "Normal",
-    crp: 2.5,
-    biologyOther: "Normal",
-    ultrasound: "No abnormalities detected",
-    tdm: "Normal",
-    irm: "Normal",
-    patientId: 1,
-    doctorId: 1,
-  },
-  {
-    motif: "sore throat",
-    date: "2022-03-02",
-    height: 170.2,
-    weight: 65.4,
-    generalCondition: "healthy",
-    urogenital: "No abnormalities detected",
-    genital: "Normal",
-    abdominal: "No pain",
-    glycemie: 4.8,
-    urea: 26.1,
-    creatine: 0.9,
-    fns: "Normal",
-    crp: 2.5,
-    biologyOther: "Normal",
-    ultrasound: "No abnormalities detected",
-    tdm: "Normal",
-    irm: "Normal",
-    patientId: 1,
-    doctorId: 1,
-  },
-];
+
 const createConsultation = async (req, res) => {
   try {
     const { doctorId, patientId } = req.body;
@@ -68,7 +25,6 @@ const createConsultation = async (req, res) => {
       });
     }
     const newConsultation = await consultation.create(req.body);
-
     return res.status(201).json({
       status: "success",
       data: newConsultation,

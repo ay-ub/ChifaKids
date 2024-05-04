@@ -5,48 +5,16 @@ module.exports = (db, type) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    L: {
-      type: type.INTEGER,
+    data: {
+      type: type.JSONB,
       allowNull: false,
     },
-    M: {
-      type: type.INTEGER,
+    gender: {
+      type: type.ENUM("MALE", "FEMALE"),
       allowNull: false,
     },
-    S: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD3neg: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD2neg: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD1neg: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD0: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD1: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD2: {
-      type: type.INTEGER,
-      allowNull: false,
-    },
-    SD3: {
-      type: type.INTEGER,
+    type: {
+      type: type.ENUM("HEIGHT", "WEIGHT"),
       allowNull: false,
     },
   });

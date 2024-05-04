@@ -4,7 +4,7 @@
   --gap-15: 10px;
   --transition: 0.3s;
   --primaryColor: #7c3aed;
-  /* --primaryColor: #637bff; */
+  /* --primaryColor: rgb(206, 73, 73); */
   --primaryColorHover: #7b2fff;
   --borderRadius: 10px;
   --borderRadiusLinks: 8px;
@@ -69,6 +69,7 @@ li {
 }
 .bg-ph:hover {
   background-color: var(--primaryColorHover);
+  color: white;
 }
 
 .pc-f {
@@ -196,12 +197,12 @@ label {
 .dataTable table td,
 .dataTable table th {
   text-align: center;
-  padding: 8px;
+  padding: 5px;
 }
 
-/* .dataTable table tr:nth-child(even) {
+.dataTable table tr:nth-child(even) {
   background-color: var(--lightDarkBg);
-} */
+}
 .dataTable table tr td:first-child,
 .dataTable table tr th:first-child {
   border-radius: 7px 0 0 7px;
@@ -231,7 +232,6 @@ label {
 [contenteditable] {
   outline: 0 solid var(--primaryColor);
 }
-
 @media print {
   @page {
     size: auto;
@@ -241,9 +241,12 @@ label {
   .Toastify,
   .dashboard .rightContent header,
   .dashboard .sideBar,
+  .dashboard .rightContent .daynamicContent .pageTitle,
   .dashboard .rightContent .daynamicContent .Consultation .tabs,
   .dashboard .rightContent .daynamicContent .Consultation .consultationHeader,
-  .dashboard .rightContent .daynamicContent .Consultation .ordonnanceMain {
+  .dashboard .rightContent .daynamicContent .Consultation .ordonnanceMain,
+  .dashboard .rightContent .daynamicContent .Bilan .bilanTitle,
+  .dashboard .rightContent .daynamicContent .Bilan .impr {
     display: none;
   }
   .dashboard .rightContent .daynamicContent .Consultation .ordonnanceDocument {
@@ -264,4 +267,24 @@ label {
   .dashboard .rightContent .daynamicContent .Consultation .btnContent {
     display: none;
   }
+  label {
+    color: black;
+  }
+}
+
+input[type="time"] {
+  padding: 8px 15px;
+  border: 1px solid var(--primaryColor);
+  background-color: var(--darkBg);
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  width: fit-content;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg)
+    brightness(95%) contrast(80%);
+  cursor: pointer;
+  margin-left: 6px;
 }

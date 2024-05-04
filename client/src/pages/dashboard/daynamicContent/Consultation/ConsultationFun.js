@@ -71,15 +71,16 @@ const convertExcelToJson = (excelData, setData, patientHeight) => {
         data.push(obj);
       }
     });
+    console.log(data);
     // addCurveDataToDb(excelData);
-    if (patientHeight.data.length !== 0) {
-      data.push(patientHeight);
-    }
+    // if (patientHeight.data.length !== 0) {
+    //   data.push(patientHeight);
+    // }
     setData(data);
   }
 };
 
-const getOrdonnanceByPatientId = async (patientId, setData) => {
+const getOrdonnanceByPatientId = async (patientId, setData, selectedDate) => {
   try {
     const response = await fetch(
       `http://localhost:3000/ordonnance/patient/${patientId}`

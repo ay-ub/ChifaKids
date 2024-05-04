@@ -1,9 +1,3 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -45,6 +39,7 @@ function Ordonnance({ consultationId, patientData }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -60,6 +55,8 @@ function Ordonnance({ consultationId, patientData }) {
       eatingTime,
     };
     setTraitmentDetails((prev) => [...prev, obj]);
+    reset();
+    setSelectedMed({ id: "", name: "" });
   };
 
   const createOrdonnance = async () => {
@@ -69,6 +66,7 @@ function Ordonnance({ consultationId, patientData }) {
         return;
       }
 
+      console.log(traitmentDetails);
       const res = await fetch(`http://localhost:3000/ordonnance`, {
         method: "POST",
         headers: {
@@ -98,261 +96,257 @@ function Ordonnance({ consultationId, patientData }) {
   return (
     <div>
       <div className="ordonnanceMain flex justify-between items-start gap-3 w-full">
-        <Accordion type="single" collapsible className="w-[350px]">
-          <AccordionItem value="item-1 ">
-            <AccordionTrigger>
-              <div className="text-2xl">
+        <div className="flex-1 bg-lightDark  rounded-md h-[490px]">
+          <div className=" items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
+            <span className="flex flex-1 gap-2 items-center justify-center">
+              <span className="icon">
                 <IoIosList />
-              </div>
-              Traitement prêt
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="h-[440px] overflow-y-auto overflow-x-hidden">
-                <motion.li
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                >
-                  traitement 1
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                >
-                  traitement 2
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                >
-                  traitement 3
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                >
-                  traitement 4
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                >
-                  traitement 5
-                </motion.li>
-              </ul>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <Accordion type="single" collapsible className="w-[400px] ">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>
-              <div className="text-2xl">
+              </span>
+              <span>Traitement prêt</span>
+            </span>
+          </div>
+          <ul className="h-[440px] overflow-y-auto overflow-x-hidden p-2">
+            <motion.li
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={({ duration: 0.3 }, { delay: 0.1 })}
+              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+            >
+              traitement 1
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={({ duration: 0.3 }, { delay: 0.1 })}
+              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+            >
+              traitement 2
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={({ duration: 0.3 }, { delay: 0.1 })}
+              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+            >
+              traitement 3
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={({ duration: 0.3 }, { delay: 0.1 })}
+              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+            >
+              traitement 4
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={({ duration: 0.3 }, { delay: 0.1 })}
+              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+            >
+              traitement 5
+            </motion.li>
+          </ul>
+        </div>
+        <div className=" flex-1 bg-lightDark  rounded-md h-[490px]">
+          <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
+            <span className="flex flex-1 gap-2 items-center justify-center">
+              <span className="icon">
                 <FaPlusCircle />
-              </div>
-              Nouveau traitement
-            </AccordionTrigger>
-            <AccordionContent className="p-2 h-[455px]">
-              <SelectMedicament
-                selectedMed={selectedMed}
-                medicamentList={medicamentList}
-                setSelectedMed={setSelectedMed}
-              />
-              {selectedMed.id != "" ? (
-                <motion.form
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex flex-col mt-2 "
-                  onSubmit={handleSubmit(onSubmit)}
-                >
-                  <div className="input-group flex-1">
-                    <label htmlFor="période">la période de traitement: </label>
-                    <input
-                      type="text"
-                      id="période"
-                      placeholder="Exemple : 1 semaine ou 1 boite ..."
-                      {...register("duration", {
-                        required: {
-                          value: true,
-                          message: "période est nécessaire",
-                        },
-                      })}
-                      className={`${errors.duration ? "inValid" : null}`}
-                    />
-                    {<InputError error={errors.duration} />}
-                  </div>
-                  <div className="input-group flex-1">
-                    <label htmlFor="nbrFois">Nombre de fois/jour :</label>
-                    <input
-                      type="text"
-                      id="nbrFois"
-                      placeholder="Exemple : 1 ou 2  ou 3 ..."
-                      {...register("frequency", {
-                        required: {
-                          value: true,
-                          message: "ce champ est nécessaire",
-                        },
-                        pattern: {
-                          value: /^[0-9]+$/,
-                          message: "nombre incorrecte",
-                        },
-                      })}
-                      className={`${errors.frequency ? "inValid" : null}`}
-                    />
-                    {<InputError error={errors.frequency} />}
-                  </div>
-                  <RadioGroup
-                    defaultValue="Avant"
-                    className="mb-3 flex items-center justify-evenly flex-wrap"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="AVANT"
-                        id="Avant"
-                        onClick={handleRadioChange}
-                      />
-                      <Label htmlFor="Avant">Avant</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="PENDANT"
-                        id="pendant"
-                        onClick={handleRadioChange}
-                      />
-                      <Label htmlFor="pendant">Pendant</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem
-                        value="APRES"
-                        id="après"
-                        onClick={handleRadioChange}
-                      />
-                      <Label htmlFor="après">Après</Label>
-                    </div>
-                  </RadioGroup>
-                  <div className="input-group flex-1">
-                    <label htmlFor="remarque">Remarque :</label>
-                    <input
-                      type="text"
-                      id="remarque"
-                      placeholder="Exemple : qsp ..."
-                      {...register("notes")}
-                    />
-                  </div>
-                  <div className="flex mt-[50px] gap-4">
-                    <button type="submit" className="btn bg-[#8b63e9] flex-1 ">
-                      confirmer
-                    </button>
-                    <button
-                      type="reset"
-                      className="flex-1 bg-ph rounded-lg hover:text-white"
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                </motion.form>
-              ) : (
-                <p className="text-center text-red-500">
-                  Veuillez choisir un médicament
-                </p>
-              )}
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        <Accordion type="single" collapsible className="flex-1">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>
-              <div className="text-2xl">
-                <MdDescription />
-              </div>
-              Détails du traitement
-            </AccordionTrigger>
-            <AccordionContent>
-              <ul className="h-[375px] overflow-y-auto overflow-x-hidden">
-                {traitmentDetails.length > 0 ? (
-                  traitmentDetails.map((traitment, index) => (
-                    <motion.li
-                      initial={{ opacity: 0, x: 10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={({ duration: 0.3 }, { delay: 0.1 })}
-                      className="flex gap-x-2 justify-between items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white "
-                      key={index}
-                    >
-                      <div className="flex-1 flex flex-col items-start justify-between flex-wrap">
-                        <div className="flex justify-between items-center  w-full">
-                          <div className="flex gap-1 items-center">
-                            <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
-                              {index + 1}
-                            </span>
-                            {`${traitment.name} ${traitment.dosage}`}
-                          </div>
-                          {`${traitment.duration}`}
-                        </div>
-                        <div className=" w-full flex justify-evenly items-center">
-                          <div>{`${traitment.frequency} fois/jour ${traitment.eatingTime} le repas.`}</div>
-                          <div>{` ${traitment.notes}`}</div>
-                        </div>
-                      </div>
-                      <Alert
-                        title="Voulez-vous supprimer ce traitement ?"
-                        btnFun={() =>
-                          setTraitmentDetails((prev) =>
-                            prev.filter((_, i) => i !== index)
-                          )
-                        }
-                        description="Cette action ne peut pas être annulée. "
-                        confirmBtn="Oui, Supprimer"
-                      >
-                        <span className="text-red-400 select-none text-2xl">
-                          <AiOutlineDelete />
-                        </span>
-                      </Alert>
-                    </motion.li>
-                  ))
-                ) : (
-                  <motion.li
-                    initial={{ opacity: 0, x: 10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={({ duration: 0.3 }, { delay: 0.1 })}
-                    className="flex items-start justify-between darkBg  p-2 rounded-sm mt-1 select-none "
-                  >
-                    Aucun traitement
-                  </motion.li>
-                )}
-              </ul>
-              <motion.div
+              </span>
+              <span>Nouveau traitement</span>
+            </span>
+          </div>
+          <div className="px-2">
+            <SelectMedicament
+              selectedMed={selectedMed}
+              medicamentList={medicamentList}
+              setSelectedMed={setSelectedMed}
+            />
+            {selectedMed.id != "" ? (
+              <motion.form
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={({ duration: 0.3 }, { delay: 0.1 })}
-                className="flex mt-5 gap-4"
+                className="flex flex-col mt-2 "
+                onSubmit={handleSubmit(onSubmit)}
               >
-                <button
-                  type="button"
-                  className="btn bg-[#8b63e9] flex-1"
-                  onClick={createOrdonnance}
+                <div className="input-group flex-1">
+                  <label htmlFor="période">la période de traitement: </label>
+                  <input
+                    type="text"
+                    id="période"
+                    placeholder="Exemple : 1 semaine ou 1 boite ..."
+                    {...register("duration", {
+                      required: {
+                        value: true,
+                        message: "période est nécessaire",
+                      },
+                    })}
+                    className={`${errors.duration ? "inValid" : null}`}
+                  />
+                  {<InputError error={errors.duration} />}
+                </div>
+                <div className="input-group flex-1">
+                  <label htmlFor="nbrFois">Nombre de fois/jour :</label>
+                  <input
+                    type="text"
+                    id="nbrFois"
+                    placeholder="Exemple : 1 ou 2  ou 3 ..."
+                    {...register("frequency", {
+                      required: {
+                        value: true,
+                        message: "ce champ est nécessaire",
+                      },
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "nombre incorrecte",
+                      },
+                    })}
+                    className={`${errors.frequency ? "inValid" : null}`}
+                  />
+                  {<InputError error={errors.frequency} />}
+                </div>
+                <RadioGroup
+                  defaultValue="Avant"
+                  className="mb-3 flex items-center justify-evenly flex-wrap"
                 >
-                  Enregistrer et imprimer
-                </button>
-                <button
-                  type="button"
-                  className="flex-1 bg-ph rounded-lg hover:text-white border-[1px] border-ph"
-                  onClick={() => setTraitmentDetails([])}
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="AVANT"
+                      id="Avant"
+                      onClick={handleRadioChange}
+                    />
+                    <Label htmlFor="Avant">Avant</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="PENDANT"
+                      id="pendant"
+                      onClick={handleRadioChange}
+                    />
+                    <Label htmlFor="pendant">Pendant</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="APRES"
+                      id="après"
+                      onClick={handleRadioChange}
+                    />
+                    <Label htmlFor="après">Après</Label>
+                  </div>
+                </RadioGroup>
+                <div className="input-group flex-1">
+                  <label htmlFor="remarque">Remarque :</label>
+                  <input
+                    type="text"
+                    id="remarque"
+                    placeholder="Exemple : qsp ..."
+                    {...register("notes")}
+                  />
+                </div>
+                <div className="flex mt-[50px] gap-4">
+                  <button type="submit" className="btn bg-[#8b63e9] flex-1 ">
+                    confirmer
+                  </button>
+                  <button
+                    type="reset"
+                    className="flex-1 bg-ph rounded-lg hover:text-white"
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </motion.form>
+            ) : (
+              <p className="text-center text-red-500">
+                Veuillez choisir un médicament
+              </p>
+            )}
+          </div>
+        </div>
+        <div className=" flex-1 bg-lightDark  rounded-md h-[490px]">
+          <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
+            <span className="flex flex-1 gap-2 items-center justify-center">
+              <span className="icon">
+                <MdDescription />
+              </span>
+              <span>Détails du traitement</span>
+            </span>
+          </div>
+          <ul className="h-[375px] overflow-y-auto overflow-x-hidden p-2">
+            {traitmentDetails.length > 0 ? (
+              traitmentDetails.map((traitment, index) => (
+                <motion.li
+                  initial={{ opacity: 0, x: 10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={({ duration: 0.3 }, { delay: 0.1 })}
+                  className="flex gap-x-2 justify-between items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white "
+                  key={index}
                 >
-                  Annuler
-                </button>
-              </motion.div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+                  <div className="flex-1 flex flex-col items-start justify-between flex-wrap">
+                    <div className="flex justify-between items-center  w-full">
+                      <div className="flex gap-1 items-center">
+                        <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
+                          {index + 1}
+                        </span>
+                        {`${traitment.name} ${traitment.dosage}`}
+                      </div>
+                      {`${traitment.duration}`}
+                    </div>
+                    <div className=" w-full flex justify-evenly items-center">
+                      <div>{`${traitment.frequency} fois/jour ${traitment.eatingTime} le repas.`}</div>
+                      <div>{` ${traitment.notes}`}</div>
+                    </div>
+                  </div>
+                  <Alert
+                    title="Voulez-vous supprimer ce traitement ?"
+                    btnFun={() =>
+                      setTraitmentDetails((prev) =>
+                        prev.filter((_, i) => i !== index)
+                      )
+                    }
+                    description="Cette action ne peut pas être annulée. "
+                    confirmBtn="Oui, Supprimer"
+                  >
+                    <span className="text-red-400 select-none text-2xl">
+                      <AiOutlineDelete />
+                    </span>
+                  </Alert>
+                </motion.li>
+              ))
+            ) : (
+              <motion.li
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={({ duration: 0.3 }, { delay: 0.1 })}
+                className="flex items-start justify-between darkBg  p-2 rounded-sm mt-1 select-none "
+              >
+                Aucun traitement
+              </motion.li>
+            )}
+          </ul>
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={({ duration: 0.3 }, { delay: 0.1 })}
+            className="flex mt-3 gap-4 px-2"
+          >
+            <button
+              type="button"
+              className="btn bg-p flex-1"
+              onClick={createOrdonnance}
+            >
+              Enregistrer et imprimer
+            </button>
+            <button
+              type="button"
+              className="flex-1 bg-ph  rounded-lg hover:text-white"
+              onClick={() => setTraitmentDetails([])}
+            >
+              Annuler
+            </button>
+          </motion.div>
+        </div>
       </div>
       <OrdonnanceModel
         traitmentDetails={traitmentDetails}

@@ -1,7 +1,7 @@
 import Entecedent from "./entecedent/Entecedent.jsx";
 import ConsultationForm from "./ConsultationForm.jsx";
 import Courbes from "./Courbes.jsx";
-import { SectionTitle, DateRangeComponent, Btn } from "components";
+import { SectionTitle, DateRangeComponent } from "components";
 import Motif from "./Motif.jsx";
 import { useState, useEffect } from "react";
 import { TabsList, TabsTrigger, Tabs, TabsContent } from "@/components/ui/tabs";
@@ -11,15 +11,17 @@ import Ordonnance from "./ordonnance/Ordonnance.jsx";
 import ExmnParaClinique from "./ExmnParaClinique.jsx";
 import { calculateAge } from "utils";
 import { getConsultationData, getPatientData } from "./ConsultationFun.js";
-import CertificatModel from "./Certificat/CertificatModel.jsx";
 import DisplayOrdonnance from "./ordonnance/DisplayOrdonnance.jsx";
+import CmptRnd from "./compteRendu/CmptRnd.jsx";
+import DisplayCmptRendi from "./compteRendu/DisplayCmptRendi.jsx";
+import Certificat from "./Certificat/Certificat.jsx";
 
 function Consultation() {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState();
   const [consultationData, setConsultationData] = useState([]);
   const [consultationId, setConsultationId] = useState();
-  // const [OrdonnanceData, setOrdonnanceData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState({ from: "", to: "" });
 
   //get patient data
   useEffect(() => {
@@ -61,7 +63,6 @@ function Consultation() {
             <div className="user-data text-xl capitalize">
               <span>{`${patientData.firstName} ${patientData.lastName}`}</span>
               <span>
-                {" "}
                 Age : {calculateAge(new Date(), patientData.dateOfBirth)} mois.
               </span>
             </div>
@@ -73,7 +74,7 @@ function Consultation() {
             <TabsTrigger value="historique">Historique</TabsTrigger>
           </TabsList>
           <TabsContent value="nouveau">
-            <Tabs defaultValue="consultation" className="w-full ">
+            <Tabs defaultValue="Compte" className="w-full ">
               <TabsList className="tabs">
                 <TabsTrigger value="consultation">consultation </TabsTrigger>
                 <TabsTrigger value="Antécédents">Antécédents</TabsTrigger>
@@ -99,17 +100,14 @@ function Consultation() {
                   patientData={patientData}
                 />
               </TabsContent>
-              <TabsContent value="Compte">FROM 4</TabsContent>
+              <TabsContent value="Compte">
+                <CmptRnd
+                  consultationId={consultationId}
+                  patientId={patientId}
+                />
+              </TabsContent>
               <TabsContent value="Certificat">
-                <CertificatModel patientData={patientData} />
-                <div className="btnContent flex items-center justify-center">
-                  <Btn
-                    text="imprimer"
-                    btnFun={() => {
-                      window.print();
-                    }}
-                  />
-                </div>
+                <Certificat patientData={patientData} />
               </TabsContent>
               <TabsContent value="Courbes">
                 <Courbes patientData={patientData} />
@@ -129,7 +127,10 @@ function Consultation() {
                     Certificat et Courrier
                   </TabsTrigger>
                 </TabsList>
-                <DateRangeComponent onDateChange={getConsultationByDate} />
+                <DateRangeComponent
+                  onDateChange={getConsultationByDate}
+                  setSelectedDate={setSelectedDate}
+                />
               </div>
               <TabsContent value="Antécédents">
                 <Entecedent />
@@ -159,12 +160,17 @@ function Consultation() {
                 </Tabs>
               </TabsContent>
               <TabsContent value="Traitement">
-                <DisplayOrdonnance patientId={patientId} />
+                <DisplayOrdonnance
+                  patientId={patientId}
+                  selectedDate={selectedDate}
+                />
               </TabsContent>
-              <TabsContent value="Compte">FROM 4</TabsContent>
+              <TabsContent value="Compte">
+                <DisplayCmptRendi patientId={patientId} />
+              </TabsContent>
               <TabsContent value="Certificat">FROM 5</TabsContent>
               <TabsContent value="Courbes">
-                <Courbes />
+                <Courbes patientData={patientData} />
               </TabsContent>
             </Tabs>
           </TabsContent>

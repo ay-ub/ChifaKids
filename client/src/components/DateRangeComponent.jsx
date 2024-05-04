@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useEffect } from "react";
 
-function DateRangeComponent({ className, onDateChange }) {
+function DateRangeComponent({ className, onDateChange, setSelectedDate }) {
   const [date, setDate] = useState({
     from: addDays(new Date(), -90),
     to: new Date(),
@@ -22,6 +22,7 @@ function DateRangeComponent({ className, onDateChange }) {
     if (date?.from && date?.to) {
       const from = date.from ? format(date.from, "yyyy-MM-dd") : "";
       const to = date.to ? format(date.to, "yyyy-MM-dd") : "";
+      setSelectedDate({ from, to });
       onDateChange({ from, to });
     }
   }, [date]);

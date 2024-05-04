@@ -40,6 +40,7 @@ module.exports = (db, type) => {
       // moment de prise du médicament
       type: type.ENUM("AVANT", "PENDANT", "APRES"),
       allowNull: false,
+      defaultValue: "PENDANT",
     },
   });
 };

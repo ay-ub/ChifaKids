@@ -12,6 +12,7 @@ import {
   NewMedicament,
   EditMedicament,
   Settings,
+  Bilan,
 } from "./dashboard/daynamicContent/index";
 
 export {
@@ -28,4 +29,5 @@ export {
   NewMedicament,
   EditMedicament,
   Settings,
+  Bilan,
 };

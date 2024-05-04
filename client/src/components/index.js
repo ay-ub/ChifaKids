@@ -16,6 +16,9 @@ import Table from "./Table.jsx";
 import SubTitle from "./SubTitle.jsx";
 import PopUp from "./PopUp.jsx";
 import DateRangeComponent from "./DateRangeComponent.jsx";
+import ToolTip from "./ToolTip.jsx";
+import CheckBox from "./CheckBox.jsx";
+import CardModel from "./Card.jsx";
 
 export {
   SectionTitle,
@@ -36,4 +39,7 @@ export {
   SubTitle,
   PopUp,
   DateRangeComponent,
+  ToolTip,
+  CheckBox,
+  CardModel,
 };

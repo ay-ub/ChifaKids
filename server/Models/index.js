@@ -9,8 +9,10 @@ const doctorModel = require("./Doctor.js");
 const nurseModel = require("./Nurse.js");
 const antecedentModel = require("./Antecedent.js");
 const prescriptionModel = require("./Prescription.js");
-const curveModel = require("./curve.js");
+const curveModel = require("./Curve.js");
 const patientAntecedentModel = require("./PatientAntecedent.js");
+const compteRenduModel = require("./CompteRendu.js");
+const appointmentModel = require("./Appointment.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -23,6 +25,8 @@ const antecedent = antecedentModel(db, DataTypes);
 const prescription = prescriptionModel(db, DataTypes);
 const curve = curveModel(db, DataTypes);
 const patientAntecedent = patientAntecedentModel(db, DataTypes);
+const compteRendu = compteRenduModel(db, DataTypes);
+const appointment = appointmentModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
@@ -54,6 +58,9 @@ consultation.belongsTo(patient);
 consultation.hasMany(ordonnance);
 ordonnance.belongsTo(consultation);
 
+consultation.hasMany(compteRendu);
+compteRendu.belongsTo(consultation);
+
 ordonnance.belongsToMany(medicament, {
   through: {
     model: prescription,
@@ -68,7 +75,6 @@ medicament.belongsToMany(ordonnance, {
     foreignKey: "medicamentId",
   },
 });
-
 patient.belongsToMany(antecedent, {
   through: {
     model: patientAntecedent,
@@ -84,10 +90,12 @@ antecedent.belongsToMany(patient, {
   },
 });
 
+patient.hasMany(appointment);
+appointment.belongsTo(patient);
+
 db.sync({ force: false })
   .then(() => console.log("db synced"))
   .catch((err) => console.log(err));
-
 module.exports = {
   patient,
   medicament,
@@ -100,5 +108,7 @@ module.exports = {
   prescription,
   curve,
   patientAntecedent,
+  compteRendu,
+  appointment,
 };
 //========================  export models END     ========================

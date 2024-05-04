@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
-
-const readFile = (e, setExcelData) => {
+import { convertExcelToJson } from "./globalFunction";
+const readFile = (e, gender, type) => {
   const file = e.target.files[0];
   const reader = new FileReader();
 
@@ -10,7 +10,7 @@ const readFile = (e, setExcelData) => {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-    setExcelData(data);
+    convertExcelToJson(data, gender, type);
   };
 
   reader.readAsBinaryString(file);

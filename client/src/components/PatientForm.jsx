@@ -28,6 +28,7 @@ function PatientForm({ patient, subFun }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -40,6 +41,9 @@ function PatientForm({ patient, subFun }) {
   const onSubmit = (data) => {
     const dateOfBirth = format(date, "yyyy-MM-dd");
     subFun({ ...data, gender, dateOfBirth });
+    if (patient.firstName === "") {
+      reset();
+    }
   };
   return (
     <form
@@ -189,11 +193,16 @@ function PatientForm({ patient, subFun }) {
           {<InputError error={errors.numberPhone} />}
         </div>
       </div>
-      <button type="submit" className="sign bg-p mt-5">
-        {patient.firstName === ""
-          ? "Ajouter patient"
-          : "mettre à jour le patient"}
-      </button>
+      <div className="flex justify-center">
+        <button
+          type="submit"
+          className="bg-p mt-5 rounded-md p-2 px-4 text-white"
+        >
+          {patient.firstName === ""
+            ? "Ajouter patient"
+            : "mettre à jour le patient"}
+        </button>
+      </div>
     </form>
   );
 }
