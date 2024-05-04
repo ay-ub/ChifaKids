@@ -4,7 +4,7 @@ import { tbodyVarient } from "data";
 function Table({ data, dataList, headers }) {
   return (
     <div className="dataTable w-[100%] mt-2">
-      {(data.length > 0 && (
+      {(data.length >= 0 && (
         <motion.table
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

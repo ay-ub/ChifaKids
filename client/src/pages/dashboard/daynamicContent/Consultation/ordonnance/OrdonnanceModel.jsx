@@ -17,7 +17,7 @@ function OrdonnanceModel({ traitmentDetails, patientData }) {
             <div className="ordonnanceHeaderLeft">
               <p>Nom: {patientData.firstName}</p>
               <p>Prénom: {patientData.lastName}</p>
-              <p>Age: {calculateAge(patientData.dateOfBirth)}</p>
+              <p>Age: {calculateAge(new Date(), patientData.dateOfBirth)}</p>
               <p>Date:{new Date().toLocaleDateString()}</p>
             </div>
             <div className="ordonnanceHeaderRight">

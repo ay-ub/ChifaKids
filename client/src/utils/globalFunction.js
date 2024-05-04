@@ -37,5 +37,55 @@ const getAllMedicament = async (setMedicaments) => {
     Notify({ type: "error", message: "J’ai pas eu de médicaments." });
   }
 };
+const addCurveDataToDb = async (data, gender, type) => {
+  try {
+    const addCurveToDb = await fetch("http://localhost:3000/curve", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data, gender, type }),
+    });
 
-export { calculateAge, getAllMedicament };
+    const resData = await addCurveToDb.json();
+    if (resData.status === "success") {
+      Notify({ type: "success", message: "Data added successfully" });
+    }
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+const convertExcelToJson = async (excelData, gender, type) => {
+  if (excelData) {
+    const headers = [
+      { title: "SD3neg" },
+      { title: "SD2neg" },
+      { title: "SD0" },
+      { title: "SD2" },
+      { title: "SD3" },
+    ];
+    let data = [];
+    excelData[0].forEach((cell, indexRow) => {
+      if (headers.find((header) => header.title === cell)) {
+        let obj = {};
+        obj.id = cell;
+        obj.data = [];
+        for (let i = 0; i < excelData.length - 1; i++) {
+          obj.data.push({
+            x: i,
+            y: excelData[i + 1][indexRow],
+          });
+        }
+        data.push(obj);
+      }
+    });
+    console.log(data);
+    addCurveDataToDb(data, gender, type);
+    // addCurveDataToDb(excelData);
+    // if (patientHeight.data.length !== 0) {
+    //   data.push(patientHeight);
+    // }
+    // setData(data);
+  }
+};
+export { calculateAge, getAllMedicament, convertExcelToJson };

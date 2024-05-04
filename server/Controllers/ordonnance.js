@@ -6,7 +6,6 @@ const {
   patient,
   doctor,
 } = require("../Models/index");
-const db = require("../config/dbConfig.js");
 
 const createOrdonnance = async (req, res) => {
   const { doctorId, patientId } = req.body.consultationData;
@@ -120,33 +119,36 @@ const getAllOrdonnances = async (req, res) => {
         .status(400)
         .json({ status: "fail", message: "Patient id is required" });
     }
-    const prescriptions = await consultation.findAll({
-      where: { patientId: patientId },
-      attributes: [],
+    // const prescriptions = await consultation.findAll({
+    //   where: { patientId: patientId },
+    //   attributes: [],
+    //   include: [
+    //     {
+    //       model: ordonnance,
+    //       attributes: ["id", "date"],
+    //       order: [["date", "DESC"]],
+    //       include: [
+    //         {
+    //           model: medicament,
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // });
+    const prescriptions = await ordonnance.findAll({
+      attributes: ["id", "date"],
+      order: [["date", "DESC"]],
       include: [
         {
-          model: ordonnance,
-          attributes: ["id", "date"],
-          order: [["date", "DESC"]],
-          include: [
-            {
-              model: medicament,
-            },
-          ],
+          model: medicament,
+        },
+        {
+          model: consultation,
+          attributes: [],
+          where: { patientId: patientId },
         },
       ],
     });
-    //  const sql = `SELECT "consultation"."id", "ordonnances"."id" AS "ordonnances.id", "ordonnances"."date" AS "ordonnances.date", "ordonnances->medicaments"."id" AS "ordonnances.medicaments.id", "ordonnances->medicaments"."name" AS "ordonnances.medicaments.name", "ordonnances->medicaments"."type" AS "ordonnances.medicaments.type", "ordonnances->medicaments"."dosage" AS "ordonnances.medicaments.dosage", "ordonnances->medicaments->prescription"."id" AS "ordonnances.medicaments.prescription.id", "ordonnances->medicaments->prescription"."medicamentId" AS "ordonnances.medicaments.prescription.medicamentId", "ordonnances->medicaments->prescription"."ordonnanceId" AS "ordonnances.medicaments.prescription.ordonnanceId", "ordonnances->medicaments->prescription"."frequency" AS "ordonnances.medicaments.prescription.frequency", "ordonnances->medicaments->prescription"."duration" AS "ordonnances.medicaments.prescription.duration", "ordonnances->medicaments->prescription"."notes" AS "ordonnances.medicaments.prescription.notes", "ordonnances->medicaments->prescription"."eatingTime" AS "ordonnances.medicaments.prescription.eatingTime" FROM "consultations" AS "consultation" LEFT OUTER JOIN "ordonnances" AS "ordonnances" ON "consultation"."id" = "ordonnances"."consultationId" LEFT OUTER JOIN ( "prescriptions" AS "ordonnances->medicaments->prescription" INNER JOIN "medicaments" AS "ordonnances->medicaments" ON "ordonnances->medicaments"."id" = "ordonnances->medicaments->prescription"."medicamentId") ON "ordonnances"."id" = "ordonnances->medicaments->prescription"."ordonnanceId" WHERE "consultation"."patientId" = '1'`;
-
-    // const sql = `SELECT c.* , o.* from consultations c
-    // inner join ordonnances o on c.id = o.consultationsId
-    // where "patientId" = ${patientId}`;
-    // const prescriptions = await db.query(sql, {
-    //   type: db.QueryTypes.SELECT,
-    // });
-
-    // console.log(prescriptions);
-
     res.status(200).json({ status: "success", data: prescriptions });
   } catch (error) {
     console.log(error);

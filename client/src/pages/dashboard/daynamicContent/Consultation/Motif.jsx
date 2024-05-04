@@ -27,9 +27,7 @@ function Motif({ data }) {
                     key={index}
                     className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
                   >
-                    <span className="flex-1">
-                      {index + 1} - {item.motif}
-                    </span>
+                    <span className="flex-1">- {item.motif}</span>
                   </motion.li>
                 )
             )}

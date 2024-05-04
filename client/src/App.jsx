@@ -13,15 +13,18 @@ import {
   NewMedicament,
   EditMedicament,
   Settings,
+  Bilan,
 } from "./pages";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { RequireAuth, DoctorAuth, AdminAuth } from "./components";
+// import { ConsultationProvider } from "providers";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route element={<RequireAuth />}>
+        {/* <Route element={<ConsultationProvider />}> */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to={"patietns"} />} />
           <Route path="patietns" element={<AllPatients />} />
@@ -30,6 +33,7 @@ function App() {
           <Route path="waiting" element={<Waiting />} />
           <Route path="payments" element={<Payments />} />
           <Route element={<DoctorAuth />}>
+            <Route path="bilan" element={<Bilan />} />
             <Route path="consultation/:patientId" element={<Consultation />} />
             <Route path="medicament" element={<Medicament />} />
             <Route path="new-medicament" element={<NewMedicament />} />
@@ -41,6 +45,7 @@ function App() {
           </Route>
         </Route>
       </Route>
+      {/* </Route> */}
     </Routes>
   );
 }

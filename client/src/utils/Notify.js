@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const toastConfig = {
   position: "bottom-right",
@@ -9,7 +9,7 @@ const toastConfig = {
   draggable: true,
   progress: undefined,
 };
-// import { toast } from "sonner";
+import { toast } from "sonner";
 
 function Notify({ type, message }) {
   toastConfig.theme = localStorage.getItem("theme") || "light";

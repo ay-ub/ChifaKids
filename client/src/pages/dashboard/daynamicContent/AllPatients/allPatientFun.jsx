@@ -3,11 +3,15 @@ import {
   FaUserEdit,
   FaStethoscope,
   FaUserClock,
+  CiCalendarDate,
 } from "assets/icon";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Notify, handleWaitingRom, calculateAge } from "utils";
-import { Alert } from "components";
+import { Alert, PopUp, ToolTip } from "components";
+import RndvForm from "./RndvForm";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DisplayRndv from "./DisplayRndv";
 
 const getPatients = async (setPatients) => {
   const res = await fetch("http://localhost:3000/patients", { method: "GET" });
@@ -66,39 +70,84 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
           <td className="select-none">{patient.gender}</td>
           <td className="select-none">{patient.dateOfBirth}</td>
           <td className="select-none">
-            {calculateAge(patient.dateOfBirth)}Mois
+            {calculateAge(new Date(), patient.dateOfBirth)}Mois
           </td>
           <td className="select-none">{patient.parent}</td>
           <td className="select-none">{patient.numberPhone}</td>
           <td className="action flex justify-center items-center gap-4">
+            <PopUp
+              header={
+                <ToolTip
+                  trigger={
+                    <span className="select-none">
+                      <CiCalendarDate />
+                    </span>
+                  }
+                  msg="Rendez-vous"
+                />
+              }
+              body={
+                <Tabs defaultValue="Ajouter">
+                  <TabsList className="flex">
+                    <TabsTrigger value="Ajouter" className="flex-1">
+                      Ajouter Rendez-vous
+                    </TabsTrigger>
+                    <TabsTrigger value="password" className="flex-1">
+                      historique
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="Ajouter">
+                    <RndvForm patientId={patient.id} />
+                  </TabsContent>
+                  <TabsContent value="password">
+                    <DisplayRndv patientId={patient.id} />
+                  </TabsContent>
+                </Tabs>
+              }
+            />
             {user.typeUser === "ADMIN" || user.typeUser === "DOCTOR" ? (
-              <Link
-                to={`/dashboard/consultation/${patient.id}`}
-                className="select-none"
-              >
-                <FaStethoscope />
-              </Link>
+              <ToolTip
+                trigger={
+                  <Link
+                    to={`/dashboard/consultation/${patient.id}`}
+                    className="select-none"
+                  >
+                    <FaStethoscope className="mb-2" />
+                  </Link>
+                }
+                msg="Consulter ce patient"
+              />
             ) : (
-              <span
-                className="select-none"
-                onClick={() => {
-                  handleWaitingRom(
-                    patient.id,
-                    "enterWaitingRoom",
-                    setPatients,
-                    socket
-                  );
-                }}
-              >
-                <FaUserClock />
-              </span>
+              <ToolTip
+                trigger={
+                  <span
+                    className="select-none"
+                    onClick={() => {
+                      handleWaitingRom(
+                        patient.id,
+                        "enterWaitingRoom",
+                        setPatients,
+                        socket
+                      );
+                    }}
+                  >
+                    <FaUserClock />
+                  </span>
+                }
+                msg="ajouter dans la salle d'attente"
+              />
             )}
-            <Link
-              to={`/dashboard/edit-patient/${patient.id}`}
-              className="select-none"
-            >
-              <FaUserEdit />
-            </Link>
+            <ToolTip
+              trigger={
+                <Link
+                  to={`/dashboard/edit-patient/${patient.id}`}
+                  className="select-none"
+                >
+                  <FaUserEdit className="mb-2" />
+                </Link>
+              }
+              msg="Modifier ce patient"
+            />
             <Alert
               title="Voulez-vous vraiment supprimer ce patient ?"
               btnFun={() => {
@@ -107,9 +156,14 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
               description="Cette action ne peut pas être annulée. "
               confirmBtn="Oui, Supprimer"
             >
-              <span className="text-red-400 select-none">
-                <AiOutlineDelete />
-              </span>
+              <ToolTip
+                trigger={
+                  <span className="text-red-400 select-none ">
+                    <AiOutlineDelete className="text-2xl" />
+                  </span>
+                }
+                msg="Supprimer ce patient"
+              />
             </Alert>
           </td>
         </motion.tr>

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { InputError } from "components";
 
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -17,6 +18,7 @@ function MedicamentForm({ medicament, submitFun }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -114,9 +116,22 @@ function MedicamentForm({ medicament, submitFun }) {
           </Select>
         </div>
       </div>
-      <button type="submit" className="btn bg-[#8b63e9] mt-5">
-        {medicament.name ? "Modifier le médicament" : "Ajouter le médicament"}
-      </button>
+      <div className="flex gap-5">
+        <button
+          type="submit"
+          className="flex-1 bg-p mt-5 rounded-md text-white"
+        >
+          {medicament.name ? "Modifier le médicament" : "Ajouter le médicament"}
+        </button>
+        <Button
+          onClick={() => {
+            reset();
+          }}
+          className="flex-1 border bg-ph inline-block mt-5 p-2 rounded-md text-black"
+        >
+          RESET
+        </Button>
+      </div>
     </form>
   );
 }

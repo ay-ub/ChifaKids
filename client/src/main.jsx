@@ -4,12 +4,12 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider, ThemeProvider, ContextProvider } from "providers";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { handleTheme } from "utils";
 
 // import { Loader } from "components";
-// import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 handleTheme();
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -18,8 +18,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AuthProvider>
         <ContextProvider>
           <BrowserRouter>
-            <ToastContainer />
-            {/* <Toaster /> */}
+            {/* <ToastContainer /> */}
+            <Toaster />
             {/* <div className="fixed w-full h-full bg-red-500 z-50 flex items-center justify-center">
           <Loader />
         </div> */}

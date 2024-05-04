@@ -90,7 +90,7 @@ function Login() {
               </a>
             </div>
           </div>
-          <button type="submit" className="sign bg-p bg-ph">
+          <button type="submit" className="sign p-2 bg-p bg-ph rounded-md ">
             Se Connectez
           </button>
         </form>

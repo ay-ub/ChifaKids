@@ -5,6 +5,7 @@ import {
   FaBriefcaseMedical,
   FaUserClock,
   IoMdSettings,
+  FaMicroscope,
 } from "assets/icon/index";
 
 const SideLinkData = [
@@ -19,6 +20,12 @@ const SideLinkData = [
     path: "/dashboard/waiting",
     icon: FaUserClock,
     permission: ["ADMIN", "DOCTOR", "NURSE"],
+  },
+  {
+    name: "Bilan",
+    path: "/dashboard/bilan",
+    icon: FaMicroscope,
+    permission: ["ADMIN", "DOCTOR"],
   },
   {
     name: "Règlement",

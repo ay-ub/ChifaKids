@@ -1,4 +1,5 @@
 import themeContext from "./themeContext";
 import AuthContext from "./AuthContext";
 import globalContext from "./GlobalContext";
-export { themeContext, AuthContext, globalContext };
+import ConsultationContext from "./ConsultationContext";
+export { themeContext, AuthContext, globalContext, ConsultationContext };

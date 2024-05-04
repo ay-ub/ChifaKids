@@ -18,6 +18,9 @@ import {
   FaLaptop,
   FaDna,
   FaXRay,
+  FaMicroscope,
+  FaFemale,
+  FaMale,
 } from "react-icons/fa";
 
 import { TbUserSearch } from "react-icons/tb";
@@ -59,4 +62,7 @@ export {
   FaDna,
   FaXRay,
   CiCalendarDate,
+  FaMicroscope,
+  FaFemale,
+  FaMale,
 };

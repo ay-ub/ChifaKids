@@ -1,0 +1,14 @@
+const Bilans = [
+  ["FNS", "UREE", "CREAT", "GLYCEMIE A JEUN", "GROUPAGE SANGUIN +RH"],
+  ["VS CRP", "TSHus", " TP TK TCA INR", "SEROLOGIE: HIV HBS HCV", "PSAt"],
+  [
+    "PROTEINURIE DES 24H",
+    "ASAT, ALAT, GAMMA, GT, PAL, BT, BC",
+    "HDL, LDL, TG, CHOLESTEROL",
+    "FSH, LH, PROLACTINE",
+    "SPEEMOGRAMME + CULTURE",
+  ],
+  ["ECB DES URINES + ATBGRAMME", "HBA1C"],
+];
+
+export default Bilans;
