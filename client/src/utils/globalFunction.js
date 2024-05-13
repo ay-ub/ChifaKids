@@ -34,7 +34,7 @@ const getAllMedicament = async (setMedicaments) => {
       setMedicaments(data.data.medicament);
     }
   } catch (error) {
-    Notify({ type: "error", message: "J’ai pas eu de médicaments." });
+    console.log("Error: ", error);
   }
 };
 const addCurveDataToDb = async (data, gender, type) => {

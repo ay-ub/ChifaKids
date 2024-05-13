@@ -6,6 +6,7 @@ const {
   patient,
   doctor,
 } = require("../Models/index");
+const { Op } = require("sequelize");
 
 const createOrdonnance = async (req, res) => {
   const { doctorId, patientId } = req.body.consultationData;
@@ -113,31 +114,21 @@ const deleteOrdonnance = async (req, res) => {
 
 const getAllOrdonnances = async (req, res) => {
   const { patientId } = req.params;
+  const { from, to } = req.body;
   try {
     if (!patientId) {
       return res
         .status(400)
         .json({ status: "fail", message: "Patient id is required" });
     }
-    // const prescriptions = await consultation.findAll({
-    //   where: { patientId: patientId },
-    //   attributes: [],
-    //   include: [
-    //     {
-    //       model: ordonnance,
-    //       attributes: ["id", "date"],
-    //       order: [["date", "DESC"]],
-    //       include: [
-    //         {
-    //           model: medicament,
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // });
     const prescriptions = await ordonnance.findAll({
       attributes: ["id", "date"],
       order: [["date", "DESC"]],
+      where: {
+        date: {
+          [Op.between]: [from, to],
+        },
+      },
       include: [
         {
           model: medicament,
@@ -149,7 +140,9 @@ const getAllOrdonnances = async (req, res) => {
         },
       ],
     });
-    res.status(200).json({ status: "success", data: prescriptions });
+    res
+      .status(200)
+      .json({ status: "success", data: prescriptions, req: req.body });
   } catch (error) {
     console.log(error);
     res.status(500).json({ status: "error", message: error.message });

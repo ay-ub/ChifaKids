@@ -6,13 +6,20 @@ import { motion } from "framer-motion";
 import { CiCalendarDate, AiOutlineDelete } from "assets/icon";
 import { useEffect } from "react";
 
-function DisplayCmptRendi({ patientId }) {
+function DisplayCmptRendi({ patientId, selectedDate }) {
   const [selected, setSelected] = useState();
   const [cmptRendiData, setCmptRendiData] = useState([]);
   const getCmptRendi = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/compteRendu/patient/${patientId}`
+        `http://localhost:3000/compteRendu/patient/${patientId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(selectedDate),
+        }
       );
       const data = await res.json();
       console.log(data);
@@ -26,7 +33,7 @@ function DisplayCmptRendi({ patientId }) {
   };
   useEffect(() => {
     getCmptRendi();
-  }, []);
+  }, [selectedDate]);
 
   const deleteCmptRendi = async (id) => {
     try {

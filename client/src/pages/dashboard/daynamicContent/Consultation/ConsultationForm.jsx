@@ -10,6 +10,7 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
@@ -21,7 +22,30 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
         });
         return;
       }
-
+      if (
+        !data.motif &&
+        !data.height &&
+        !data.weight &&
+        !data.glycemie &&
+        !data.crp &&
+        !data.urea &&
+        !data.creatine &&
+        !data.fns &&
+        !data.biologyOther &&
+        !data.generalCondition &&
+        !data.urogenital &&
+        !data.genital &&
+        !data.abdominal &&
+        !data.ultrasound &&
+        !data.tdm &&
+        !data.irm
+      ) {
+        Notify({
+          type: "error",
+          message: "Veuillez remplir ou minimum les champs obligatoires.",
+        });
+        return;
+      }
       const res = await fetch("http://localhost:3000/consultations", {
         method: "POST",
         headers: {
@@ -39,6 +63,7 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
         setConsultationId(resData.data.id);
         Notify({ type: "success", message: "Consultation ajoutée." });
         setConsultationData((prev) => [...prev, resData.data]);
+        reset();
       } else {
         Notify({
           type: "error",
@@ -258,10 +283,10 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
         </div>
       </div>
       <div className="flex gap-4 my-5 w-[500px]">
-        <button type="submit" className="btn bg-[#8b63e9]">
+        <button type="submit" className="btn bg-p">
           Ajouter consultation
         </button>
-        <button type="reset" className="btn bg-[#8b63e9] ">
+        <button type="reset" className="btn bg-p ">
           Reset
         </button>
       </div>

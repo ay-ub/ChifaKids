@@ -48,7 +48,8 @@ li {
   list-style: none;
 }
 
-.lightBg {
+.lightBg,
+.lightBgHover:hover {
   background-color: var(--lightDarkBg);
 }
 
@@ -92,6 +93,10 @@ input.inValid {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
+}
+
+.textColor {
+  color: var(--fontColor);
 }
 
 @keyframes shake {
@@ -200,9 +205,15 @@ label {
   padding: 5px;
 }
 
-.dataTable table tr:nth-child(even) {
-  background-color: var(--lightDarkBg);
+table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+/* .dataTable table tr:nth-child(even) {
+  background-color: var(--lightDarkBg);
+} */
 .dataTable table tr td:first-child,
 .dataTable table tr th:first-child {
   border-radius: 7px 0 0 7px;
@@ -287,4 +298,15 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     brightness(95%) contrast(80%);
   cursor: pointer;
   margin-left: 6px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

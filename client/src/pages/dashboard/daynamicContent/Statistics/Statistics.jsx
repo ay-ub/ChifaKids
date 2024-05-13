@@ -1,9 +1,8 @@
-import { SectionTitle, CardModel } from "components";
+import { SectionTitle, CardModel, PieChart } from "components";
 import { FaFemale, FaStethoscope, FaMale, MdGroups } from "assets/icon";
 
 const iconStyle = "text-3xl text-muted-foreground";
-const divStyle =
-  "border rounded-md p-2 h-[410px] hover:border-primary-foreground transition duration-700 ease-in-out";
+const divStyle = "border rounded-md p-4 h-[410px]";
 import { useState, useEffect } from "react";
 function Statistics() {
   const [statisticsData, setStatisticsData] = useState([]);
@@ -27,7 +26,7 @@ function Statistics() {
     <div>
       <SectionTitle title="Statistiques" />
       <div className="flex flex-col mt-5">
-        <div className="flex gap-x-5 flex-wrap">
+        <div className="flex gap-5 flex-wrap">
           <CardModel
             title={"Consultation"}
             description={"nombre Total de consultation "}
@@ -47,15 +46,19 @@ function Statistics() {
             icon={<FaMale className={iconStyle} />}
           />
           <CardModel
-            title={"Moyenne"}
-            description={"moyenne de patient / jour"}
-            nbr={"+10"}
+            title={"Utilisateur de l'application"}
+            description={"nombre Total d'utilisateur"}
+            nbr={statisticsData.nbrUsers}
             icon={<MdGroups className={iconStyle} />}
           />
         </div>
         <div className="flex gap-5 items-start mt-5">
-          <div className={`left flex-1 ${divStyle}`}></div>
-          <div className={`right w-[380px] ${divStyle}`}></div>
+          <div className={`left flex-1 ${divStyle}`}>
+            <PieChart />
+          </div>
+          <div className={`right w-[380px] ${divStyle}`}>
+            <SectionTitle title="Plus actif" />
+          </div>
         </div>
       </div>
     </div>

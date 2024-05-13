@@ -166,7 +166,10 @@ function Consultation() {
                 />
               </TabsContent>
               <TabsContent value="Compte">
-                <DisplayCmptRendi patientId={patientId} />
+                <DisplayCmptRendi
+                  patientId={patientId}
+                  selectedDate={selectedDate}
+                />
               </TabsContent>
               <TabsContent value="Certificat">FROM 5</TabsContent>
               <TabsContent value="Courbes">
