@@ -19,7 +19,8 @@ import DateRangeComponent from "./DateRangeComponent.jsx";
 import ToolTip from "./ToolTip.jsx";
 import CheckBox from "./CheckBox.jsx";
 import CardModel from "./Card.jsx";
-
+import PieChart from "./PieChart.jsx";
+import Dialog from "./Dialog.jsx";
 export {
   SectionTitle,
   PatientForm,
@@ -42,4 +43,6 @@ export {
   ToolTip,
   CheckBox,
   CardModel,
+  PieChart,
+  Dialog,
 };

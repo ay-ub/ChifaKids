@@ -81,6 +81,7 @@ function Ordonnance({ consultationId, patientData }) {
           medicamentData: traitmentDetails,
         }),
       });
+      console.log(traitmentDetails);
       const data = await res.json();
       if (data.status === "success") {
         Notify({ type: "success", message: "ordonnance a été ajouté." });

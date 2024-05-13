@@ -6,6 +6,7 @@ import { calculateAge } from "utils";
 function Courbes({ patientData }) {
   const [height, setHeight] = useState([]);
   const [weight, setWeight] = useState([]);
+
   const { patientId } = useParams();
 
   const getPatientCurve = async (heightOrWeight) => {
@@ -16,24 +17,17 @@ function Courbes({ patientData }) {
       }
     );
     const resData = await getPatientHeightOrWeight.json();
-
     if (resData.status === "success") {
       let obj = {};
       obj.id = heightOrWeight === "height" ? "Taille" : "Poids";
       obj.data = [];
-      console.log("patientdata", patientData);
-      resData.data.forEach((cell) => {
-        let month = calculateAge(cell.date, patientData.dateOfBirth);
-        // console.log(cell.date);
-        // let month = calculateAge(new Date(), "2021-09-01");
-        console.log("month: ", month);
+      resData?.data.forEach((cell) => {
+        let month = calculateAge(cell?.date, patientData.dateOfBirth);
         obj.data.push({
           x: month,
-          y: heightOrWeight === "height" ? cell.height : cell.weight,
+          y: heightOrWeight === "height" ? cell?.height : cell?.weight,
         });
       });
-      console.log("heightOrWeight: ", heightOrWeight);
-      console.log("obj: ", obj);
       if (obj.data.length > 0) {
         return obj;
       }
@@ -57,27 +51,36 @@ function Courbes({ patientData }) {
         );
         const data = await getCurveRes.json();
         if (data.status === "success") {
-          const patientHeigh = await getPatientCurve("height");
-          const patientWeight = await getPatientCurve("weight");
-          const curveHeight = data.data?.heightCurves[0].data;
-          const curveWeight = data.data?.weightCurves[0].data;
-          if (patientHeigh) {
-            setHeight([...curveHeight, patientHeigh]);
+          if (data.data?.heightCurves.length > 0) {
+            const patientHeight = await getPatientCurve("height");
+            const height = data.data?.heightCurves[0].data;
+            if (patientHeight?.data.length > 0) {
+              setHeight([...height, patientHeight]);
+            } else {
+              setHeight([...height]);
+            }
           } else {
-            setHeight([...curveHeight]);
+            setHeight([]);
           }
-          if (patientWeight) {
-            setWeight([...curveWeight, patientWeight]);
+          if (data.data?.weightCurves.length > 0) {
+            const patientWeight = await getPatientCurve("weight");
+            const weight = data.data?.weightCurves[0].data;
+            if (patientWeight?.data.length > 0) {
+              setWeight([...weight, patientWeight]);
+            } else {
+              setWeight([...weight]);
+            }
           } else {
-            setWeight([...curveWeight]);
+            setWeight([]);
           }
         }
       } catch (error) {
         console.log("Error: ", error);
       }
     };
-
-    getCurveData();
+    if (height.length === 0 && weight.length === 0) {
+      getCurveData();
+    }
   }, []);
 
   return (
@@ -87,7 +90,7 @@ function Courbes({ patientData }) {
           <Chart data={height} xTitle="Mois" yTitle="Taille" />
         </div>
         <div className="right h-[450px] bg-transparent w-1/2">
-          <Chart data={weight} xTitle="Mois" yTitle="poids" />
+          <Chart data={weight} xTitle="Mois" yTitle="Poids" />
         </div>
       </div>
     </>

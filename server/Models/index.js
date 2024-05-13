@@ -13,6 +13,7 @@ const curveModel = require("./Curve.js");
 const patientAntecedentModel = require("./PatientAntecedent.js");
 const compteRenduModel = require("./CompteRendu.js");
 const appointmentModel = require("./Appointment.js");
+const serviceModel = require("./Service.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -27,6 +28,7 @@ const curve = curveModel(db, DataTypes);
 const patientAntecedent = patientAntecedentModel(db, DataTypes);
 const compteRendu = compteRenduModel(db, DataTypes);
 const appointment = appointmentModel(db, DataTypes);
+const service = serviceModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
@@ -110,5 +112,6 @@ module.exports = {
   patientAntecedent,
   compteRendu,
   appointment,
+  service,
 };
 //========================  export models END     ========================

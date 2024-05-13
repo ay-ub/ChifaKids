@@ -9,6 +9,6 @@ const {
 
 router.route("/:ordonnanceId").get(getOrdonnanceById).delete(deleteOrdonnance);
 router.route("/").post(createOrdonnance);
-router.route("/patient/:patientId").get(getAllOrdonnances);
+router.route("/patient/:patientId").post(getAllOrdonnances);
 
 module.exports = router;

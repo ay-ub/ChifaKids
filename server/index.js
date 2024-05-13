@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 const {
-  loginRoute,
-  registerRoute,
+  authRoute,
+  userRoute,
   patientRoute,
   medicamentRoute,
   consultationRoute,
@@ -13,6 +14,7 @@ const {
   compteRenduRoute,
   appointmentRoute,
   statistiqueRoute,
+  serviceRoute,
 } = require("./routes/index.js");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
@@ -24,18 +26,17 @@ const io = new Server(server, {
     origin: "*",
   },
 });
-
 app.set("socketio", io);
-
 app.use(express.json());
+app.use(cookieParser());
 
 const db = require("./config/dbConfig.js");
 db.authenticate()
   .then(() => console.log("db connected"))
   .catch((err) => console.log(err));
 
-app.use("/login", loginRoute);
-app.use("/regester", registerRoute);
+app.use("/auth", authRoute);
+app.use("/user", userRoute);
 app.use("/patients", patientRoute);
 app.use("/medicaments", medicamentRoute);
 app.use("/consultations", consultationRoute);
@@ -45,6 +46,7 @@ app.use("/curve", curveRoute);
 app.use("/compteRendu", compteRenduRoute);
 app.use("/appointment", appointmentRoute);
 app.use("/statistics", statistiqueRoute);
+app.use("/service", serviceRoute);
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
@@ -158,7 +160,6 @@ const { appointment } = require("./Models");
 //     console.error("Error sending notifications:", error);
 //   }
 // });
-
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`listen at port num ${port}`);

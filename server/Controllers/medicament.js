@@ -2,16 +2,17 @@ const { medicament } = require("../Models/index.js");
 
 const addMedicament = async (req, res) => {
   try {
-    // if (!req.body.name || !req.body.type || !req.body.dosage) {
-    //   return res.status(400).json({
-    //     status: "fail",
-    //     message: "name, type, and dosage are required",
-    //   });
-    // }
-    // const newMedicament = await medicament.create(req.body);
+    if (!req.body.name || !req.body.type || !req.body.dosage) {
+      return res.status(400).json({
+        status: "fail",
+        message: "name, type, and dosage are required",
+      });
+    }
     const deleteMedicament = await medicament.destroy({
       where: {},
     });
+    // const newMedicament = await medicament.create(req.body);
+
     const medications = [
       {
         name: "Metformin",

@@ -71,11 +71,7 @@ const convertExcelToJson = (excelData, setData, patientHeight) => {
         data.push(obj);
       }
     });
-    console.log(data);
-    // addCurveDataToDb(excelData);
-    // if (patientHeight.data.length !== 0) {
-    //   data.push(patientHeight);
-    // }
+
     setData(data);
   }
 };
@@ -83,7 +79,14 @@ const convertExcelToJson = (excelData, setData, patientHeight) => {
 const getOrdonnanceByPatientId = async (patientId, setData, selectedDate) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/ordonnance/patient/${patientId}`
+      `http://localhost:3000/ordonnance/patient/${patientId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selectedDate),
+      }
     );
     const newResponse = await response.json();
     if (newResponse.status === "success") {

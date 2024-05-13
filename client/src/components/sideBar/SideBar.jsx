@@ -5,30 +5,25 @@ import { NavLink } from "react-router-dom";
 import { handleLogOut } from "./sideFun";
 import { useAuth } from "hooks";
 import { Alert } from "components";
-// import { useEffect } from "react";
+import Logo from "assets/images/logo.svg";
 
 function SideBar() {
   const auth = useAuth();
   const [isHidden, setIsHidden] = useState(null);
   const handleSide = () => {
     setIsHidden(!isHidden);
-    // localStorage.setItem("sideBar", isHidden ? "isHidden" : "isVisible");
   };
 
-  // useEffect(() => {
-  //   const sideBar = localStorage.getItem("sideBar");
-  //   if (sideBar === "isHidden") {
-  //     setIsHidden(true);
-  //   } else {
-  //     setIsHidden(false);
-  //   }
-  // }, []);
   return (
     <div className={`sideBar bg-darkBg ${isHidden ? "hideSideBar" : ""}`}>
       <span className="controlSideBar" onClick={handleSide}>
         <IoIosArrowDropleftCircle />
       </span>
-      <div className="top"></div>
+      <div className="top flex items-center justify-center">
+        <div className="max-w-20 aspect-square">
+          <img src={Logo} alt="Logo" className="w-full" />
+        </div>
+      </div>
       <div className="links flex">
         {SideLinkData.map((link, index) => {
           return (

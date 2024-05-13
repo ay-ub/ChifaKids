@@ -3,7 +3,6 @@ import { useTheme } from "hooks";
 
 export default function Chart({ data, xTitle, yTitle }) {
   const { theme } = useTheme();
-  console.log("data: ", data);
   return (
     <div className="h-[400px] w-full ">
       <ResponsiveLine

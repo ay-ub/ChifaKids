@@ -13,20 +13,20 @@ import { Toaster } from "@/components/ui/sonner";
 
 handleTheme();
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <AuthProvider>
-        <ContextProvider>
-          <BrowserRouter>
-            {/* <ToastContainer /> */}
-            <Toaster />
-            {/* <div className="fixed w-full h-full bg-red-500 z-50 flex items-center justify-center">
+  // <React.StrictMode>
+  <ThemeProvider>
+    <AuthProvider>
+      <ContextProvider>
+        <BrowserRouter>
+          {/* <ToastContainer /> */}
+          <Toaster />
+          {/* <div className="fixed w-full h-full bg-red-500 z-50 flex items-center justify-center">
           <Loader />
         </div> */}
-            <App />
-          </BrowserRouter>
-        </ContextProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+          <App />
+        </BrowserRouter>
+      </ContextProvider>
+    </AuthProvider>
+  </ThemeProvider>
+  // </React.StrictMode>
 );

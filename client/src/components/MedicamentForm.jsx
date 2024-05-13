@@ -127,7 +127,7 @@ function MedicamentForm({ medicament, submitFun }) {
           onClick={() => {
             reset();
           }}
-          className="flex-1 border bg-ph inline-block mt-5 p-2 rounded-md text-black"
+          className="flex-1 border bg-ph inline-block mt-5 p-2 rounded-md textColor"
         >
           RESET
         </Button>

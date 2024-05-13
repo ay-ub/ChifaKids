@@ -2,7 +2,6 @@ import { SectionTitle, SubTitle } from "components";
 import { useForm } from "react-hook-form";
 import { FaBriefcaseMedical, FaSackDollar } from "assets/icon";
 import { useEffect, useState } from "react";
-import SelectOp from "./SelectOp";
 import PaymentForm from "./PeymentForm";
 import OperationList from "./OperationList";
 
@@ -34,15 +33,9 @@ function Payments() {
         <div className="acts flex-1 bg-lightDark rounded-md h-[550px]">
           <div className="displayActs">
             <SubTitle title={"Actes Medicaux"} icon={<FaBriefcaseMedical />} />
-            <SelectOp
-              setTotalPrice={setTotalPrice}
-              totalPrice={totalPrice}
-              setOperationList={setOperationList}
-              operationList={operationList}
-            />
             <OperationList
-              operationList={operationList}
               totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
             />
           </div>
         </div>

@@ -30,7 +30,9 @@ const mapPatients = (patients, search, setPatients, user) => {
           <td className="select-none">{patient.lastName}</td>
           <td className="select-none">{patient.gender}</td>
           <td className="select-none">{patient.dateOfBirth}</td>
-          <td className="select-none">{calculateAge(patient.dateOfBirth)}</td>
+          <td className="select-none">
+            {calculateAge(new Date(), patient.dateOfBirth)} Mois
+          </td>
           <td className="select-none">{patient.parent}</td>
           <td className="select-none">{patient.numberPhone}</td>
           <td className="action flex justify-center items-center gap-4">

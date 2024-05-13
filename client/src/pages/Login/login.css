@@ -4,7 +4,6 @@
   background-color: var(--darkBg);
   padding: 2rem;
   color: var(--fontColor);
-  min-height: 470px;
 }
 
 .title {

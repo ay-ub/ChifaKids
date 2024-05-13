@@ -9,6 +9,6 @@ const {
 } = require("../Controllers/compteRendu");
 
 router.post("/", createCompteRendu);
-router.get("/patient/:id", getAllCompteRenduOfPatient);
+router.post("/patient/:id", getAllCompteRenduOfPatient);
 router.route("/:cmptRndId").put(updateCompteRendu).delete(deleteCompteRendu);
 module.exports = router;

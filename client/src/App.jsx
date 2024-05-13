@@ -18,14 +18,16 @@ import {
 import { Route, Routes, Navigate } from "react-router-dom";
 import { RequireAuth, DoctorAuth, AdminAuth } from "./components";
 // import { ConsultationProvider } from "providers";
-
+import { useAuth } from "hooks";
 function App() {
+  const auth = useAuth();
+  console.log(auth.user);
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route element={<RequireAuth />}>
         {/* <Route element={<ConsultationProvider />}> */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to={"patietns"} />} />
           <Route path="patietns" element={<AllPatients />} />
           <Route path="new-patient" element={<NewPatient />} />

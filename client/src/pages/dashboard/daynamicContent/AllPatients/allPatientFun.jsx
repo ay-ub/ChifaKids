@@ -105,6 +105,7 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
                 </Tabs>
               }
             />
+
             {user.typeUser === "ADMIN" || user.typeUser === "DOCTOR" ? (
               <ToolTip
                 trigger={

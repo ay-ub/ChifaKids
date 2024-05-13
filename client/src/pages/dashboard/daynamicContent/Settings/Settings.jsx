@@ -1,102 +1,247 @@
-import { SectionTitle, Alert, ToolTip, Table } from "components";
+import { SectionTitle, Alert, ToolTip, Dialog, Table } from "components";
 import { Input } from "@/components/ui/input";
 import { Notify } from "utils";
-import { readFile } from "utils";
+
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CardModel } from "components";
 
+import { AiOutlineDelete } from "assets/icon";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  getAllUsers,
+  getService,
+  mapUsers,
+  handleCreateUser,
+  handleUpdate,
+} from "./SettingsFun";
+import { useAuth } from "hooks";
+import { motion } from "framer-motion";
+import CreateUserForm from "./CreateUserForm";
 function Settings() {
   const [selectedFile, setSelectedFile] = useState();
   const [gender, setGender] = useState("MALE");
   const [type, setType] = useState("HEIGHT");
-  const handleUpdate = async () => {
-    if (!selectedFile) {
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    typeUser: "NURSE",
+  });
+  const [search, setSearch] = useState("");
+  const [services, setServices] = useState([]);
+  useEffect(() => {
+    getService(setServices);
+    getAllUsers(setUsers);
+  }, []);
+
+  const [service, setService] = useState({
+    name: "",
+    price: "",
+  });
+
+  const createService = async (event) => {
+    event.preventDefault();
+    if (!service.name || !service.price) {
+      return Notify({
+        type: "error",
+        message: "Veuillez remplir tous les champs",
+      });
+    }
+    const response = await fetch("http://localhost:3000/service/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: service.name,
+        price: service.price,
+      }),
+    });
+    const data = await response.json();
+    if (data.status == "success") {
+      Notify({
+        type: "success",
+        message: "Service ajouté avec succès",
+      });
+      setServices((prev) => [...prev, data.data]);
+    } else {
       Notify({
         type: "error",
-        message: "Sil vous plaît, sélectionnez un fichier",
+        message: data.message,
       });
-      return;
     }
-    readFile(selectedFile, gender, type);
+    setService({ name: "", price: "" });
+  };
+  const deleteService = async (id) => {
+    const response = await fetch(`http://localhost:3000/service/${id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    if (data.status == "success") {
+      Notify({
+        type: "success",
+        message: "Service supprimé avec succès",
+      });
+      setServices((prev) => prev.filter((service) => service.id !== id));
+    }
   };
 
-  const tableHeader = ["N°", "Nom", "Prénom", "Email", "Rôle", "Actions"];
-  const medicamentList = [];
-  const medicaments = [
-    {
-      id: 1,
-      nom: "Hadj Youcef",
-      prenom: "Ayoub",
-      email: "ayoubhadjyoucef@gmail.com",
-      Role: "ADMIN",
-    },
-  ];
+  const auth = useAuth();
+
+  const usersList = mapUsers(users, search, auth, setUsers);
   return (
     <div>
-      <SectionTitle title="Settings" />
+      <SectionTitle title="paramètres" />
       <div className="flex gap-5 mt-5 items-start  h-[570px]">
         <div className=" flex-1 flex flex-col gap-5 ">
-          <div className="flex gap-5 ">
-            <CardModel
-              title={"Consultation"}
-              description={"nombre Total de consultation "}
-              nbr={"10"}
-              // icon={"<FaStethoscope className={iconStyle} />"}
-            />
-            <CardModel
-              title={"Consultation"}
-              description={"nombre Total de consultation "}
-              nbr={"10"}
-              // icon={"<FaStethoscope className={iconStyle} />"}
-            />
-            <CardModel
-              title={"Consultation"}
-              description={"nombre Total de consultation "}
-              nbr={"10"}
-              // icon={"<FaStethoscope className={iconStyle} />"}
-            />
-          </div>
-          <div className="border h-[420px] rounded-md px-4 py-2 ">
-            <SectionTitle title="Utilisateurs" />
-            <ul>
-              <li className="flex gap-5 items-center py-2">
-                <span className="text-center">N°</span>
-                <span className="flex-1 text-center">Nom</span>
-                <span className="flex-1 text-center">Prénom</span>
-                <span className="flex-1 text-center">Email</span>
-                <span className="flex-1 text-center">rôle</span>
-                <span className="flex-1 text-center">Actions</span>
-              </li>
-              <div>
-                {medicaments.map((medicament, index) => {
-                  return (
-                    <li className="flex gap-5 items-center py-2" key={index}>
-                      <span className="text-center">{medicament.id}</span>
-                      <span className="flex-1 text-center">
-                        {medicament.nom}
-                      </span>
-                      <span className="flex-1 text-center">
-                        {medicament.prenom}
-                      </span>
-                      <span className="flex-1 text-center">
-                        {medicament.email}
-                      </span>
-                      <span className="flex-1 text-center">
-                        {medicament.Role}
-                      </span>
-                      <span className="flex-1 text-center">Actions</span>
-                    </li>
-                  );
-                })}
+          <div className="border h-[570px] relative rounded-md px-4 py-2 ">
+            <div className="flex justify-between items-center">
+              <SectionTitle title="Utilisateurs" />
+              <div className="flex gap-3 items-center">
+                {users.length > 1 && (
+                  <Input
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                    id="Name"
+                    className="p-4"
+                    placeholder="Rechercher un utilisateur"
+                  />
+                )}
+                <Dialog
+                  btn={<Button variant="outline">Nouveau</Button>}
+                  header={
+                    <motion.p
+                      initial={{ opacity: 0, x: 10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={({ duration: 0.3 }, { delay: 0.1 })}
+                      className="text-center text-2xl font-bold mb-4"
+                    >
+                      Ajouter un utilisateur
+                    </motion.p>
+                  }
+                  body={<CreateUserForm user={user} setUser={setUser} />}
+                  btnFun={() => handleCreateUser(user, setUser, setUsers, auth)}
+                  btnCancel={() => {
+                    setUser({
+                      firstName: "",
+                      lastName: "",
+                      email: "",
+                      password: "",
+                      typeUser: "NURSE",
+                    });
+                  }}
+                />
               </div>
-            </ul>
+            </div>
+            <Table
+              data={users}
+              dataList={usersList}
+              headers={["N°", "Prénom", "Nom", "Email", "Rôle", "Actions"]}
+            />
           </div>
         </div>
-        <div className="border w-[380px] h-[570px] rounded-md p-4 flex flex-col gap-5 ">
-          <div className="h-1/2 border rounded-sm overflow-hidden hover:border-primary-foreground transition duration-700 ease-in-out"></div>
+        <div className="border w-[380px] h-[570px] rounded-md p-4 flex flex-col justify-between gap-3 ">
+          <div className="flex-1 border rounded-sm overflow-hidden  p-4 flex flex-col gap-4">
+            <div className="flex justify-between gap-3 items-center">
+              <SectionTitle title="Actes " />
+
+              <Dialog
+                btn={<Button variant="outline">Nouveau</Button>}
+                header={
+                  <motion.p
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={({ duration: 0.3 }, { delay: 0.1 })}
+                    className="text-center text-2xl font-bold mb-4"
+                  >
+                    Actes Medicaux
+                  </motion.p>
+                }
+                body={
+                  <div className="grid gap-4">
+                    <form className="grid gap-4">
+                      <div className="flex flex-col gap-3">
+                        <Label htmlFor="Name" className="textColor">
+                          Nom :
+                        </Label>
+                        <Input
+                          id="Name"
+                          value={service.name}
+                          className="col-span-2 h-8"
+                          placeholder="Nom du Acte"
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setService({ ...service, name: e.target.value });
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-3">
+                        <Label htmlFor="price" className="textColor">
+                          Prix :
+                        </Label>
+                        <Input
+                          type="number"
+                          value={service.price}
+                          onChange={(e) => {
+                            setService({ ...service, price: e.target.value });
+                          }}
+                          id="price"
+                          min="0"
+                          className="col-span-2 h-8"
+                          placeholder="Prix du Acte"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                }
+                btnFun={createService}
+                btnCancel={() => {
+                  setService({ name: "", price: "" });
+                }}
+              />
+            </div>
+            <ul className="flex-1 ">
+              <ScrollArea className="h-[135px]  rounded-md border p-2">
+                {services.map((service, index) => {
+                  return (
+                    <motion.li
+                      initial={{ opacity: 0, x: 10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={({ duration: 0.3 }, { delay: 0.1 * index })}
+                      key={index}
+                      className="flex gap-5 items-center py-2"
+                    >
+                      <span className="text-center">{index + 1}</span>
+                      <span className="flex-1 text-center text-ellipsis text-nowrap">
+                        {service.name}
+                      </span>
+                      <span className=" text-center">{service.price}DA</span>
+                      <span className="text-center">
+                        <Alert
+                          title="Vous êtes sûr de vouloir supprimer ce service !"
+                          btnFun={() => {
+                            deleteService(service.id);
+                          }}
+                          description="Une fois supprimé, vous ne pourrez pas récupérer ce service ."
+                          confirmBtn="Oui, supprimer !"
+                          cancelBtn="Annuler"
+                        >
+                          <span className="text-red-400 text-xl">
+                            <AiOutlineDelete />
+                          </span>
+                        </Alert>
+                      </span>
+                    </motion.li>
+                  );
+                })}
+              </ScrollArea>
+            </ul>
+          </div>
           <div className="flex flex-col gap-5">
             <SectionTitle title="Courbes" />
             <Label htmlFor="file" className=" text-nowrap">
@@ -109,9 +254,8 @@ function Settings() {
                 setSelectedFile(e);
               }}
             />
-            <div className="flex flex-col justify-center items-start gap-5 mt-5">
+            <div className="flex flex-col justify-center items-start gap-5 mt-3">
               <div className="flex gap-5 items-center ">
-                {" "}
                 <Label className="text-nowrap">Sexe :</Label>
                 <RadioGroup
                   className="flex gap-5"
@@ -150,18 +294,21 @@ function Settings() {
                 </RadioGroup>
               </div>
             </div>
-            <div className="flex gap-5 justify-center items-center mt-5">
+            <div className="flex gap-5 justify-center items-center mt-3">
               <Alert
                 title="Êtes-vous sûr de vouloir mettre à jour la courbe ?"
                 btnFun={() => {
-                  handleUpdate();
+                  handleUpdate(selectedFile, gender, type);
                 }}
                 description="Cette action ne peut pas être annulée. "
                 confirmBtn="Oui, mettre à jour"
               >
                 <ToolTip
                   trigger={
-                    <Button variant="primary" className="border bg-primary">
+                    <Button
+                      variant="primary"
+                      className="border bg-primary text-white"
+                    >
                       Mise à jour
                     </Button>
                   }

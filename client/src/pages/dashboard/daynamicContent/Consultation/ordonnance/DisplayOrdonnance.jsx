@@ -9,7 +9,7 @@ function DisplayOrdonnance({ patientId, selectedDate }) {
 
   useEffect(() => {
     getOrdonnanceByPatientId(patientId, setData, selectedDate);
-  }, []);
+  }, [selectedDate]);
   return (
     <div className="DisplayOrdonnance flex gap-5 items-start">
       <div className="bg-lightDark min-w-80  rounded-md h-[440px] ">

@@ -25,6 +25,16 @@ const createConsultation = async (req, res) => {
       });
     }
     const newConsultation = await consultation.create(req.body);
+    await patient.update(
+      {
+        isWaiting: false,
+      },
+      {
+        where: {
+          id: patientId,
+        },
+      }
+    );
     return res.status(201).json({
       status: "success",
       data: newConsultation,

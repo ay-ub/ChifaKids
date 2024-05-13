@@ -1,5 +1,6 @@
 // const { compteRendu, consultation } = require("../Models");
 const { consultation, compteRendu, doctor, patient } = require("../Models");
+const { Op } = require("sequelize");
 
 const createCompteRendu = async (req, res) => {
   try {
@@ -31,13 +32,19 @@ const createCompteRendu = async (req, res) => {
 
 const getAllCompteRenduOfPatient = async (req, res) => {
   try {
+    const { from, to } = req.body;
     if (!req.params.id) {
       return res
         .status(400)
         .json({ status: "fail", message: "id is required" });
     }
     const cmptData = await consultation.findAll({
-      where: { patientId: req.params.id },
+      where: {
+        patientId: req.params.id,
+        date: {
+          [Op.between]: [from, to],
+        },
+      },
       attributes: [],
       order: [["date", "DESC"]],
       include: [

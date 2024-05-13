@@ -2,14 +2,14 @@ import { InputError } from "components";
 function PeymentForm({
   totalPrice,
   RestPrice,
-  // setVersementPrice,
+  setVersementPrice,
   register,
   errors,
 }) {
   return (
-    <div className="py-4 px-8 ">
+    <div className="py-4  ">
       <form className="flex flex-col  gap-y-1 ">
-        <div className="input-group flex-1  mb-5">
+        <div className="input-group flex-1 mb-5 px-8">
           <label htmlFor="previousdebts" className="text-nowrap">
             Dettes antérieures :
           </label>
@@ -30,7 +30,7 @@ function PeymentForm({
             className={`${errors.previousDebts ? "inValid" : null}`}
           />
         </div>
-        <div className="input-group flex-1  ">
+        <div className="input-group flex-1 px-8">
           <label htmlFor="amounttobepaid" className="text-nowrap">
             Montant à payer:
           </label>
@@ -54,32 +54,20 @@ function PeymentForm({
           />
           {<InputError error={errors.amountToBePaid} />}
         </div>
-        <div className="input-group flex-1  ">
+        <div className="input-group flex-1 px-8">
           <label htmlFor="payment" className="text-nowrap">
             Versement:
           </label>
           <input
-            type="text"
+            type="number"
             id="payment"
             placeholder="0000 DA"
-            // onChange={(e) => setVersementPrice(e.target.value)}
-            {...register("payment", {
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "valeur incorrecte",
-              },
-              required: {
-                value: true,
-                message: "Règlement est nécessaire",
-              },
-              // onChange: (e) => setVersementPrice(e.target.value),
-            })}
+            onChange={(e) => setVersementPrice(e.target.value)}
             autoComplete="off"
-            className={`${errors.payment ? "inValid" : null}`}
+            min="0"
           />
-          {<InputError error={errors.payment} />}
         </div>
-        <div className="input-group flex-1  ">
+        <div className="input-group flex-1 px-8">
           <label htmlFor="leftToPay" className="text-nowrap">
             Rest à payer:
           </label>
@@ -102,7 +90,7 @@ function PeymentForm({
           />
           {<InputError error={errors.leftToPay} />}
         </div>
-        <div className=" flex gap-x-2">
+        <div className=" flex gap-x-2 mt-14">
           <button
             type="submit"
             className="bg-primary w-full py-2 rounded-md text-white "
