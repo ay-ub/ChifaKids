@@ -16,14 +16,19 @@ const {
   statistiqueRoute,
   serviceRoute,
 } = require("./routes/index.js");
-const { createServer } = require("node:http");
+const { createServer } = require("http");
 const { Server } = require("socket.io");
 const app = express();
 const server = createServer(app);
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:5173"],
   },
 });
 app.set("socketio", io);
