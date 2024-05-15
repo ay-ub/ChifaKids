@@ -17,13 +17,20 @@ function Payments() {
     // handleSubmit,
     formState: { errors },
   } = useForm({
-    // defaultValues: {
-    //
-    // },
+    defaultValues: {
+      amountToBePaid: totalPrice,
+      previousDebts: 0,
+      leftToPay: RestPrice,
+      versement: VersementPrice,
+    },
   });
 
   useEffect(() => {
-    setRestPrice(() => totalPrice - VersementPrice);
+    if (totalPrice > 0) {
+      setRestPrice(() => totalPrice - VersementPrice);
+    } else {
+      setRestPrice(0);
+    }
   }, [VersementPrice, totalPrice]);
 
   return (
@@ -32,7 +39,7 @@ function Payments() {
       <div className="paymentsContent mt-4 p-4 flex items-center gap-7 flex-wrap">
         <div className="acts flex-1 bg-lightDark rounded-md h-[550px]">
           <div className="displayActs">
-            <SubTitle title={"Actes Medicaux"} icon={<FaBriefcaseMedical />} />
+            <SubTitle title={"Actes Médicaux"} icon={<FaBriefcaseMedical />} />
             <OperationList
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
@@ -40,7 +47,7 @@ function Payments() {
           </div>
         </div>
         <div className="calcul flex-1 bg-lightDark  rounded-md h-[550px]">
-          <SubTitle title={"Payments"} icon={<FaSackDollar />} />
+          <SubTitle title={"Règlement"} icon={<FaSackDollar />} />
 
           <PaymentForm
             totalPrice={totalPrice}

@@ -1,7 +1,7 @@
 import TextEditor from "./TextEditor";
 
 import { Btn, CheckBox } from "components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Notify } from "utils";
 import { useAuth } from "hooks";
 import LeftList from "./LeftList";
@@ -10,7 +10,21 @@ function CmptRnd({ consultationId, patientId }) {
   const [value, setValue] = useState();
   const [checked, setChecked] = useState(false); // [1
   const auth = useAuth();
+  const [title, setTitle] = useState("");
+  const [savedCmptRnd, setSavedCmptRnd] = useState([]);
 
+  const getSavedCmptRnd = async () => {
+    const res = await fetch("http://localhost:3000/compteRendu", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.status === "success") {
+      setSavedCmptRnd(data.data);
+    }
+  };
   const onSbmit = () => {
     if (!value) {
       Notify({ type: "error", message: "Veuillez remplir le champ" });
@@ -26,7 +40,8 @@ function CmptRnd({ consultationId, patientId }) {
             commentaire: value,
             patientId,
             doctorId: auth.user.id,
-            saveAsModel: checked,
+            isSaved: checked,
+            title: title,
           }),
         });
         const data = await res.json();
@@ -35,6 +50,9 @@ function CmptRnd({ consultationId, patientId }) {
             type: "success",
             message: "Compte rendu ajouté avec succès",
           });
+          if (checked) {
+            getSavedCmptRnd();
+          }
         } else {
           Notify({
             type: "error",
@@ -46,10 +64,13 @@ function CmptRnd({ consultationId, patientId }) {
     }
   };
 
+  useEffect(() => {
+    getSavedCmptRnd();
+  }, []);
   return (
     <>
       <div className="flex gap-5 px-5 ">
-        <LeftList />
+        <LeftList setValue={setValue} savedCmptRnd={savedCmptRnd} />
         <div className="bg-white   text-black">
           <TextEditor value={value} setValue={setValue} />
         </div>
@@ -57,11 +78,18 @@ function CmptRnd({ consultationId, patientId }) {
       <div className="flex justify-end mt-4 mr-10 gap-5">
         <CheckBox
           label={"Enregistrez ce modèle"}
-          description={
-            "Sélectionnez pour enregistrer le modèle de compte rendu"
-          }
+          description={"Enregistrer ce modèle pour une utilisation ultérieure"}
           setChecked={setChecked}
         />
+        {checked && (
+          <input
+            type="text"
+            placeholder="Nom du modèle"
+            className="border border-gray-300 rounded-md p-2"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        )}
         <Btn
           text="Enregistrer "
           btnFun={() => {

@@ -18,70 +18,70 @@ module.exports = (db, type) => {
     // =================================================end interrogatoire Attr=================================================
     // =================================================start exmn clinique general Attr=================================================
     height: {
-      type: type.STRING,
+      type: type.FLOAT,
       allowNull: true,
     },
     weight: {
-      type: type.STRING,
+      type: type.FLOAT,
       allowNull: true,
     },
     generalCondition: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     // =================================================end exmn clinique general Attr=================================================
     // =================================================start exmn clinique par appareil Attr=================================================
     urogenital: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     genital: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     abdominal: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     // =================================================end exmn  clinique par appareil Attr=================================================
     // =================================================start biologie Attr=================================================
     glycemie: {
-      type: type.STRING,
+      type: type.FLOAT,
       allowNull: true,
     },
     urea: {
       // urée
-      type: type.STRING,
+      type: type.FLOAT,
       allowNull: true,
     },
     creatine: {
-      type: type.STRING,
+      type: type.FLOAT,
       allowNull: true,
     },
     fns: {
-      type: type.TEXT,
-      allowNull: true,
-    },
-    crp: {
       type: type.STRING,
       allowNull: true,
     },
+    crp: {
+      type: type.FLOAT,
+      allowNull: true,
+    },
     biologyOther: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     // =================================================end biologie Attr=================================================
     // =================================================start radiologie Attr=================================================
     ultrasound: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     tdm: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     irm: {
-      type: type.TEXT,
+      type: type.STRING,
       allowNull: true,
     },
     // ================================================= end radiologie attr =================================================

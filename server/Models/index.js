@@ -14,6 +14,8 @@ const patientAntecedentModel = require("./PatientAntecedent.js");
 const compteRenduModel = require("./CompteRendu.js");
 const appointmentModel = require("./Appointment.js");
 const serviceModel = require("./Service.js");
+const savedOrdonnanceModel = require("./SavedPrescription.js");
+const savedCmptRndModel = require("./SavedCmptRnd.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -29,6 +31,8 @@ const patientAntecedent = patientAntecedentModel(db, DataTypes);
 const compteRendu = compteRenduModel(db, DataTypes);
 const appointment = appointmentModel(db, DataTypes);
 const service = serviceModel(db, DataTypes);
+const savedOrdonnance = savedOrdonnanceModel(db, DataTypes);
+const savedCmptRnd = savedCmptRndModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
@@ -95,6 +99,11 @@ antecedent.belongsToMany(patient, {
 patient.hasMany(appointment);
 appointment.belongsTo(patient);
 
+ordonnance.hasMany(savedOrdonnance);
+savedOrdonnance.belongsTo(ordonnance);
+
+compteRendu.hasMany(savedCmptRnd);
+savedCmptRnd.belongsTo(compteRendu);
 db.sync({ force: false })
   .then(() => console.log("db synced"))
   .catch((err) => console.log(err));
@@ -113,5 +122,7 @@ module.exports = {
   compteRendu,
   appointment,
   service,
+  savedOrdonnance,
+  savedCmptRnd,
 };
 //========================  export models END     ========================

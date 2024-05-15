@@ -20,7 +20,7 @@ function SideBar() {
         <IoIosArrowDropleftCircle />
       </span>
       <div className="top flex items-center justify-center">
-        <div className="max-w-20 aspect-square">
+        <div className="w-[70px] aspect-square p-2 select-none rounded-full ">
           <img src={Logo} alt="Logo" className="w-full" />
         </div>
       </div>

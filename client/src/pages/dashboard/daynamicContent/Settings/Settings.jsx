@@ -223,11 +223,11 @@ function Settings() {
                       <span className=" text-center">{service.price}DA</span>
                       <span className="text-center">
                         <Alert
-                          title="Vous êtes sûr de vouloir supprimer ce service !"
+                          title="Vous êtes sûr de vouloir supprimer ce acte ?"
                           btnFun={() => {
                             deleteService(service.id);
                           }}
-                          description="Une fois supprimé, vous ne pourrez pas récupérer ce service ."
+                          description="Une fois supprimé, vous ne pourrez pas récupérer ce acte."
                           confirmBtn="Oui, supprimer !"
                           cancelBtn="Annuler"
                         >

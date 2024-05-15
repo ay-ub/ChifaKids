@@ -14,14 +14,12 @@ function PeymentForm({
             Dettes antérieures :
           </label>
           <input
-            type="text"
+            type="number"
+            min={0}
             id="previousdebts"
             placeholder="0000 DA"
+            readOnly
             {...register("previousDebts", {
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "valeur incorrecte",
-              },
               required: {
                 value: true,
                 message: "dettes antérieures sont nécessaire",
@@ -35,16 +33,13 @@ function PeymentForm({
             Montant à payer:
           </label>
           <input
-            type="text"
+            type="number"
+            min={0}
             id="amounttobepaid"
             placeholder="0000 DA"
             value={totalPrice}
             readOnly
             {...register("amountToBePaid", {
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "valeur incorrecte",
-              },
               required: {
                 value: true,
                 message: "le montant à payer est nécessaire",
@@ -67,20 +62,17 @@ function PeymentForm({
             min="0"
           />
         </div>
-        <div className="input-group flex-1 px-8">
+        <div className="input-group flex-1 px-8 mt-6">
           <label htmlFor="leftToPay" className="text-nowrap">
             Rest à payer:
           </label>
           <input
-            type="text"
+            type="number"
+            min={0}
             id="leftToPay"
             placeholder="0000 DA"
             value={RestPrice}
             {...register("leftToPay", {
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "valeur incorrecte",
-              },
               required: {
                 value: true,
                 message: "left To Pay is required",

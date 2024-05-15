@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { CiCalendarDate } from "assets/icon";
-function LeftList() {
+function LeftList({ setValue, savedCmptRnd }) {
   return (
     <div className="flex-1 bg-lightDark  rounded-md h-[420px]">
       <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
@@ -12,132 +12,18 @@ function LeftList() {
         </span>
       </div>
       <ul className="p-2 h-[370px] overflow-y-auto overflow-x-hidden">
-        {/* {data.map(
-            (item, index) =>
-              item.motif && ( */}
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 1
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 2
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 3
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 4
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 5
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 6
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 7
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 8
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 9
-          </span>
-        </motion.li>
-        <motion.li
-          initial={{ opacity: 0, x: 10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={({ duration: 0.3 }, { delay: 0.1 })}
-          // key={index}
-          className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-        >
-          <span className="flex-1">
-            {/* {index + 1} - {item.motif} */}
-            compte Rendu 10
-          </span>
-        </motion.li>
-        {/* )
-          ) */}
-        {/* } */}
+        {savedCmptRnd.map((item, index) => (
+          <motion.li
+            onClick={() => setValue(item?.compteRendu?.commentaire)}
+            key={index}
+            initial={{ opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={({ duration: 0.3 }, { delay: 0.1 })}
+            className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
+          >
+            <span className="flex-1">{item.title}</span>
+          </motion.li>
+        ))}
       </ul>
     </div>
   );

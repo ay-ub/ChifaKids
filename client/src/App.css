@@ -244,6 +244,9 @@ table td {
   outline: 0 solid var(--primaryColor);
 }
 @media print {
+  input[type="checkbox"] {
+    tick: none;
+  }
   @page {
     size: auto;
     height: 100vh;
