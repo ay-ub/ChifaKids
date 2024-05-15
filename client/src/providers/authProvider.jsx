@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     const authing = async () => {
       // send get rea to quth api to check if user is logged in
       try {
-        const result = await fetch("http://localhost:3000/auth");
+        const result = await fetch("/api/auth");
         console.log("Result: ", result);
         if (!result.ok) {
           throw new Error("Not logged in");
@@ -32,8 +32,7 @@ const AuthProvider = ({ children }) => {
   }, []);
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-      {/* {loading ? <h1>Loading...</h1> : children} */}
+      {loading ? <h1>Loading...</h1> : children}
     </AuthContext.Provider>
   );
 };

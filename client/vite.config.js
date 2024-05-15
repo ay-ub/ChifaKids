@@ -19,13 +19,14 @@ export default defineConfig({
       leyout: "/src/leyout",
       providers: "/src/providers",
     },
-    server: {
-      proxy: {
-        "/api": {
-          target: "http://localhost:3000",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        credentials: "include",
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

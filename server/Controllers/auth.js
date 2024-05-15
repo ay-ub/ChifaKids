@@ -28,14 +28,9 @@ const login = async (req, res) => {
           { expiresIn: "1h" }
         );
 
-        // console.log(token);
-
-        // res.cookie("token", token, {
-        //   maxAge: 24 * 60 * 60 * 1000,
-        //   httpOnly: true,
-        //   sameSite: "strict",
-        //   secure: false,
-        // });
+        res.cookie("token", token, {
+          maxAge: 60 * 60 * 1000,
+        });
 
         if (userInfo.typeUser === "DOCTOR" || userInfo.typeUser === "ADMIN") {
           const doctorInfo = await doctor.findOne({

@@ -1,7 +1,7 @@
 import { Notify } from "utils";
 const login = async (data, auth, navigate, redirectPath) => {
   try {
-    const res = await fetch("http://localhost:3000/auth/login", {
+    const res = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -9,7 +9,6 @@ const login = async (data, auth, navigate, redirectPath) => {
     const resData = await res.json();
     if (resData.status === "success") {
       auth.login(resData.data.user);
-      localStorage.setItem("token", resData.data.token);
       Notify({
         type: "success",
         message: `bienvenue ${resData.data.user.firstName} ${resData.data.user.lastName}`,
