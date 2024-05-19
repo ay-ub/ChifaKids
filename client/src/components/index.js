@@ -3,7 +3,6 @@ import PatientForm from "./PatientForm.jsx";
 import SearchInput from "./SearchInput.jsx";
 import Btn from "./BtnPrimary.jsx";
 import MedicamentForm from "./MedicamentForm.jsx";
-import RequireAuth from "./auth/RequireAuth";
 import AdminAuth from "./auth/AdminAuth";
 import DoctorAuth from "./auth/DoctorAuth";
 import Loader from "./loader/Loader";
@@ -28,7 +27,6 @@ export {
   Btn,
   MedicamentForm,
   AdminAuth,
-  RequireAuth,
   DoctorAuth,
   Loader,
   Header,

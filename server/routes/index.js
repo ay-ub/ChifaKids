@@ -10,6 +10,7 @@ const compteRenduRoute = require("./compteRendu.js");
 const appointmentRoute = require("./appointment.js");
 const statistiqueRoute = require("./statistique.js");
 const serviceRoute = require("./service.js");
+const paymentRoute = require("./payment.js");
 
 module.exports = {
   authRoute,
@@ -24,4 +25,5 @@ module.exports = {
   appointmentRoute,
   statistiqueRoute,
   serviceRoute,
+  paymentRoute,
 };

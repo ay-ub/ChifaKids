@@ -72,11 +72,15 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res.clearCookie("token");
-  return res.status(200).json({
-    status: "success",
-    message: "user disconnected",
-  });
+  try {
+    res.clearCookie("token");
+    return res.status(200).json({
+      status: "success",
+      message: "utilisateur déconnecté",
+    });
+  } catch (error) {
+    res.status(500).json({ status: "error", error: error.message });
+  }
 };
 
 module.exports = {

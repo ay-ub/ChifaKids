@@ -16,7 +16,7 @@ function Entecedent() {
   // GET antecedents
   useEffect(() => {
     const getAntecedents = async () => {
-      const allAntecedents = await fetch(`http://localhost:3000/antecedent`);
+      const allAntecedents = await fetch(`/api/antecedent`);
       const newEntecedent = await allAntecedents.json();
       if (newEntecedent.status === "success") {
         setEntecedentData(newEntecedent.data);
@@ -35,7 +35,7 @@ function Entecedent() {
         });
         return;
       }
-      const result = await fetch("http://localhost:3000/antecedent", {
+      const result = await fetch("/api/antecedent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,12 +64,9 @@ function Entecedent() {
   };
   const deleteEntecedent = async (id) => {
     try {
-      const deleteEntecedent = await fetch(
-        `http://localhost:3000/antecedent/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const deleteEntecedent = await fetch(`/api/antecedent/${id}`, {
+        method: "DELETE",
+      });
       const deletedEntecedent = await deleteEntecedent.json();
       if (deletedEntecedent.status === "success") {
         Notify({
@@ -95,16 +92,13 @@ function Entecedent() {
 
   const UpdateEntecedent = async (updatedEntecedent, entecedentId) => {
     try {
-      const updateResult = await fetch(
-        `http://localhost:3000/antecedent/${entecedentId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedEntecedent),
-        }
-      );
+      const updateResult = await fetch(`/api/antecedent/${entecedentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEntecedent),
+      });
       const finalResult = await updateResult.json();
       if (finalResult.status === "success") {
         Notify({

@@ -5,13 +5,15 @@ const {
   prescription,
   patient,
   doctor,
+  savedOrdonnance,
+  savedPrescription,
 } = require("../Models/index");
 const { Op } = require("sequelize");
 
 const createOrdonnance = async (req, res) => {
   const { doctorId, patientId } = req.body.consultationData;
   try {
-    let { consultationId, medicamentData } = req.body;
+    let { consultationId, medicamentData, title, isSaved } = req.body;
     if (!consultationId) {
       if (!doctorId || !patientId) {
         return res.status(400).json({
@@ -45,6 +47,14 @@ const createOrdonnance = async (req, res) => {
     }
     const ordonnanceData = await ordonnance.create({ consultationId });
     const ordonnanceId = ordonnanceData.id;
+    let savedOrdonnanceId;
+    if (isSaved) {
+      const savedOrdData = await savedOrdonnance.create({
+        title,
+      });
+      savedOrdonnanceId = savedOrdData.id;
+    }
+
     medicamentData.forEach(async (item) => {
       const { medicamentId, frequency, duration, notes, eatingTime } = item;
       const foundMedicament = await medicament.findByPk(medicamentId);
@@ -57,9 +67,26 @@ const createOrdonnance = async (req, res) => {
           notes,
           eatingTime,
         });
+        if (isSaved) {
+          const saveOrdonnaceExist = await savedOrdonnance.findByPk(
+            savedOrdonnanceId
+          );
+          if (!saveOrdonnaceExist) {
+            return res
+              .status(404)
+              .json({ status: "fail", message: "Saved ordonnance not found" });
+          }
+          await savedPrescription.create({
+            medicamentId,
+            savedOrdonnanceId,
+            frequency,
+            duration,
+            notes,
+            eatingTime,
+          });
+        }
       }
     });
-    // const newPrescription = await prescription.bulkCreate(medicamentData);
 
     res.status(201).json({ status: "success", data: null });
   } catch (error) {
@@ -140,11 +167,46 @@ const getAllOrdonnances = async (req, res) => {
         },
       ],
     });
-    res
-      .status(200)
-      .json({ status: "success", data: prescriptions, req: req.body });
+    res.status(200).json({ status: "success", data: prescriptions });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+const getSavedOrdonnances = async (req, res) => {
+  try {
+    const prescriptions = await savedOrdonnance.findAll({
+      include: medicament,
+    });
+    res.status(200).json({ status: "success", data: prescriptions });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+const deleteSavedOrdonnance = async (req, res) => {
+  try {
+    if (!req.params.savedOrdonnanceId) {
+      return res
+        .status(400)
+        .json({ status: "fail", message: "Saved ordonnance id is required" });
+    }
+    const foundSavedOrdonnance = await savedOrdonnance.findByPk(
+      req.params.savedOrdonnanceId
+    );
+    if (!foundSavedOrdonnance) {
+      return res
+        .status(404)
+        .json({ status: "fail", message: "Saved ordonnance not found" });
+    }
+    await savedOrdonnance.destroy({
+      where: {
+        id: req.params.savedOrdonnanceId,
+      },
+    });
+    res.status(200).json({ status: "success", data: null });
+  } catch (error) {
     res.status(500).json({ status: "error", message: error.message });
   }
 };
@@ -154,4 +216,6 @@ module.exports = {
   getOrdonnanceById,
   deleteOrdonnance,
   getAllOrdonnances,
+  getSavedOrdonnances,
+  deleteSavedOrdonnance,
 };

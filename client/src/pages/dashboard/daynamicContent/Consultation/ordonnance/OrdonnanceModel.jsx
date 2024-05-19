@@ -31,23 +31,26 @@ function OrdonnanceModel({ traitmentDetails, patientData }) {
             Ordonnance
           </div>
           <div className="traitmentDetails p-3 text-center my-10">
-            {traitmentDetails.map((item, index) => (
-              <div key={item.id} className="flex justify-between">
-                <div className="flex items-center gap-x-3">
-                  <p>{index + 1}.</p>
-                  <p>{item.name}</p>
-                  <p>
-                    {item.dosage} {item.dosageUnit}
-                  </p>
+            {traitmentDetails.map((item, index) => {
+              console.log(item);
+              return (
+                <div key={item.id} className="flex justify-between">
+                  <div className="flex items-center gap-x-3">
+                    <p>{index + 1}.</p>
+                    <p>{item.name}</p>
+                    <p>
+                      {item.dosage} {item.dosageUnit}
+                    </p>
+                  </div>
+                  <p>{item.duration}</p>
+                  <div className="flex items-center gap-x-3">
+                    <p>{item.frequency} fois/jour</p>
+                    <p>{item.eatingTime} repas</p>
+                  </div>
+                  {item.notes && <p>{item.notes}</p>}
                 </div>
-                <p>{item.duration}</p>
-                <div className="flex items-center gap-x-3">
-                  <p>{item.frequency} fois/jour</p>
-                  <p>{item.eatingTime} repas</p>
-                </div>
-                {item.notes && <p>{item.notes}</p>}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

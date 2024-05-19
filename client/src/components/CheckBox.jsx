@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-function CheckboxWithText({ label, description, setChecked }) {
+function CheckboxWithText({ label, description, setChecked, checked }) {
   return (
     <div className="items-top flex space-x-2">
       <Checkbox
@@ -7,6 +7,7 @@ function CheckboxWithText({ label, description, setChecked }) {
         onCheckedChange={(e) => {
           setChecked(e);
         }}
+        checked={checked}
       />
       <div className="grid gap-1.5 leading-none">
         <label

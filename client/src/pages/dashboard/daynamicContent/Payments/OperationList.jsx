@@ -8,7 +8,7 @@ function OperationList({ totalPrice, setTotalPrice }) {
   useEffect(() => {
     const getActs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/service/");
+        const response = await fetch("/api/service/");
         const data = await response.json();
         console.log(data);
         if (data.status === "success" && data?.data.length > 0) {

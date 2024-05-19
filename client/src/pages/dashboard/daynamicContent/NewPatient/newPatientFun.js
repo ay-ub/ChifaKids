@@ -2,7 +2,7 @@ import { Notify } from "utils";
 
 const addPatient = async (newPatient) => {
   try {
-    const res = await fetch(`http://localhost:3000/patients`, {
+    const res = await fetch(`/api/patients`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

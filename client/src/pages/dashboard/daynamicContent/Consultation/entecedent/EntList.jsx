@@ -16,9 +16,7 @@ function EntList({
   const [patientAntecedents, setPatientAntecedents] = useState([]);
   useEffect(() => {
     const getPatientAntecedents = async () => {
-      const antecedents = await fetch(
-        `http://localhost:3000/antecedent/patient/${patientId}`
-      );
+      const antecedents = await fetch(`/api/antecedent/patient/${patientId}`);
       const patEntecedent = await antecedents.json();
       if (patEntecedent.status === "success") {
         const ids = [];
@@ -31,7 +29,7 @@ function EntList({
   const addAntecedentToPatient = async (antecedentId) => {
     try {
       if (antecedentId) {
-        const result = await fetch(`http://localhost:3000/antecedent/patient`, {
+        const result = await fetch(`/api/antecedent/patient`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -49,7 +47,7 @@ function EntList({
   };
   const removeAntecedentFromPatient = async (antecedentId) => {
     try {
-      const remove = await fetch(`http://localhost:3000/antecedent/patient`, {
+      const remove = await fetch(`/api/antecedent/patient`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

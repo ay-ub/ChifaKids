@@ -1,4 +1,4 @@
-const { service } = require("../Models");
+const { act } = require("../Models");
 
 const createService = async (req, res) => {
   try {
@@ -8,15 +8,15 @@ const createService = async (req, res) => {
         .status(400)
         .json({ status: "fail", message: "nom et prix sont obligatoires" });
     }
-    const foundService = await service.findOne({
+    const foundService = await act.findOne({
       where: { name, price },
     });
     if (foundService) {
       return res
         .status(400)
-        .json({ status: "fail", message: "service déjà existant" });
+        .json({ status: "fail", message: "act déjà existant" });
     }
-    const newService = await service.create(req.body);
+    const newService = await act.create(req.body);
     return res.status(201).json({ status: "success", data: newService });
   } catch (error) {
     return res.status(500).json({ status: "error", error: error.message });
@@ -25,7 +25,7 @@ const createService = async (req, res) => {
 
 const getServices = async (req, res) => {
   try {
-    const services = await service.findAll();
+    const services = await act.findAll();
     return res.status(200).json({ status: "success", data: services });
   } catch (error) {
     return res.status(500).json({ status: "error", error: error.message });
@@ -35,7 +35,7 @@ const getServices = async (req, res) => {
 const deleteService = async (req, res) => {
   try {
     const { id } = req.params;
-    const serviceToDelete = await service.findByPk(id);
+    const serviceToDelete = await act.findByPk(id);
     if (!serviceToDelete) {
       return res
         .status(404)
@@ -51,7 +51,7 @@ const deleteService = async (req, res) => {
 const updateService = async (req, res) => {
   try {
     const { id } = req.params;
-    const serviceToUpdate = await service.update(req.body, { where: { id } });
+    const serviceToUpdate = await act.update(req.body, { where: { id } });
     return res.status(200).json({ status: "success", data: null });
   } catch (error) {
     return res.status(500).json({ status: "error", error: error.message });

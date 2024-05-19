@@ -5,25 +5,17 @@ module.exports = (db, type) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    patientId: {
-      type: type.INTEGER,
-      allowNull: false,
-      references: {
-        model: "patients",
-        key: "id",
-      },
-    },
-    amount: {
-      type: type.INTEGER,
+    receivedAmount: {
+      type: type.FLOAT,
       allowNull: false,
     },
     date: {
-      type: type.DATE,
+      type: type.DATEONLY,
       allowNull: false,
       defaultValue: type.NOW,
     },
     paymentMethod: {
-      type: type.ENUM[("cash", "card", "cheque")],
+      type: type.ENUM("CASH", "CARD", "CHEQUE"),
       allowNull: false,
     },
   });

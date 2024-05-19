@@ -1,7 +1,6 @@
 // import { toast } from "react-toastify";
 
 const toastConfig = {
-  position: "bottom-right",
   autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,
@@ -11,13 +10,19 @@ const toastConfig = {
 };
 import { toast } from "sonner";
 
-function Notify({ type, message }) {
+function Notify({ type, message, pos }) {
   toastConfig.theme = localStorage.getItem("theme") || "light";
   switch (type) {
     case "success":
-      return toast.success(message, toastConfig);
+      return toast.success(message, {
+        ...toastConfig,
+        position: pos || "bottom-right",
+      });
     case "error":
-      return toast.error(message, { ...toastConfig, position: "top-center" });
+      return toast.error(message, {
+        ...toastConfig,
+        position: pos || "top-center",
+      });
     case "warning":
       return toast.warning(message, toastConfig);
     default:

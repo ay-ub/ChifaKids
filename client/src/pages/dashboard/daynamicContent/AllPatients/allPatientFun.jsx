@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DisplayRndv from "./DisplayRndv";
 
 const getPatients = async (setPatients) => {
-  const res = await fetch("http://localhost:3000/patients", { method: "GET" });
+  const res = await fetch("/api/patients", { method: "GET" });
   const data = await res.json();
   if (data.status === "success" && data.data.patient.length > 0) {
     setPatients(data.data.patient);
@@ -24,7 +24,7 @@ const getPatients = async (setPatients) => {
 const handleDelete = async (id, patients, setPatients) => {
   // delete patient
   try {
-    const res = await fetch(`http://localhost:3000/patients/${id}`, {
+    const res = await fetch(`/api/patients/${id}`, {
       method: "DELETE",
     });
     const data = await res.json();
@@ -113,7 +113,7 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
                     to={`/dashboard/consultation/${patient.id}`}
                     className="select-none"
                   >
-                    <FaStethoscope className="mb-2" />
+                    <FaStethoscope className="text-base" />
                   </Link>
                 }
                 msg="Consulter ce patient"
@@ -122,7 +122,7 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
               <ToolTip
                 trigger={
                   <span
-                    className="select-none"
+                    className="select-none "
                     onClick={() => {
                       handleWaitingRom(
                         patient.id,
@@ -144,7 +144,7 @@ const mapPatients = (patients, search, setPatients, user, socket) => {
                   to={`/dashboard/edit-patient/${patient.id}`}
                   className="select-none"
                 >
-                  <FaUserEdit className="mb-2" />
+                  <FaUserEdit className="text-2xl" />
                 </Link>
               }
               msg="Modifier ce patient"

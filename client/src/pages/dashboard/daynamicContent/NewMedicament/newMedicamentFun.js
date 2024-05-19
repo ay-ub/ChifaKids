@@ -7,7 +7,7 @@ let medicament = {
 
 const addMedicament = async (newMedicament) => {
   try {
-    const res = await fetch(`http://localhost:3000/medicaments`, {
+    const res = await fetch(`/api/medicaments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,10 +1,25 @@
 // const { compteRendu, consultation } = require("../Models");
-const { consultation, compteRendu, doctor, patient } = require("../Models");
+const {
+  consultation,
+  compteRendu,
+  doctor,
+  patient,
+  savedCmptRnd,
+} = require("../Models");
+
 const { Op } = require("sequelize");
 
 const createCompteRendu = async (req, res) => {
   try {
-    let { consultationId, commentaire, patientId, doctorId, date } = req.body;
+    let {
+      consultationId,
+      commentaire,
+      patientId,
+      doctorId,
+      date,
+      isSaved,
+      title,
+    } = req.body;
     if (!consultationId && patientId && doctorId) {
       const foundPatient = await patient.findByPk(patientId);
       const foundDoctor = await doctor.findByPk(doctorId);
@@ -24,6 +39,13 @@ const createCompteRendu = async (req, res) => {
       commentaire,
       date,
     });
+    if (isSaved) {
+      await savedCmptRnd.create({
+        title,
+        commentaire,
+      });
+    }
+
     return res.status(201).json({ status: "success", data: newCompteRendu });
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -92,9 +114,32 @@ const deleteCompteRendu = async (req, res) => {
   }
 };
 
+const getSavedCompteRendu = async (req, res) => {
+  try {
+    const savedCmptRndData = await savedCmptRnd.findAll();
+    return res.status(200).json({ status: "success", data: savedCmptRndData });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const deleteSavedCompteRendu = async (req, res) => {
+  try {
+    await savedCmptRnd.destroy({
+      where: { id: req.params.id },
+    });
+
+    res.status(200).json({ status: "success", data: null });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
 module.exports = {
   createCompteRendu,
   getAllCompteRenduOfPatient,
   updateCompteRendu,
   deleteCompteRendu,
+  getSavedCompteRendu,
+  deleteSavedCompteRendu,
 };

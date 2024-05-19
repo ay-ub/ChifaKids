@@ -24,7 +24,16 @@ function Alert({ children, btnFun, description, title, confirmBtn }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={btnFun}>{confirmBtn}</AlertDialogAction>
+          <AlertDialogAction
+            onClick={btnFun}
+            // onKeyPress={(e) => {
+            //   if (e.key === "Enter") {
+            //     btnFun();
+            //   }
+            // }}
+          >
+            {confirmBtn}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

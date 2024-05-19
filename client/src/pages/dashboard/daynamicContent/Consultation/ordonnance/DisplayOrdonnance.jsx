@@ -10,6 +10,11 @@ function DisplayOrdonnance({ patientId, selectedDate }) {
   useEffect(() => {
     getOrdonnanceByPatientId(patientId, setData, selectedDate);
   }, [selectedDate]);
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log(data);
+    }
+  }, [data]);
   return (
     <div className="DisplayOrdonnance flex gap-5 items-start">
       <div className="bg-lightDark min-w-80  rounded-md h-[440px] ">
@@ -47,7 +52,7 @@ function DisplayOrdonnance({ patientId, selectedDate }) {
               initial={{ opacity: 0, x: 10 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg  p-2 rounded-sm mt-1 select-none "
+              className="flex items-start justify-center  rounded-sm select-none "
             >
               Aucun traitement
             </motion.li>

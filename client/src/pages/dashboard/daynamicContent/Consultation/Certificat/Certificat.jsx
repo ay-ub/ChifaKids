@@ -2,21 +2,34 @@ import CertificatMd from "./CertificatV1";
 import { Btn, ToolTip } from "components";
 import { useAuth } from "hooks";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Certificat({ patientData }) {
   const auth = useAuth();
-  const [nbrJours, setNbrJours] = useState("....... ");
-  const [dateDebut, setDateDebut] = useState("....................");
-  const [dateFin, setDateFin] = useState("....................");
+  const [nbrJours, setNbrJours] = useState(null);
+  const [dateDebut, setDateDebut] = useState(null);
+  const [dateFin, setDateFin] = useState(null);
   const handleEdit = (e, setState) => {
     e.target.contentEditable = false;
-    if (e.target.innerText === "") {
-      setState("...............");
+    if (e.target.innerText === "" && e.target.innerText.length < 1) {
+      setState(null);
     } else {
       setState(e.target.innerText);
     }
   };
+
+  useEffect(() => {
+    const addDays = (date, days) => {
+      var result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    };
+    if (dateDebut && nbrJours) {
+      setDateFin(
+        addDays(new Date(dateDebut), parseInt(nbrJours)).toLocaleDateString()
+      );
+    }
+  }, [dateDebut, nbrJours]);
   return (
     <>
       <CertificatMd
@@ -31,7 +44,7 @@ function Certificat({ patientData }) {
             <div className="text-2xl uppercase text-center font-bold italic text-blue-500">
               Certificat medical
             </div>
-            <div className="traitmentDetails p-3 text-center my-10">
+            <div className=" p-3 text-center my-10">
               je soussigné Dr, {auth.user.lastName} , certifie avoir <br />
               examiné (e) ce jour le (a) sus nomme(é) <br /> et atteste que son
               état de santé nécessite <br /> un arrêt de travail de{" "}
@@ -54,7 +67,7 @@ function Certificat({ patientData }) {
                       handleEdit(e, setNbrJours);
                     }}
                   >
-                    {nbrJours}
+                    {nbrJours || "...................."}
                   </span>
                 }
                 msg="Nombre de jours"
@@ -79,7 +92,9 @@ function Certificat({ patientData }) {
                       handleEdit(e, setDateDebut);
                     }}
                   >
-                    {dateDebut}
+                    {dateDebut ||
+                      "...................." ||
+                      new Date().toLocaleDateString()}
                   </span>
                 }
                 msg="Date de debut"
@@ -104,7 +119,7 @@ function Certificat({ patientData }) {
                       handleEdit(e, setDateFin);
                     }}
                   >
-                    {dateFin}
+                    {dateFin || "...................."}
                   </span>
                 }
                 msg="Date de fin"

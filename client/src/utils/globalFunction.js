@@ -26,7 +26,7 @@ const calculateAge = (firstDate, lastDate) => {
 
 const getAllMedicament = async (setMedicaments) => {
   try {
-    const res = await fetch("http://localhost:3000/medicaments/", {
+    const res = await fetch("/api/medicaments/", {
       method: "GET",
     });
     const data = await res.json();
@@ -39,7 +39,7 @@ const getAllMedicament = async (setMedicaments) => {
 };
 const addCurveDataToDb = async (data, gender, type) => {
   try {
-    const addCurveToDb = await fetch("http://localhost:3000/curve", {
+    const addCurveToDb = await fetch("/api/curve", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

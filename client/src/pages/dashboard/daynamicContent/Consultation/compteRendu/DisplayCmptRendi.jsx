@@ -11,16 +11,13 @@ function DisplayCmptRendi({ patientId, selectedDate }) {
   const [cmptRendiData, setCmptRendiData] = useState([]);
   const getCmptRendi = async () => {
     try {
-      const res = await fetch(
-        `http://localhost:3000/compteRendu/patient/${patientId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(selectedDate),
-        }
-      );
+      const res = await fetch(`/api/compteRendu/patient/${patientId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selectedDate),
+      });
       const data = await res.json();
       console.log(data);
       if (data.status == "success") {
@@ -37,7 +34,7 @@ function DisplayCmptRendi({ patientId, selectedDate }) {
 
   const deleteCmptRendi = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/compteRendu/${id}`, {
+      const res = await fetch(`/api/compteRendu/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -62,41 +59,42 @@ function DisplayCmptRendi({ patientId, selectedDate }) {
               <span>Compte Rendu</span>
             </span>
           </div>
-
-          {cmptRendiData.length > 0 &&
-            cmptRendiData.map((item, index) => {
-              return (
-                <ul key={index} className="px-2">
-                  {item?.compteRendus &&
-                    item.compteRendus.map((cmp, pos) => {
-                      return (
-                        <motion.li
-                          initial={{ opacity: 0, x: 10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={({ duration: 0.3 }, { delay: 0.1 })}
-                          key={pos}
-                          onClick={() => setSelected(cmp.commentaire)}
-                          className="flex items-center justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-                        >
-                          <span className="flex-1">{cmp.date}</span>
-                          <Alert
-                            title="Voulez-vous vraiment supprimer ce compte rendu ?"
-                            btnFun={() => {
-                              deleteCmptRendi(cmp.id);
-                            }}
-                            description="Cette action ne peut pas être annulée. "
-                            confirmBtn="Oui, Supprimer"
+          <div className="py-2 h-[370px] overflow-y-auto overflow-x-hidden">
+            {cmptRendiData.length > 0 &&
+              cmptRendiData.map((item, index) => {
+                return (
+                  <ul key={index} className="px-2 ">
+                    {item?.compteRendus &&
+                      item.compteRendus.map((cmp, pos) => {
+                        return (
+                          <motion.li
+                            initial={{ opacity: 0, x: 10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={({ duration: 0.3 }, { delay: 0.1 })}
+                            key={pos}
+                            onClick={() => setSelected(cmp.commentaire)}
+                            className="flex items-center justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
                           >
-                            <span className="text-red-400 select-none text-xl">
-                              <AiOutlineDelete />
-                            </span>
-                          </Alert>
-                        </motion.li>
-                      );
-                    })}
-                </ul>
-              );
-            })}
+                            <span className="flex-1">{cmp.date}</span>
+                            <Alert
+                              title="Voulez-vous vraiment supprimer ce compte rendu ?"
+                              btnFun={() => {
+                                deleteCmptRendi(cmp.id);
+                              }}
+                              description="Cette action ne peut pas être annulée. "
+                              confirmBtn="Oui, Supprimer"
+                            >
+                              <span className="text-red-400 select-none text-xl">
+                                <AiOutlineDelete />
+                              </span>
+                            </Alert>
+                          </motion.li>
+                        );
+                      })}
+                  </ul>
+                );
+              })}
+          </div>
         </div>
         <motion.div
           initial={{ opacity: 0, x: 10 }}

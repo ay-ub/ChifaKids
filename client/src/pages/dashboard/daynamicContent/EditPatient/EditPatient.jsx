@@ -16,7 +16,7 @@ function EditPatient() {
   const updatePatient = async (patientData) => {
     console.log(patientData);
     try {
-      const res = await fetch(`http://localhost:3000/patients/${id}`, {
+      const res = await fetch(`/api/patients/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

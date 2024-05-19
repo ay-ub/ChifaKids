@@ -9,7 +9,7 @@ function ToolTip({ trigger, msg }) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>{trigger}</TooltipTrigger>
+        <TooltipTrigger asChild>{trigger}</TooltipTrigger>
         <TooltipContent>
           <p>{msg}</p>
         </TooltipContent>

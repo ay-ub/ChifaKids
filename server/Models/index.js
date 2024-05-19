@@ -13,7 +13,12 @@ const curveModel = require("./Curve.js");
 const patientAntecedentModel = require("./PatientAntecedent.js");
 const compteRenduModel = require("./CompteRendu.js");
 const appointmentModel = require("./Appointment.js");
-const serviceModel = require("./Service.js");
+const actModel = require("./Act.js");
+const payModel = require("./Payment.js");
+const actPaymentModel = require("./ActPayment.js");
+const savedOrdonnanceModel = require("./SavedOrdonnance.js"); // <== Add this line to import the savedOrdonnance model
+const savedPrescriptionModel = require("./SavedPrescription.js"); // <== Add this line to import the savedPrescription model
+const savedCmptRndModel = require("./SavedCmptRnd.js");
 
 const patient = patientModel(db, DataTypes);
 const medicament = medicamentModel(db, DataTypes);
@@ -28,7 +33,12 @@ const curve = curveModel(db, DataTypes);
 const patientAntecedent = patientAntecedentModel(db, DataTypes);
 const compteRendu = compteRenduModel(db, DataTypes);
 const appointment = appointmentModel(db, DataTypes);
-const service = serviceModel(db, DataTypes);
+const act = actModel(db, DataTypes);
+const payment = payModel(db, DataTypes);
+const actPayment = actPaymentModel(db, DataTypes);
+const savedOrdonnance = savedOrdonnanceModel(db, DataTypes); // <== Add this line to create the savedOrdonnance table
+const savedPrescription = savedPrescriptionModel(db, DataTypes); // <== Add this line to create the savedPrescription table
+const savedCmptRnd = savedCmptRndModel(db, DataTypes);
 
 user.hasMany(nurse);
 nurse.belongsTo(user);
@@ -41,21 +51,6 @@ consultation.belongsTo(doctor);
 
 patient.hasMany(consultation);
 consultation.belongsTo(patient);
-
-// patient.belongsToMany(doctor, {
-//   through: {
-//     model: consultation,
-//     unique: false,
-//     foreignKey: "patientId",
-//   },
-// });
-// doctor.belongsToMany(patient, {
-//   through: {
-//     model: consultation,
-//     unique: false,
-//     foreignKey: "doctorId",
-//   },
-// });
 
 consultation.hasMany(ordonnance);
 ordonnance.belongsTo(consultation);
@@ -70,6 +65,7 @@ ordonnance.belongsToMany(medicament, {
     foreignKey: "ordonnanceId",
   },
 });
+
 medicament.belongsToMany(ordonnance, {
   through: {
     model: prescription,
@@ -95,6 +91,39 @@ antecedent.belongsToMany(patient, {
 patient.hasMany(appointment);
 appointment.belongsTo(patient);
 
+patient.hasMany(payment);
+payment.belongsTo(patient);
+
+payment.belongsToMany(act, {
+  through: {
+    model: actPayment,
+    unique: false,
+    foreignKey: "paymentId",
+  },
+});
+act.belongsToMany(payment, {
+  through: {
+    model: actPayment,
+    unique: false,
+    foreignKey: "actId",
+  },
+});
+
+savedOrdonnance.belongsToMany(medicament, {
+  through: {
+    model: savedPrescription,
+    unique: false,
+    foreignKey: "ordonnanceId",
+  },
+});
+medicament.belongsToMany(savedOrdonnance, {
+  through: {
+    model: savedPrescription,
+    unique: false,
+    foreignKey: "medicamentId",
+  },
+});
+
 db.sync({ force: false })
   .then(() => console.log("db synced"))
   .catch((err) => console.log(err));
@@ -112,6 +141,11 @@ module.exports = {
   patientAntecedent,
   compteRendu,
   appointment,
-  service,
+  act,
+  payment,
+  actPayment,
+  savedOrdonnance,
+  savedPrescription,
+  savedCmptRnd,
 };
 //========================  export models END     ========================

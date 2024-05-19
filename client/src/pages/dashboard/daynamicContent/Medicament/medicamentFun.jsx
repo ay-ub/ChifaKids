@@ -7,7 +7,7 @@ import { Alert } from "components";
 const handleDelete = async (id, medicaments, setMedicaments) => {
   // delete patient
   try {
-    const res = await fetch(`http://localhost:3000/medicaments/${id}`, {
+    const res = await fetch(`/api/medicaments/${id}`, {
       method: "DELETE",
     });
     const data = await res.json();
