@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { user } = require("../Models");
+const { user, doctor, nurse } = require("../Models");
 
 console.log("Protect Route Middleware");
 const protectRoute = async (req, res, next) => {
@@ -25,7 +25,20 @@ const protectRoute = async (req, res, next) => {
     if (!userData) {
       return res.status(401).json({ message: "Unauthorized - Invalid User" });
     }
-    req.user = userData;
+    if (
+      userData.dataValues.typeUser === "ADMIN" ||
+      userData.dataValues.typeUser === "DOCTOR"
+    ) {
+      const doctorData = await doctor.findOne({
+        where: { userEmail: userData.dataValues.email },
+      });
+      console.log("Doctor Data: ", doctorData.dataValues.id);
+      req.user = {
+        ...userData.dataValues,
+        id: doctorData.dataValues.id,
+      };
+    } else {
+    }
     next();
   } catch (error) {
     console.error("Error on protectRoute: ", error.message || error);

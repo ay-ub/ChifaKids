@@ -20,7 +20,7 @@ function RndvForm({ patientId }) {
   const [time, setTime] = useState("08:00");
   const createRndv = async () => {
     try {
-      const res = await fetch("http://localhost:3000/appointment", {
+      const res = await fetch("/api/appointment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

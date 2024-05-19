@@ -4,17 +4,17 @@ import { FaBriefcaseMedical, FaSackDollar } from "assets/icon";
 import { useEffect, useState } from "react";
 import PaymentForm from "./PeymentForm";
 import OperationList from "./OperationList";
+import { Notify } from "utils";
 
 function Payments() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [RestPrice, setRestPrice] = useState(0);
   const [VersementPrice, setVersementPrice] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [operationList, setOperationList] = useState([]);
 
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -33,6 +33,40 @@ function Payments() {
     }
   }, [VersementPrice, totalPrice]);
 
+  const onSubmit = async (data) => {
+    console.log({ ...data, VersementPrice });
+    if (VersementPrice == 0) {
+      return Notify({
+        type: "error",
+        message: "Le versement doit être supérieur à 0",
+      });
+    }
+    const response = await fetch("/api/payment/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        patientId: 1,
+        receivedAmount: VersementPrice,
+        paymentMethod: "CASH",
+      }),
+    });
+    const responseData = await response.json();
+    if (responseData.status == "success") {
+      Notify({
+        type: "success",
+        message: "Versement effectué avec succès",
+      });
+    } else {
+      Notify({
+        type: "error",
+        message: responseData.message || "Erreur lors du versement",
+      });
+    }
+    setVersementPrice(0);
+    reset();
+  };
   return (
     <div className="payment">
       <SectionTitle title="Règlement" />
@@ -55,6 +89,8 @@ function Payments() {
             register={register}
             errors={errors}
             setVersementPrice={setVersementPrice}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
           />
         </div>
       </div>

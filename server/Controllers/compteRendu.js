@@ -42,7 +42,7 @@ const createCompteRendu = async (req, res) => {
     if (isSaved) {
       await savedCmptRnd.create({
         title,
-        compteRenduId: newCompteRendu.id,
+        commentaire,
       });
     }
 
@@ -116,17 +116,20 @@ const deleteCompteRendu = async (req, res) => {
 
 const getSavedCompteRendu = async (req, res) => {
   try {
-    const savedCmptRndData = await savedCmptRnd.findAll({
-      attributes: ["title", "id"],
-      include: [
-        {
-          model: compteRendu,
-          attributes: ["commentaire", "date"],
-          order: [["date", "DESC"]],
-        },
-      ],
-    });
+    const savedCmptRndData = await savedCmptRnd.findAll();
     return res.status(200).json({ status: "success", data: savedCmptRndData });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+const deleteSavedCompteRendu = async (req, res) => {
+  try {
+    await savedCmptRnd.destroy({
+      where: { id: req.params.id },
+    });
+
+    res.status(200).json({ status: "success", data: null });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -138,4 +141,5 @@ module.exports = {
   updateCompteRendu,
   deleteCompteRendu,
   getSavedCompteRendu,
+  deleteSavedCompteRendu,
 };

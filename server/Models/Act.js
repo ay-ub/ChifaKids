@@ -1,5 +1,5 @@
 module.exports = (db, type) => {
-  return db.define("service", {
+  return db.define("act", {
     id: {
       type: type.INTEGER,
       primaryKey: true,

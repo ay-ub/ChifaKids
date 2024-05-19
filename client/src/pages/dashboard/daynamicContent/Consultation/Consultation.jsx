@@ -35,16 +35,13 @@ function Consultation() {
 
   const getConsultationByDate = async ({ from, to }) => {
     try {
-      const result = await fetch(
-        `http://localhost:3000/consultations/date/${patientId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ from, to }),
-        }
-      );
+      const result = await fetch(`/api/consultations/date/${patientId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ from, to }),
+      });
       const data = await result.json();
       if (data.status === "success") {
         setConsultationData(data.data);
@@ -63,7 +60,8 @@ function Consultation() {
             <div className="user-data text-xl capitalize">
               <span>{`${patientData.firstName} ${patientData.lastName}`}</span>
               <span>
-                Age : {calculateAge(new Date(), patientData.dateOfBirth)} mois.
+                {" "}
+                Âge : {calculateAge(new Date(), patientData.dateOfBirth)} mois.
               </span>
             </div>
           </div>

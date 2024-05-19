@@ -1,5 +1,5 @@
 module.exports = (db, type) => {
-  return db.define("savedMedicalReport", {
+  return db.define("savedOrdonnance", {
     id: {
       type: type.INTEGER,
       autoIncrement: true,
@@ -8,10 +8,6 @@ module.exports = (db, type) => {
     title: {
       type: type.STRING,
       allowNull: false,
-    },
-    commentaire: {
-      type: type.TEXT,
-      allowNull: true,
     },
   });
 };

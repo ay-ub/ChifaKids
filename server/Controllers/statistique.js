@@ -3,6 +3,7 @@ const {
   consultation,
   patientAntecedent,
   antecedent,
+  doctor,
   user,
 } = require("../Models");
 const sequelize = require("sequelize");
@@ -16,6 +17,7 @@ const getAllStatistique = async (req, res) => {
     });
     const nbrUsers = await user.count();
     const totalNbrConsultation = await consultation.count();
+
     res.json({
       status: "success",
       data: {
@@ -23,6 +25,7 @@ const getAllStatistique = async (req, res) => {
         nbrPatientGirls,
         totalNbrConsultation,
         nbrUsers,
+        // doctors,
       },
     });
   } catch (error) {

@@ -1,11 +1,8 @@
 const getConsultationData = async (setConsultationData, patientId) => {
   try {
-    const res = await fetch(
-      `http://localhost:3000/consultations/${patientId}`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(`/api/consultations/${patientId}`, {
+      method: "GET",
+    });
     const resData = await res.json();
     if (resData.status === "success") {
       setConsultationData(resData.data);
@@ -17,7 +14,7 @@ const getConsultationData = async (setConsultationData, patientId) => {
 
 const getPatientData = async (setPatientData, patientId) => {
   try {
-    const res = await fetch(`http://localhost:3000/patients/${patientId}`, {
+    const res = await fetch(`/api/patients/${patientId}`, {
       method: "GET",
     });
     const resData = await res.json();
@@ -31,7 +28,7 @@ const getPatientData = async (setPatientData, patientId) => {
 
 const addCurveDataToDb = async (data) => {
   try {
-    const res = await fetch(`http://localhost:3000/curve`, {
+    const res = await fetch(`/api/curve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +44,7 @@ const addCurveDataToDb = async (data) => {
   }
 };
 
-const convertExcelToJson = (excelData, setData, patientHeight) => {
+const convertExcelToJson = (excelData, setData) => {
   if (excelData) {
     const headers = [
       { title: "SD3neg" },
@@ -78,16 +75,13 @@ const convertExcelToJson = (excelData, setData, patientHeight) => {
 
 const getOrdonnanceByPatientId = async (patientId, setData, selectedDate) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/ordonnance/patient/${patientId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(selectedDate),
-      }
-    );
+    const response = await fetch(`/api/ordonnance/patient/${patientId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(selectedDate),
+    });
     const newResponse = await response.json();
     if (newResponse.status === "success") {
       console.log(newResponse.data);

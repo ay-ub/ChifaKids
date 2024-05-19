@@ -52,6 +52,7 @@ function Login() {
             <input
               type="text"
               id="email"
+              // value="admin@gmail.com"
               placeholder="Enter your email"
               {...register("email", {
                 required: { value: true, message: "email est obligatoire" },
@@ -69,6 +70,7 @@ function Login() {
             <input
               type="password"
               id="password"
+              // value="root123"
               placeholder="Entrez votre mot de passe"
               {...register("password", {
                 required: {

@@ -5,10 +5,10 @@ module.exports = (db, type) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    // data: {
-    //   type: type.JSONB,
-    //   allowNull: false,
-    // },
+    data: {
+      type: type.JSONB,
+      allowNull: false,
+    },
     gender: {
       type: type.ENUM("MALE", "FEMALE"),
       allowNull: false,

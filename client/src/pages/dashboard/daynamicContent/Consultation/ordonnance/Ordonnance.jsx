@@ -13,7 +13,6 @@ import { InputError, Alert } from "components";
 import { getAllMedicament, Notify } from "utils";
 import SelectMedicament from "./SelectMedicament";
 import OrdonnanceModel from "./OrdonnanceModel";
-
 import { useAuth } from "hooks";
 
 function Ordonnance({ consultationId, patientData }) {
@@ -21,7 +20,7 @@ function Ordonnance({ consultationId, patientData }) {
     id: "",
     name: "",
   });
-
+  const [savedOrdonnance, setSavedOrdonnance] = useState([]);
   const auth = useAuth();
 
   const [medicamentList, setMedicamentList] = useState([]);
@@ -65,9 +64,7 @@ function Ordonnance({ consultationId, patientData }) {
         Notify({ type: "error", message: "aucun traitement" });
         return;
       }
-
-      console.log(traitmentDetails);
-      const res = await fetch(`http://localhost:3000/ordonnance`, {
+      const res = await fetch(`/api/ordonnance`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +78,6 @@ function Ordonnance({ consultationId, patientData }) {
           medicamentData: traitmentDetails,
         }),
       });
-      console.log(traitmentDetails);
       const data = await res.json();
       if (data.status === "success") {
         Notify({ type: "success", message: "ordonnance a été ajouté." });
@@ -94,62 +90,123 @@ function Ordonnance({ consultationId, patientData }) {
     }
   };
 
+  const getSavedOrdonnance = async () => {
+    try {
+      const res = await fetch(`/api/ordonnance/saved`);
+      const data = await res.json();
+      if (data.status === "success") {
+        setSavedOrdonnance(data.data);
+      } else {
+        Notify({ type: "error", message: data.message });
+      }
+    } catch (error) {
+      Notify({ type: "error", message: "N’a pas trouvé de ordonnance." });
+    }
+  };
+
+  const handleDeleteSavedOrdonnance = async (id) => {
+    try {
+      const res = await fetch(`/api/ordonnance/saved/${id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        Notify({ type: "success", message: "Le traitement a été supprimé." });
+        const newSavedOrdonnance = savedOrdonnance.filter(
+          (item) => item.id !== id
+        );
+        setSavedOrdonnance(newSavedOrdonnance);
+      } else {
+        Notify({
+          type: "error",
+          message: "Impossible de supprimer le traitement.",
+        });
+      }
+    } catch (error) {
+      Notify({
+        type: "error",
+        message: "Impossible de supprimer le traitement.",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getSavedOrdonnance();
+  }, []);
+
+  function transformData(updated) {
+    return {
+      duration: updated.savedPrescription.duration,
+      frequency: updated.savedPrescription.frequency,
+      notes: updated.savedPrescription.notes,
+      id: updated.savedPrescription.id,
+      name: updated.name,
+      type: updated.type,
+      dosage: updated.dosage,
+      medicamentId: updated.savedPrescription.medicamentId,
+      eatingTime: updated.savedPrescription.eatingTime,
+    };
+  }
+  const selectSavedOrdonnance = (item) => {
+    let newMedicamentList = [];
+    item.forEach((med) => {
+      return newMedicamentList.push(transformData(med));
+    });
+    console.log("newMedicamentList = ", newMedicamentList);
+    setTraitmentDetails(newMedicamentList);
+  };
+
   return (
     <div>
       <div className="ordonnanceMain flex justify-between items-start gap-3 w-full">
-        <div className="flex-1 bg-lightDark  rounded-md h-[490px]">
+        <div className="w-[350px] bg-lightDark  rounded-md h-[490px]">
           <div className=" items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
             <span className="flex flex-1 gap-2 items-center justify-center">
               <span className="icon">
                 <IoIosList />
               </span>
-              <span>Traitement prêt</span>
+              <span>Traitement Prêt</span>
             </span>
           </div>
           <ul className="h-[440px] overflow-y-auto overflow-x-hidden p-2">
-            <motion.li
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-            >
-              traitement 1
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-            >
-              traitement 2
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-            >
-              traitement 3
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-            >
-              traitement 4
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0, x: 10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={({ duration: 0.3 }, { delay: 0.1 })}
-              className="flex items-start justify-between darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white"
-            >
-              traitement 5
-            </motion.li>
+            {savedOrdonnance.map((item, index) => {
+              return (
+                item?.medicaments.length > 0 && (
+                  <motion.li
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={({ duration: 0.3 }, { delay: 0.1 })}
+                    className="flex gap-2 items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white "
+                    key={index}
+                  >
+                    <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
+                      {index + 1}
+                    </span>
+                    <span
+                      className="flex-1"
+                      onClick={() => selectSavedOrdonnance(item.medicaments)}
+                    >
+                      {item.title}
+                    </span>
+                    <Alert
+                      title="Voulez-vous vraiment supprimer ce traitement ?"
+                      btnFun={() => {
+                        handleDeleteSavedOrdonnance(item.id);
+                      }}
+                      description="Cette action ne peut pas être annulée. "
+                      confirmBtn="Oui, Supprimer"
+                    >
+                      <span className="text-red-400 select-none ">
+                        <AiOutlineDelete className="text-2xl" />
+                      </span>
+                    </Alert>
+                  </motion.li>
+                )
+              );
+            })}
           </ul>
         </div>
-        <div className=" flex-1 bg-lightDark  rounded-md h-[490px]">
+        <div className=" w-[350px] bg-lightDark  rounded-md h-[490px]">
           <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
             <span className="flex flex-1 gap-2 items-center justify-center">
               <span className="icon">
@@ -292,11 +349,27 @@ function Ordonnance({ consultationId, patientData }) {
                         </span>
                         {`${traitment.name} ${traitment.dosage}`}
                       </div>
-                      {`${traitment.duration}`}
+                      {`${
+                        traitment?.savedPrescription
+                          ? traitment?.savedPrescription?.duration
+                          : traitment.duration
+                      }`}
                     </div>
                     <div className=" w-full flex justify-evenly items-center">
-                      <div>{`${traitment.frequency} fois/jour ${traitment.eatingTime} le repas.`}</div>
-                      <div>{` ${traitment.notes}`}</div>
+                      <div>{`${
+                        traitment?.savedPrescription
+                          ? traitment.savedPrescription.frequency
+                          : traitment.frequency
+                      } fois/jour ${
+                        traitment?.savedPrescription
+                          ? traitment?.savedPrescription?.eatingTime
+                          : traitment?.eatingTime
+                      } le repas.`}</div>
+                      <div>{` ${
+                        traitment?.savedPrescription
+                          ? traitment?.savedPrescription?.notes
+                          : traitment?.notes
+                      }`}</div>
                     </div>
                   </div>
                   <Alert
@@ -320,7 +393,7 @@ function Ordonnance({ consultationId, patientData }) {
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={({ duration: 0.3 }, { delay: 0.1 })}
-                className="flex items-start justify-between darkBg  p-2 rounded-sm mt-1 select-none "
+                className="flex items-start justify-center  p-2 rounded-sm mt-1 select-none "
               >
                 Aucun traitement
               </motion.li>

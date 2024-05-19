@@ -24,6 +24,7 @@ function Settings() {
   const [gender, setGender] = useState("MALE");
   const [type, setType] = useState("HEIGHT");
   const [users, setUsers] = useState([]);
+  const auth = useAuth();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -35,7 +36,7 @@ function Settings() {
   const [services, setServices] = useState([]);
   useEffect(() => {
     getService(setServices);
-    getAllUsers(setUsers);
+    getAllUsers(setUsers, auth);
   }, []);
 
   const [service, setService] = useState({
@@ -51,7 +52,7 @@ function Settings() {
         message: "Veuillez remplir tous les champs",
       });
     }
-    const response = await fetch("http://localhost:3000/service/", {
+    const response = await fetch("/api/service/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,6 +63,7 @@ function Settings() {
       }),
     });
     const data = await response.json();
+    console.log(data);
     if (data.status == "success") {
       Notify({
         type: "success",
@@ -77,7 +79,7 @@ function Settings() {
     setService({ name: "", price: "" });
   };
   const deleteService = async (id) => {
-    const response = await fetch(`http://localhost:3000/service/${id}`, {
+    const response = await fetch(`/api/service/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -89,8 +91,6 @@ function Settings() {
       setServices((prev) => prev.filter((service) => service.id !== id));
     }
   };
-
-  const auth = useAuth();
 
   const usersList = mapUsers(users, search, auth, setUsers);
   return (
@@ -175,7 +175,6 @@ function Settings() {
                           className="col-span-2 h-8"
                           placeholder="Nom du Acte"
                           onChange={(e) => {
-                            console.log(e.target.value);
                             setService({ ...service, name: e.target.value });
                           }}
                         />

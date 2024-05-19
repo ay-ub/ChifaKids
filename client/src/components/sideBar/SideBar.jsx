@@ -4,7 +4,7 @@ import SideLinkData from "data/SideLinkData";
 import { NavLink } from "react-router-dom";
 import { handleLogOut } from "./sideFun";
 import { useAuth } from "hooks";
-import { Alert } from "components";
+import { Alert, ToolTip } from "components";
 import Logo from "assets/images/logo.svg";
 
 function SideBar() {
@@ -29,8 +29,8 @@ function SideBar() {
           return (
             link.permission.includes(auth.user.typeUser) && (
               <NavLink
-                className="flex items-center "
                 key={index}
+                className="flex items-center "
                 to={link.path}
               >
                 <span className="icon">{<link.icon />}</span>
@@ -50,9 +50,14 @@ function SideBar() {
         confirmBtn="oui , Déconnecter"
       >
         <div className="logout flex items-center">
-          <span className="pc-f flex items-center">
-            <CiLogout />
-          </span>
+          <ToolTip
+            trigger={
+              <span className="pc-f flex items-center">
+                <CiLogout />
+              </span>
+            }
+            msg="Déconnecter"
+          />
           <span>Déconnecter</span>
         </div>
       </Alert>

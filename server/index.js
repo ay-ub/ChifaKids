@@ -15,6 +15,7 @@ const {
   appointmentRoute,
   statistiqueRoute,
   serviceRoute,
+  paymentRoute,
 } = require("./routes/index.js");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -52,6 +53,7 @@ app.use("/compteRendu", compteRenduRoute);
 app.use("/appointment", appointmentRoute);
 app.use("/statistics", statistiqueRoute);
 app.use("/service", serviceRoute);
+app.use("/payment", paymentRoute);
 
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);

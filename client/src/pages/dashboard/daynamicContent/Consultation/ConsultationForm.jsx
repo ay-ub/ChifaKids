@@ -46,7 +46,7 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
         });
         return;
       }
-      const res = await fetch("http://localhost:3000/consultations", {
+      const res = await fetch("/api/consultations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,8 +57,10 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
           doctorId: auth.user.id,
         }),
       });
+
       const resData = await res.json();
       console.log(resData);
+
       if (resData.status === "success") {
         setConsultationId(resData.data.id);
         Notify({ type: "success", message: "Consultation ajoutée." });

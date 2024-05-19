@@ -5,10 +5,15 @@ function PeymentForm({
   setVersementPrice,
   register,
   errors,
+  handleSubmit,
+  onSubmit,
 }) {
   return (
     <div className="py-4  ">
-      <form className="flex flex-col  gap-y-1 ">
+      <form
+        className="flex flex-col  gap-y-1 "
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="input-group flex-1 mb-5 px-8">
           <label htmlFor="previousdebts" className="text-nowrap">
             Dettes antérieures :
@@ -68,7 +73,7 @@ function PeymentForm({
           </label>
           <input
             type="number"
-            min={0}
+            readOnly
             id="leftToPay"
             placeholder="0000 DA"
             value={RestPrice}

@@ -24,7 +24,25 @@ const createConsultation = async (req, res) => {
         message: "Patient not found",
       });
     }
-    const newConsultation = await consultation.create(req.body);
+    const newConsultation = await consultation.create({
+      ...req.body,
+      weight: parseFloat(req.body.weight),
+      height: parseFloat(req.body.height),
+      glycemie: parseFloat(req.body.glycemie),
+      urea: parseFloat(req.body.urea),
+      creatine: parseFloat(req.body.creatine),
+      crp: parseFloat(req.body.crp),
+    });
+    await patient.update(
+      {
+        isWaiting: false,
+      },
+      {
+        where: {
+          id: patientId,
+        },
+      }
+    );
     await patient.update(
       {
         isWaiting: false,
@@ -40,7 +58,11 @@ const createConsultation = async (req, res) => {
       data: newConsultation,
     });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    console.log(error);
+    res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMedicament } from "./editMedicalFun";
 import { SectionTitle, MedicamentForm } from "components";
@@ -14,7 +14,7 @@ function EditMedicament() {
 
   const updataMedicament = async (medicament) => {
     try {
-      const response = await fetch(`http://localhost:3000/medicaments/${id}`, {
+      const response = await fetch(`/api/medicaments/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

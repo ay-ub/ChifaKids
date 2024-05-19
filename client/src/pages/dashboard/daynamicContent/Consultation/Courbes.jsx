@@ -11,7 +11,7 @@ function Courbes({ patientData }) {
 
   const getPatientCurve = async (heightOrWeight) => {
     const getPatientHeightOrWeight = await fetch(
-      `http://localhost:3000/consultations/${heightOrWeight}/${patientId}`,
+      `/api/consultations/${heightOrWeight}/${patientId}`,
       {
         method: "GET",
       }
@@ -37,18 +37,15 @@ function Courbes({ patientData }) {
   useEffect(() => {
     const getCurveData = async () => {
       try {
-        const getCurveRes = await fetch(
-          "http://localhost:3000/curve/getCurve",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              gender: patientData.gender,
-            }),
-          }
-        );
+        const getCurveRes = await fetch("/api/curve/getCurve", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            gender: patientData.gender,
+          }),
+        });
         const data = await getCurveRes.json();
         if (data.status === "success") {
           if (data.data?.heightCurves.length > 0) {
@@ -90,7 +87,7 @@ function Courbes({ patientData }) {
           <Chart data={height} xTitle="Mois" yTitle="Taille" />
         </div>
         <div className="right h-[450px] bg-transparent w-1/2">
-          <Chart data={weight} xTitle="Mois" yTitle="Poids" />
+          <Chart data={weight} xTitle="Semaine" yTitle="Poids" />
         </div>
       </div>
     </>

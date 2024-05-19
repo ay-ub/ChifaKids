@@ -1,7 +1,7 @@
 import { Notify } from "utils";
 
 const getPatients = async (setPatients) => {
-  const res = await fetch("http://localhost:3000/patients/isWaiting", {
+  const res = await fetch("/api/patients/isWaiting", {
     method: "GET",
   });
   const data = await res.json();
@@ -14,12 +14,9 @@ const getPatients = async (setPatients) => {
 
 const handleWaitingRom = async (patientId, target, setPatients, socket) => {
   try {
-    const res = await fetch(
-      `http://localhost:3000/patients/${patientId}/${target}`,
-      {
-        method: "PUT",
-      }
-    );
+    const res = await fetch(`/api/patients/${patientId}/${target}`, {
+      method: "PUT",
+    });
     const data = await res.json();
     // console.log("data = ", data);
     if (data.status === "success") {

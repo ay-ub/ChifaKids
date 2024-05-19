@@ -6,7 +6,7 @@ import { AiOutlineDelete } from "assets/icon";
 function DisplayRndv({ patientId }) {
   const [rndv, setRndv] = useState(); //[1
   const getRndv = async () => {
-    const res = await fetch(`http://localhost:3000/appointment/${patientId}`, {
+    const res = await fetch(`/api/appointment/${patientId}`, {
       method: "GET",
     });
     const data = await res.json();
@@ -22,7 +22,7 @@ function DisplayRndv({ patientId }) {
 
   const deleteRndv = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/appointment/${id}`, {
+      const res = await fetch(`/api/appointment/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

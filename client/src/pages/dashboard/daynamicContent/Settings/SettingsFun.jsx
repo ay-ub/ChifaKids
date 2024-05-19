@@ -13,7 +13,7 @@ import { readFile } from "utils";
 
 const getService = async (setServices) => {
   try {
-    const response = await fetch("http://localhost:3000/service/");
+    const response = await fetch("/api/service/");
     const data = await response.json();
     if (data.status == "success") {
       setServices(data.data);
@@ -23,12 +23,14 @@ const getService = async (setServices) => {
   }
 };
 
-const getAllUsers = async (setUsers) => {
+const getAllUsers = async (setUsers, auth) => {
   try {
-    const response = await fetch("http://localhost:3000/user/");
+    const response = await fetch("/api/user/");
     const data = await response.json();
     if (data.status == "success") {
-      setUsers(data?.data?.users);
+      setUsers(
+        data?.data?.users.filter((user) => user.email !== auth?.user.email)
+      );
     }
   } catch (error) {
     console.log(error);
@@ -48,7 +50,7 @@ const DeleteUser = async (email, setUsers, auth) => {
       message: "Vous ne pouvez pas supprimer votre propre compte",
     });
   }
-  const response = await fetch("http://localhost:3000/user", {
+  const response = await fetch("/api/user", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -70,8 +72,22 @@ const DeleteUser = async (email, setUsers, auth) => {
   }
 };
 
-const updateUserType = async (email, type, setUsers) => {
-  const response = await fetch(`http://localhost:3000/user/${email}`, {
+const updateUserType = async (email, type, setUsers, auth) => {
+  if (email === "") {
+    return Notify({
+      type: "error",
+      message: "email est vide",
+    });
+  }
+  console.log(email);
+  if (email === auth?.user.email) {
+    return Notify({
+      type: "error",
+      message: "Vous ne pouvez pas modifier votre propre compte",
+    });
+  }
+
+  const response = await fetch(`/api/user/${email}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -111,7 +127,7 @@ const mapUsers = (users, search, auth, setUsers) => {
         user.typeUser.toLowerCase().includes(search.toLowerCase())
     )
     .map((user, index) => {
-      return user.email !== auth?.user.email ? (
+      return (
         <motion.tr
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,19 +135,16 @@ const mapUsers = (users, search, auth, setUsers) => {
           key={index}
           className="flex items-center lightBgHover"
         >
-          <td className="select-none">{index}</td>
+          <td className="select-none">{index + 1}</td>
           <td className="select-none">{user.firstName}</td>
           <td className="select-none">{user.lastName}</td>
           <td className="select-none">
-            <ToolTip trigger={user.email} msg={user.email} />
+            {<ToolTip trigger={<span>{user.email}</span>} msg={user.email} />}
           </td>
           <td className="select-none">
-            {/* {(user.typeUser === "NURSE" && "Infirmier") ||
-              (user.typeUser === "DOCTOR" && "Médecin") ||
-              (user.typeUser === "ADMIN" && "Admin")} */}
             <Select
               onValueChange={(e) => {
-                updateUserType(user.email, e, setUsers);
+                updateUserType(user.email, e, setUsers, auth);
               }}
               value={user.typeUser}
             >
@@ -161,12 +174,11 @@ const mapUsers = (users, search, auth, setUsers) => {
             </Alert>
           </td>
         </motion.tr>
-      ) : null;
+      );
     });
 };
 
 const handleCreateUser = async (user, setUser, setUsers, auth) => {
-  console.log("clicked");
   try {
     if (
       user.firstName == "" ||
@@ -181,12 +193,19 @@ const handleCreateUser = async (user, setUser, setUsers, auth) => {
       });
     }
     if (user.email === auth?.user.email) {
+      setUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        typeUser: "",
+      });
       return Notify({
         type: "error",
-        message: "Vous ne pouvez pas ajouter votre propre compte",
+        message: "email existe déjà",
       });
     }
-    const response = await fetch("http://localhost:3000/user", {
+    const response = await fetch("/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
