@@ -67,7 +67,7 @@ function Settings() {
     if (data.status == "success") {
       Notify({
         type: "success",
-        message: "Service ajouté avec succès",
+        message: "Act ajouté avec succès",
       });
       setServices((prev) => [...prev, data.data]);
     } else {
@@ -211,12 +211,12 @@ function Settings() {
                     <motion.li
                       initial={{ opacity: 0, x: 10 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={({ duration: 0.3 }, { delay: 0.1 * index })}
+                      transition={{ duration: 0.3 }}
                       key={index}
                       className="flex gap-5 items-center py-2"
                     >
                       <span className="text-center">{index + 1}</span>
-                      <span className="flex-1 text-center text-ellipsis text-nowrap">
+                      <span className="flex-1 text-center text-nowrap">
                         {service.name}
                       </span>
                       <span className=" text-center">{service.price}DA</span>

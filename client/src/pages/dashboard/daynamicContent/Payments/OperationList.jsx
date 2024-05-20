@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 
-function OperationList({ totalPrice, setTotalPrice }) {
+function OperationList({ totalPrice, setTotalPrice, setPaymentAct }) {
   const [acts, setActs] = useState([]);
   useEffect(() => {
     const getActs = async () => {
@@ -39,8 +39,12 @@ function OperationList({ totalPrice, setTotalPrice }) {
                   onCheckedChange={(event) => {
                     if (event) {
                       setTotalPrice((prev) => prev + operation.price);
+                      setPaymentAct((prev) => [...prev, operation.id]);
                     } else {
                       setTotalPrice((prev) => prev - operation.price);
+                      setPaymentAct((prev) =>
+                        prev.filter((id) => id !== operation.id)
+                      );
                     }
                   }}
                 />
@@ -48,7 +52,7 @@ function OperationList({ totalPrice, setTotalPrice }) {
                   {operation.name}
                 </label>
               </span>
-              <span className="flex-1 text-center text-ellipsis text-nowrap">
+              <span className="flex-1 text-right text-ellipsis text-nowrap">
                 {operation.price} DA
               </span>
             </motion.li>
@@ -63,7 +67,7 @@ function OperationList({ totalPrice, setTotalPrice }) {
           <span className="flex-1  text-left text-ellipsis text-nowrap px-11">
             Total :
           </span>
-          <span className="flex-1  text-center text-ellipsis text-nowrap">
+          <span className="flex-1  text-right text-ellipsis text-nowrap">
             {totalPrice} DA
           </span>
         </motion.li>

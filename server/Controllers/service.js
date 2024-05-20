@@ -1,22 +1,25 @@
 const { act } = require("../Models");
-
+const { acts } = require("../data/dbData");
 const createService = async (req, res) => {
   try {
-    const { name, price } = req.body;
-    if (!name || !price) {
-      return res
-        .status(400)
-        .json({ status: "fail", message: "nom et prix sont obligatoires" });
-    }
-    const foundService = await act.findOne({
-      where: { name, price },
-    });
-    if (foundService) {
-      return res
-        .status(400)
-        .json({ status: "fail", message: "act déjà existant" });
-    }
-    const newService = await act.create(req.body);
+    // const { name, price } = req.body;
+    // if (!name || !price) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: "fail", message: "nom et prix sont obligatoires" });
+    // }
+    // const foundService = await act.findOne({
+    //   where: { name, price },
+    // });
+    // if (foundService) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: "fail", message: "act déjà existant" });
+    // }
+    // const newService = await act.create(req.body);
+    // return res.status(201).json({ status: "success", data: newService });
+    await act.destroy({ where: {} });
+    const newService = await act.bulkCreate(acts);
     return res.status(201).json({ status: "success", data: newService });
   } catch (error) {
     return res.status(500).json({ status: "error", error: error.message });

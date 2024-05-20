@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { InputError } from "components";
@@ -13,8 +13,16 @@ import {
 } from "@/components/ui/select";
 
 function MedicamentForm({ medicament, submitFun }) {
-  const [dosageUnit, setDosageUnit] = useState(medicament.dosageUnit || "mL");
-  const [typeOfDrug, setTypeOfDrug] = useState(medicament.type || "Tablet");
+  const [dosageUnit, setDosageUnit] = useState();
+  const [typeOfDrug, setTypeOfDrug] = useState("Tablet");
+  function extractNumberAndUnit(str) {
+    const matches = str.match(/(\d+(\.\d+)?)(\D+)/);
+    if (matches) {
+      return [parseFloat(matches[1]), matches[3]];
+    } else {
+      return null;
+    }
+  }
   const {
     register,
     handleSubmit,
@@ -24,17 +32,26 @@ function MedicamentForm({ medicament, submitFun }) {
     defaultValues: {
       name: medicament.name || "",
       type: medicament.type || "Tablet",
-      dosage: medicament.dosage || "",
+      dosage: extractNumberAndUnit(medicament.dosage)?.[0] || "",
     },
   });
 
   const onSubmit = (medicamentData) => {
     submitFun({
       ...medicamentData,
-      dosage: `${medicamentData.dosage} ${dosageUnit}`,
+      dosage: `${medicamentData.dosage}${dosageUnit}`,
       type: typeOfDrug,
     });
   };
+
+  useEffect(() => {
+    if (medicament) {
+      setDosageUnit(
+        medicament ? extractNumberAndUnit(medicament.dosage)?.[1] : "mL"
+      );
+      console.log(extractNumberAndUnit(medicament.dosage)?.[1]);
+    }
+  }, [medicament]);
   return (
     <form
       className="form w-[550px] flex flex-col"
