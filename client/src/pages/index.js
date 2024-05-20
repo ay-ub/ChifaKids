@@ -13,6 +13,7 @@ import {
   EditMedicament,
   Settings,
   Bilan,
+  PaymenTable,
 } from "./dashboard/daynamicContent/index";
 
 export {
@@ -30,4 +31,5 @@ export {
   EditMedicament,
   Settings,
   Bilan,
+  PaymenTable,
 };

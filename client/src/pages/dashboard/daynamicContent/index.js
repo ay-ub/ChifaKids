@@ -10,6 +10,7 @@ import NewMedicament from "./NewMedicament/NewMedicament";
 import EditMedicament from "./EditMedicament/EditMedicament";
 import Settings from "./Settings/Settings";
 import Bilan from "./Bilan/Bilan";
+import PaymenTable from "./Payments/PaymenTable";
 
 export {
   Consultation,
@@ -24,4 +25,5 @@ export {
   EditMedicament,
   Settings,
   Bilan,
+  PaymenTable,
 };

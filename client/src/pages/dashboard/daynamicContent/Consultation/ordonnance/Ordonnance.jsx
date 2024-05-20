@@ -1,5 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   IoIosList,
   FaPlusCircle,
@@ -22,19 +23,15 @@ function Ordonnance({ consultationId, patientData }) {
   });
   const [savedOrdonnance, setSavedOrdonnance] = useState([]);
   const auth = useAuth();
-
   const [medicamentList, setMedicamentList] = useState([]);
   useEffect(() => {
     getAllMedicament(setMedicamentList);
   }, []);
-
   const [traitmentDetails, setTraitmentDetails] = useState([]);
-
   const [eatingTime, setEatingTime] = useState("");
   const handleRadioChange = (e) => {
     setEatingTime(e.target.value);
   };
-
   const {
     register,
     handleSubmit,
@@ -57,38 +54,8 @@ function Ordonnance({ consultationId, patientData }) {
     reset();
     setSelectedMed({ id: "", name: "" });
   };
-
-  const createOrdonnance = async () => {
-    try {
-      if (traitmentDetails.length === 0) {
-        Notify({ type: "error", message: "aucun traitement" });
-        return;
-      }
-      const res = await fetch(`/api/ordonnance`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          consultationId,
-          consultationData: {
-            doctorId: auth.user.id,
-            patientId: patientData.id,
-          },
-          medicamentData: traitmentDetails,
-        }),
-      });
-      const data = await res.json();
-      if (data.status === "success") {
-        Notify({ type: "success", message: "ordonnance a été ajouté." });
-        window.print();
-      } else {
-        Notify({ type: "error", message: data.message });
-      }
-    } catch (error) {
-      Notify({ type: "error", message: "N’a pas ajouté de ordonnance." });
-    }
-  };
+  const [isSaved, setIsSaved] = useState(false);
+  const [title, setTitle] = useState(null);
 
   const getSavedOrdonnance = async () => {
     try {
@@ -127,6 +94,53 @@ function Ordonnance({ consultationId, patientData }) {
         type: "error",
         message: "Impossible de supprimer le traitement.",
       });
+    }
+  };
+
+  const createOrdonnance = async () => {
+    try {
+      if (traitmentDetails.length === 0) {
+        Notify({ type: "error", message: "aucun traitement" });
+        return;
+      }
+      if (isSaved && !title) {
+        Notify({
+          type: "error",
+          message: "Veuillez entrer un titre pour l'ordonnance",
+        });
+        return;
+      }
+      const res = await fetch(`/api/ordonnance`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          consultationId,
+          consultationData: {
+            doctorId: auth.user.id,
+            patientId: patientData.id,
+          },
+          medicamentData: traitmentDetails,
+          title: title || "Traitement",
+          isSaved,
+        }),
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        Notify({ type: "success", message: "ordonnance a été ajouté." });
+        if (isSaved) {
+          getSavedOrdonnance();
+          setTitle("");
+          setIsSaved(false);
+        }
+        window.print();
+        setTraitmentDetails([]);
+      } else {
+        Notify({ type: "error", message: data.message });
+      }
+    } catch (error) {
+      Notify({ type: "error", message: "N’a pas ajouté de ordonnance." });
     }
   };
 
@@ -331,7 +345,7 @@ function Ordonnance({ consultationId, patientData }) {
               <span>Détails du traitement</span>
             </span>
           </div>
-          <ul className="h-[375px] overflow-y-auto overflow-x-hidden p-2">
+          <ul className="h-[337px] overflow-y-auto overflow-x-hidden px-2 py-1">
             {traitmentDetails.length > 0 ? (
               traitmentDetails.map((traitment, index) => (
                 <motion.li
@@ -399,11 +413,46 @@ function Ordonnance({ consultationId, patientData }) {
               </motion.li>
             )}
           </ul>
+          <div className="flex items-center px-3  gap-10 h-8 m-2">
+            <div className="flex-1 flex items-center  space-x-2">
+              <Checkbox
+                id="terms2"
+                onCheckedChange={(e) => {
+                  setIsSaved(e);
+                }}
+                checked={isSaved}
+                className="darkBg w-6 h-6"
+              />
+              <label
+                htmlFor="terms2"
+                className="text-sm select-none font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Enregistrez ce modèle
+              </label>
+            </div>
+            {isSaved && (
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={({ duration: 0.3 }, { delay: 0.1 })}
+                className="flex-1 flex items-center gap-2"
+              >
+                <input
+                  type="text"
+                  placeholder="Nom du modèle"
+                  value={title}
+                  maxLength={30}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="flex-1 border darkBg py-1 rounded-md px-2"
+                />
+              </motion.div>
+            )}
+          </div>
           <motion.div
             initial={{ opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={({ duration: 0.3 }, { delay: 0.1 })}
-            className="flex mt-3 gap-4 px-2"
+            className="flex mt-2 gap-4 px-2"
           >
             <button
               type="button"
@@ -414,7 +463,7 @@ function Ordonnance({ consultationId, patientData }) {
             </button>
             <button
               type="button"
-              className="flex-1 bg-ph  rounded-lg hover:text-white"
+              className="flex-1 darkBg  rounded-lg hover:text-white"
               onClick={() => setTraitmentDetails([])}
             >
               Annuler

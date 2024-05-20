@@ -32,7 +32,6 @@ function OrdonnanceModel({ traitmentDetails, patientData }) {
           </div>
           <div className="traitmentDetails p-3 text-center my-10">
             {traitmentDetails.map((item, index) => {
-              console.log(item);
               return (
                 <div key={item.id} className="flex justify-between">
                   <div className="flex items-center gap-x-3">

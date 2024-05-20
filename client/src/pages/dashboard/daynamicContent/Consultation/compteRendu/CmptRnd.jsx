@@ -32,7 +32,7 @@ function CmptRnd({ consultationId, patientId }) {
         if (checked && !title) {
           return Notify({
             type: "error",
-            message: "Veuillez remplir le champ du titre",
+            message: "Veuillez remplir le champ du nom du modèle",
           });
         }
         const res = await fetch("/api/compteRendu", {

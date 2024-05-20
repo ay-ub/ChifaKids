@@ -1,5 +1,5 @@
 const { medicament } = require("../Models/index.js");
-
+const { medicaments } = require("../data/dbData.js");
 const addMedicament = async (req, res) => {
   try {
     if (!req.body.name || !req.body.type || !req.body.dosage) {
@@ -13,59 +13,7 @@ const addMedicament = async (req, res) => {
     });
     // const newMedicament = await medicament.create(req.body);
 
-    const medications = [
-      {
-        name: "Metformin",
-        type: "Antidiabetic",
-        dosage: "1000Mg",
-      },
-      {
-        name: "Lisinopril",
-        type: "Antihypertensive",
-        dosage: "10Mg",
-      },
-      {
-        name: "Atorvastatin",
-        type: "Lipid-lowering agent",
-        dosage: "20Mg",
-      },
-      {
-        name: "Levothyroxine",
-        type: "Thyroid hormone replacement",
-        dosage: "50Mg",
-      },
-      {
-        name: "Paracetamol",
-        type: "Analgesic",
-        dosage: "500Mg",
-      },
-      {
-        name: "Omeprazole",
-        type: "Proton pump inhibitor",
-        dosage: "20Mg",
-      },
-      {
-        name: "Ciprofloxacin",
-        type: "Antibiotic",
-        dosage: "500Mg",
-      },
-      {
-        name: "Fluoxetine",
-        type: "Antidepressant",
-        dosage: "20Mg",
-      },
-      {
-        name: "Amlodipine",
-        type: "Antihypertensive",
-        dosage: "5Mg",
-      },
-      {
-        name: "Warfarin",
-        type: "Anticoagulant",
-        dosage: "2.5Mg",
-      },
-    ];
-    const newMedicament = await medicament.bulkCreate(medications);
+    const newMedicament = await medicament.bulkCreate(medicaments);
     return res.status(201).json({
       status: "success",
       data: { medicament: newMedicament },

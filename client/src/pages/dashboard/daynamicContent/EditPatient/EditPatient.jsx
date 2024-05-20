@@ -43,7 +43,7 @@ function EditPatient() {
   return (
     (patientData && (
       <div className="flex flex-col">
-        <SectionTitle title="Edit Patient" />
+        <SectionTitle title="Modifier Patient" />
         <div className="flex justify-center">
           <PatientForm patient={patientData} subFun={updatePatient} />
         </div>

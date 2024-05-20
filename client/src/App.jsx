@@ -14,6 +14,7 @@ import {
   EditMedicament,
   Settings,
   Bilan,
+  PaymenTable,
 } from "./pages";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { DoctorAuth, AdminAuth } from "./components";
@@ -42,7 +43,8 @@ function App() {
         <Route path="new-patient" element={<NewPatient />} />
         <Route path="edit-patient/:id" element={<EditPatient />} />
         <Route path="waiting" element={<Waiting />} />
-        <Route path="payments" element={<Payments />} />
+        <Route path="payments" element={<PaymenTable />} />
+        <Route path="payments/:id" element={<Payments />} />
         <Route element={<DoctorAuth />}>
           <Route path="bilan" element={<Bilan />} />
           <Route path="consultation/:patientId" element={<Consultation />} />

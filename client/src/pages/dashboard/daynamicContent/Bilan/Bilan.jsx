@@ -1,5 +1,4 @@
 import { SectionTitle } from "components";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Bilans } from "data";
 import { Button } from "@/components/ui/button";
 
@@ -16,7 +15,7 @@ function Bilan() {
             <div key={i} className="flex flex-col items-start gap-4">
               {bilan.map((item, j) => (
                 <div key={j} className=" flex-1 flex items-center space-x-2">
-                  <Checkbox id={`${i}${j}`} />
+                  <input type="checkbox" id={`${i}${j}`} className="w-5 h-5" />
                   <label
                     htmlFor={`${i}${j}`}
                     className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none text-nowrap"

@@ -1,4 +1,4 @@
-const { payment, patient } = require("../Models");
+const { payment, patient, actPayment, act } = require("../Models");
 const { Sequelize } = require("sequelize");
 const createPayment = async (req, res) => {
   try {
@@ -26,6 +26,13 @@ const createPayment = async (req, res) => {
       patientId,
       receivedAmount,
       paymentMethod,
+    });
+    // const acts = await act.bulkCreate(actsData);
+    actsData.forEach(async (act) => {
+      await actPayment.create({
+        paymentId: newPayment.id,
+        actId: act,
+      });
     });
     res.status(201).json({
       status: "success",
@@ -57,10 +64,12 @@ const getPayments = async (req, res) => {
         {
           model: payment,
           attributes: [],
+          // include
         },
       ],
       group: ["patient.id", "patient.firstName", "patient.lastName"],
     });
+
     res.status(200).json({
       status: "success",
       data: patients,
@@ -72,7 +81,37 @@ const getPayments = async (req, res) => {
     });
   }
 };
+const getPaymentOfPatient = async (req, res) => {
+  try {
+    const { patientId } = req.params;
+    if (!patientId) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Veuillez fournir l'identifiant du patient",
+      });
+    }
+    const patientExists = await patient.findByPk(patientId);
+    if (!patientExists) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Patient non trouvé",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      // data: patientPaymentsAndActs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createPayment,
   getPayments,
+  getPaymentOfPatient,
 };

@@ -1,21 +1,25 @@
 const { antecedent, patient, patientAntecedent } = require("../Models");
+const { antecedents } = require("../data/dbData");
 
 const createAntecedent = async (req, res) => {
   try {
-    const { name, type } = req.body;
-    if (!name || !type) {
-      return res
-        .status(400)
-        .json({ status: "failed", massage: "All fields are required" });
-    }
-    const newAntecedent = await antecedent.create({
-      name,
-      type,
-    });
-    if (newAntecedent) {
-      return res.status(201).json({ status: "success", data: newAntecedent });
-    }
-    res.status(400).json({ status: "failed", massage: "échoué à créer ." });
+    // const { name, type } = req.body;
+    // if (!name || !type) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: "failed", massage: "All fields are required" });
+    // }
+    // const newAntecedent = await antecedent.create({
+    //   name,
+    //   type,
+    // });
+    // if (newAntecedent) {
+    //   return res.status(201).json({ status: "success", data: newAntecedent });
+    // }
+    // res.status(400).json({ status: "failed", massage: "échoué à créer ." });
+    await antecedent.destroy({ where: {} });
+    await antecedent.bulkCreate(antecedents);
+    return res.status(201).json({ status: "success", data: antecedents });
   } catch (error) {
     res.status(400).json({ status: "error", massage: error.message });
   }

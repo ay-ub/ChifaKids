@@ -13,7 +13,11 @@ function NewPatient() {
   });
   return (
     <div>
-      <SectionTitle title="new Patient" />
+      <SectionTitle
+        title="
+      Nouveau Patient
+      "
+      />
       <div className="flex justify-center">
         <PatientForm patient={patientData} subFun={addPatient} />
       </div>

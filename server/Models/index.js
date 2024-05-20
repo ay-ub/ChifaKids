@@ -1,4 +1,5 @@
 const DataTypes = require("sequelize");
+const { patients, medicaments } = require("../data/dbData.js");
 const db = require("../config/dbConfig.js");
 const patientModel = require("./Patient.js");
 const medicamentModel = require("./Medicament.js");

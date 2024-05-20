@@ -72,7 +72,7 @@ function Consultation() {
             <TabsTrigger value="historique">Historique</TabsTrigger>
           </TabsList>
           <TabsContent value="nouveau">
-            <Tabs defaultValue="Compte" className="w-full ">
+            <Tabs defaultValue="consultation" className="w-full ">
               <TabsList className="tabs">
                 <TabsTrigger value="consultation">consultation </TabsTrigger>
                 <TabsTrigger value="Antécédents">Antécédents</TabsTrigger>
@@ -121,9 +121,6 @@ function Consultation() {
                   <TabsTrigger value="Courbes">Courbes graphiques</TabsTrigger>
                   <TabsTrigger value="Traitement">Traitement</TabsTrigger>
                   <TabsTrigger value="Compte">Compte rendu</TabsTrigger>
-                  <TabsTrigger value="Certificat">
-                    Certificat et Courrier
-                  </TabsTrigger>
                 </TabsList>
                 <DateRangeComponent
                   onDateChange={getConsultationByDate}
@@ -169,7 +166,6 @@ function Consultation() {
                   selectedDate={selectedDate}
                 />
               </TabsContent>
-              <TabsContent value="Certificat">FROM 5</TabsContent>
               <TabsContent value="Courbes">
                 <Courbes patientData={patientData} />
               </TabsContent>

@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import PaymentForm from "./PeymentForm";
 import OperationList from "./OperationList";
 import { Notify } from "utils";
+import { useParams } from "react-router-dom";
 
 function Payments() {
+  const { id } = useParams();
   const [totalPrice, setTotalPrice] = useState(0);
   const [RestPrice, setRestPrice] = useState(0);
   const [VersementPrice, setVersementPrice] = useState(0);
-
+  const [paymentAct, setPaymentAct] = useState([]);
   const {
     register,
     handleSubmit,
@@ -34,25 +36,32 @@ function Payments() {
   }, [VersementPrice, totalPrice]);
 
   const onSubmit = async (data) => {
-    console.log({ ...data, VersementPrice });
     if (VersementPrice == 0) {
       return Notify({
         type: "error",
         message: "Le versement doit être supérieur à 0",
       });
     }
+    console.log({
+      patientId: id,
+      receivedAmount: VersementPrice,
+      paymentMethod: "CASH",
+      paymentAct,
+    });
     const response = await fetch("/api/payment/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        patientId: 1,
+        patientId: id,
         receivedAmount: VersementPrice,
         paymentMethod: "CASH",
+        actsData: paymentAct,
       }),
     });
     const responseData = await response.json();
+    console.log(responseData);
     if (responseData.status == "success") {
       Notify({
         type: "success",
@@ -67,6 +76,7 @@ function Payments() {
     setVersementPrice(0);
     reset();
   };
+
   return (
     <div className="payment">
       <SectionTitle title="Règlement" />
@@ -77,6 +87,7 @@ function Payments() {
             <OperationList
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
+              setPaymentAct={setPaymentAct}
             />
           </div>
         </div>
