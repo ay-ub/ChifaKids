@@ -4,15 +4,32 @@ import { useAuth } from "hooks";
 import { mapPatients } from "./waitingFun";
 import { tableHeader } from "data";
 import { getPatients } from "utils";
+import { useSocket } from "hooks";
 
 function Waiting() {
   const [patients, setPatients] = useState([]);
   const [search, setSearch] = useState("");
   const { user } = useAuth();
+  const { socket, setNotificationCounter } = useSocket();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("newPatient", (newPatient) => {
+        console.log("newPatient", newPatient);
+        setPatients((prev) => [...prev, newPatient]);
+      });
+    }
+    return () => {
+      if (socket) {
+        socket.off("newPatient");
+      }
+    };
+  }, [socket]);
 
   // get all patients in first render
   useEffect(() => {
     getPatients(setPatients);
+    setNotificationCounter(0);
   }, []);
 
   // map patients

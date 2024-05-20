@@ -17,21 +17,23 @@ const {
   serviceRoute,
   paymentRoute,
 } = require("./routes/index.js");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const app = express();
-const server = createServer(app);
+// const { createServer } = require("http");
+// const { Server } = require("socket.io");
+// const app = express();
+const { app, server, io } = require("./socket/socket");
+
+// const server = createServer(app);
 app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:5173"],
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: ["http://localhost:5173"],
+//   },
+// });
 app.set("socketio", io);
 app.use(express.json());
 app.use(cookieParser());
@@ -55,17 +57,17 @@ app.use("/statistics", statistiqueRoute);
 app.use("/service", serviceRoute);
 app.use("/payment", paymentRoute);
 
-io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-  });
-  socket.on("sendNotification", (notification) => {
-    console.log("Received notification:", notification);
-    // socket.emit("notification", notification);
-    socket.broadcast.emit("notification", notification);
-  });
-});
+// io.on("connection", (socket) => {
+//   console.log("a user connected", socket.id);
+//   socket.on("chat message", (msg) => {
+//     console.log("message: " + msg);
+//   });
+//   socket.on("sendNotification", (notification) => {
+//     console.log("Received notification:", notification);
+//     // socket.emit("notification", notification);
+//     socket.broadcast.emit("notification", notification);
+//   });
+// });
 
 // const accountSid = "AC5f5aecab8a138273630dd12c7fc62009";
 // const authToken = "889a544b409a2f6d766c93218c8258df";

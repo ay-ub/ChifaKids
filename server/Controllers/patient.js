@@ -1,6 +1,6 @@
 const { patient } = require("../Models/index.js");
 const { patients } = require("../data/dbData.js");
-
+const { io } = require("../socket/socket.js");
 const addPatient = async (req, res) => {
   try {
     // const newPatient = await patient.create(req.body);
@@ -150,6 +150,9 @@ const addToWaitinRom = async (req, res) => {
         message: "patient not found",
       });
     } else {
+      const updatedPatient = await patient.findByPk(req.params.id);
+      io.emit("newNotification");
+      io.emit("newPatient", updatedPatient);
       return res.status(200).json({
         status: "success",
         massage: "patient added to waiting room",
