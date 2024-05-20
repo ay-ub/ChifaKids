@@ -1,5 +1,5 @@
 import { SectionTitle, SubTitle } from "components";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { FaBriefcaseMedical, FaSackDollar } from "assets/icon";
 import { useEffect, useState } from "react";
 import PaymentForm from "./PeymentForm";
@@ -8,7 +8,7 @@ import { Notify } from "utils";
 import { useParams } from "react-router-dom";
 
 function Payments() {
-  const { id } = useParams();
+  const { id, detteValue } = useParams();
   const [totalPrice, setTotalPrice] = useState(0);
   const [RestPrice, setRestPrice] = useState(0);
   const [VersementPrice, setVersementPrice] = useState(0);
@@ -20,20 +20,25 @@ function Payments() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      amountToBePaid: totalPrice,
-      previousDebts: 0,
+      previousDebts: detteValue,
       leftToPay: RestPrice,
       versement: 0,
     },
   });
 
-  useEffect(() => {
-    if (totalPrice > 0) {
-      setRestPrice(() => totalPrice - VersementPrice);
-    } else {
-      setRestPrice(0);
-    }
-  }, [VersementPrice, totalPrice]);
+  useEffect(() => {}, [VersementPrice, totalPrice]);
+
+  // useEffect(() => {
+  //   setRestPrice(() => {
+  //     return (
+  //       parseFloat(
+  //         parseFloat(totalPrice) +
+  //           parseFloat(detteValue) -
+  //           parseFloat(VersementPrice)
+  //       ) || parseFloat(totalPrice) + parseFloat(detteValue)
+  //     );
+  //   });
+  // }, [VersementPrice, totalPrice]);
 
   const onSubmit = async (data) => {
     console.log({
@@ -96,6 +101,7 @@ function Payments() {
             setVersementPrice={setVersementPrice}
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
+            detteValue={detteValue}
           />
         </div>
       </div>

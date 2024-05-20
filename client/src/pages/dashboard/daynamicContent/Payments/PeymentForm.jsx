@@ -7,6 +7,7 @@ function PeymentForm({
   errors,
   handleSubmit,
   onSubmit,
+  detteValue,
 }) {
   return (
     <div className="py-4  ">
@@ -35,14 +36,14 @@ function PeymentForm({
         </div>
         <div className="input-group flex-1 px-8">
           <label htmlFor="amounttobepaid" className="text-nowrap">
-            Montant à payer:
+            Montant à payer (total + dette) :
           </label>
           <input
             type="number"
             min={0}
             id="amounttobepaid"
             placeholder="0000 DA"
-            value={totalPrice}
+            value={parseFloat(totalPrice) + parseFloat(detteValue)}
             readOnly
             {...register("amountToBePaid", {
               required: {

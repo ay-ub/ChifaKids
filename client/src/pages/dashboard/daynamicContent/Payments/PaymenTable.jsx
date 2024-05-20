@@ -112,7 +112,15 @@ function PaymenTable() {
             <ToolTip
               trigger={
                 <Link
-                  to={`/dashboard/payments/${patient.id}`}
+                  to={`/dashboard/payments/${patient.id}/${
+                    parseFloat(
+                      patient?.totalActPrice - patient?.totalReceivedAmount
+                    ) < 0
+                      ? 0
+                      : parseFloat(
+                          patient?.totalActPrice - patient?.totalReceivedAmount
+                        )
+                  }`}
                   className="select-none"
                 >
                   <FaSackDollar className="text-2xl" />
