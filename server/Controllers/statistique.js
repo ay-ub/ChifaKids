@@ -1,11 +1,6 @@
-const {
-  patient,
-  consultation,
-
-  doctor,
-  user,
-} = require("../Models");
+const { patient, consultation, doctor, user } = require("../Models");
 const sequelize = require("sequelize");
+const db = require("../config/dbConfig");
 
 const getAllStatistique = async (req, res) => {
   try {
@@ -45,6 +40,14 @@ const getAllStatistique = async (req, res) => {
       subQuery: false,
     });
 
+    const [mostAntecedent] =
+      await db.query(`SELECT a.name, COUNT(pa.antecedentId) AS count
+FROM patientAntecedents pa
+JOIN antecedents a ON pa.antecedentId = a.id
+GROUP BY pa.antecedentId, a.name
+ORDER BY count DESC
+LIMIT 5;`);
+
     res.status(200).json({
       status: "success",
       data: {
@@ -53,6 +56,7 @@ const getAllStatistique = async (req, res) => {
         nbrUsers,
         totalNbrConsultation,
         topDoctors,
+        mostAntecedent,
       },
     });
   } catch (error) {
