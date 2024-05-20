@@ -23,7 +23,7 @@ function Payments() {
       amountToBePaid: totalPrice,
       previousDebts: 0,
       leftToPay: RestPrice,
-      versement: VersementPrice,
+      versement: 0,
     },
   });
 
@@ -36,12 +36,6 @@ function Payments() {
   }, [VersementPrice, totalPrice]);
 
   const onSubmit = async (data) => {
-    if (VersementPrice == 0) {
-      return Notify({
-        type: "error",
-        message: "Le versement doit être supérieur à 0",
-      });
-    }
     console.log({
       patientId: id,
       receivedAmount: VersementPrice,
