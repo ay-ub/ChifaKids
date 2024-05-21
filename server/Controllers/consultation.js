@@ -1,58 +1,61 @@
 const { consultation, doctor, patient } = require("../Models");
 const { Op } = require("sequelize");
+const { ConsultationData } = require("../data/dbData");
 
 const createConsultation = async (req, res) => {
   try {
-    const { doctorId, patientId } = req.body;
-    if (!doctorId || !patientId) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Doctor id and Patient id are required",
-      });
-    }
-    const Doctor = await doctor.findByPk(doctorId);
-    const Patient = await patient.findByPk(patientId);
-    if (!Doctor) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Doctor not found",
-      });
-    }
-    if (!Patient) {
-      return res.status(404).json({
-        status: "fail",
-        message: "Patient not found",
-      });
-    }
-    const newConsultation = await consultation.create({
-      ...req.body,
-      weight: parseFloat(req.body.weight),
-      height: parseFloat(req.body.height),
-      glycemie: parseFloat(req.body.glycemie),
-      urea: parseFloat(req.body.urea),
-      creatine: parseFloat(req.body.creatine),
-      crp: parseFloat(req.body.crp),
-    });
-    await patient.update(
-      {
-        isWaiting: false,
-      },
-      {
-        where: {
-          id: patientId,
-        },
-      }
-    );
-    await patient.update(
-      {
-        isWaiting: false,
-      },
-      {
-        where: {
-          id: patientId,
-        },
-      }
-    );
+    // const { doctorId, patientId } = req.body;
+    // if (!doctorId || !patientId) {
+    //   return res.status(400).json({
+    //     status: "fail",
+    //     message: "Doctor id and Patient id are required",
+    //   });
+    // }
+    // const Doctor = await doctor.findByPk(doctorId);
+    // const Patient = await patient.findByPk(patientId);
+    // if (!Doctor) {
+    //   return res.status(404).json({
+    //     status: "fail",
+    //     message: "Doctor not found",
+    //   });
+    // }
+    // if (!Patient) {
+    //   return res.status(404).json({
+    //     status: "fail",
+    //     message: "Patient not found",
+    //   });
+    // }
+    // const newConsultation = await consultation.create({
+    //   ...req.body,
+    //   weight: parseFloat(req.body.weight),
+    //   height: parseFloat(req.body.height),
+    //   glycemie: parseFloat(req.body.glycemie),
+    //   urea: parseFloat(req.body.urea),
+    //   creatine: parseFloat(req.body.creatine),
+    //   crp: parseFloat(req.body.crp),
+    // });
+    // await patient.update(
+    //   {
+    //     isWaiting: false,
+    //   },
+    //   {
+    //     where: {
+    //       id: patientId,
+    //     },
+    //   }
+    // );
+    // await patient.update(
+    //   {
+    //     isWaiting: false,
+    //   },
+    //   {
+    //     where: {
+    //       id: patientId,
+    //     },
+    //   }
+    // );
+    const destroy = await consultation.destroy({ where: {} });
+    const newConsultation = await consultation.bulkCreate(ConsultationData);
     return res.status(201).json({
       status: "success",
       data: newConsultation,

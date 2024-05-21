@@ -1,39 +1,39 @@
 import { ResponsivePie } from "@nivo/pie";
 import { useTheme } from "hooks";
 
-const data = [
-  {
-    id: "css",
-    label: "css",
-    value: 141,
-    color: "hsl(37, 70%, 50%)",
-  },
-  {
-    id: "lisp",
-    label: "lisp",
-    value: 97,
-    color: "hsl(133, 70%, 50%)",
-  },
-  {
-    id: "rust",
-    label: "rust",
-    value: 255,
-    color: "hsl(185, 70%, 50%)",
-  },
-  {
-    id: "sass",
-    label: "sass",
-    value: 14,
-    color: "hsl(264, 70%, 50%)",
-  },
-  {
-    id: "ruby",
-    label: "ruby",
-    value: 462,
-    color: "hsl(272, 70%, 50%)",
-  },
-];
-const MyResponsivePie = () => {
+// const data = [
+//   {
+//     id: "css",
+//     label: "css",
+//     value: 141,
+//     color: "hsl(37, 70%, 50%)",
+//   },
+//   {
+//     id: "lisp",
+//     label: "lisp",
+//     value: 97,
+//     color: "hsl(133, 70%, 50%)",
+//   },
+//   {
+//     id: "rust",
+//     label: "rust",
+//     value: 255,
+//     color: "hsl(185, 70%, 50%)",
+//   },
+//   {
+//     id: "sass",
+//     label: "sass",
+//     value: 14,
+//     color: "hsl(264, 70%, 50%)",
+//   },
+//   {
+//     id: "ruby",
+//     label: "ruby",
+//     value: 462,
+//     color: "hsl(272, 70%, 50%)",
+//   },
+// ];
+const MyResponsivePie = ({ data }) => {
   const { theme } = useTheme();
   return (
     <ResponsivePie

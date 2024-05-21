@@ -1,10 +1,10 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "hooks";
 
-export default function Chart({ data, xTitle, yTitle }) {
+export default function Chart({ data, xTitle, yTitle, hight }) {
   const { theme } = useTheme();
   return (
-    <div className="h-[400px] w-full ">
+    <div className={`${hight ? hight : "h-[400px]"} w-full`}>
       <ResponsiveLine
         theme={{
           background: theme === "dark" ? "#030712" : "#f5f5f5",

@@ -12,10 +12,15 @@ import {
 } from "@/components/ui/popover";
 import { useEffect } from "react";
 
-function DateRangeComponent({ className, onDateChange, setSelectedDate }) {
+function DateRangeComponent({
+  className,
+  onDateChange,
+  setSelectedDate,
+  nbrDays,
+}) {
   const [date, setDate] = useState({
-    from: addDays(new Date(), -90),
-    to: new Date(),
+    from: nbrDays ? new Date() : addDays(new Date(), -90),
+    to: nbrDays ? addDays(new Date(), nbrDays) : new Date(),
   });
 
   useEffect(() => {
@@ -58,7 +63,7 @@ function DateRangeComponent({ className, onDateChange, setSelectedDate }) {
             initialFocus
             mode="range"
             defaultMonth={date?.from}
-            toDate={new Date()}
+            toDate={nbrDays ? addDays(new Date(), nbrDays) : new Date()}
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}

@@ -1,14 +1,13 @@
 import { handleTheme } from "../layout/dashboardLayout/DushFun";
 import { FaBell, IoIosArrowDown } from "assets/icon/index";
 import { PopUp } from "components";
-import { useTheme, useContxt, useAuth, useSocket } from "hooks";
-import { useState } from "react";
+import { useTheme, useAuth, useSocket } from "hooks";
 import { useLocation } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 function Header() {
   const auth = useAuth();
   const { theme, setTheme } = useTheme();
-  //   const { notification, setNotification } = useContxt();
-  //   const [newNotification, setNewNotification] = useState(false);
   const location = useLocation();
   const { notificationCounter } = useSocket();
 
@@ -73,7 +72,18 @@ function Header() {
           </div>
         }
         body={
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos?"
+          <Tabs defaultValue="account" className="w-[400px]">
+            <TabsList>
+              <TabsTrigger value="account">Account</TabsTrigger>
+              <TabsTrigger value="password">Password</TabsTrigger>
+            </TabsList>
+            <TabsContent value="account">
+              Make changes to your account here.
+            </TabsContent>
+            <TabsContent value="password">
+              Change your password here.
+            </TabsContent>
+          </Tabs>
         }
       />
     </header>

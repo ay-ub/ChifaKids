@@ -77,34 +77,39 @@ function PaymenTable() {
           <td className="select-none">{patient?.firstName}</td>
           <td className="select-none">{patient?.totalReceivedAmount}</td>
           <td className="select-none">
-            {parseFloat(patient?.totalActPrice - patient?.totalReceivedAmount)}
+            {parseFloat(patient?.totalActPrice - patient?.totalReceivedAmount) >
+            0
+              ? parseFloat(
+                  patient?.totalActPrice - patient?.totalReceivedAmount
+                )
+              : 0}
           </td>
           <td className="select-none">
             {(parseFloat(patient?.totalActPrice) === 0 &&
               parseFloat(patient?.totalReceivedAmount) === 0 && (
                 <div className="bg-gray-500 text-white px-2 py-1 rounded-full">
-                  non défini
+                  inactif
                 </div>
               )) ||
               (parseFloat(
                 patient?.totalActPrice - patient?.totalReceivedAmount
               ) === 0 && (
                 <div className="bg-green-500 text-white px-2 py-1 rounded-full">
-                  payé
+                  complet
                 </div>
               )) ||
               (parseFloat(
                 patient?.totalActPrice - patient?.totalReceivedAmount
               ) > 0 && (
                 <div className="bg-red-500 text-white px-2 py-1 rounded-full">
-                  impayé
+                  Dette
                 </div>
               )) ||
               (parseFloat(
                 patient?.totalActPrice - patient?.totalReceivedAmount
               ) < 0 && (
-                <div className="bg-yellow-500 text-white px-2 py-1 rounded-full">
-                  avance
+                <div className="bg-green-500 text-white px-2 py-1 rounded-full">
+                  payé
                 </div>
               ))}
           </td>

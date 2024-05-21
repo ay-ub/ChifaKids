@@ -1,5 +1,5 @@
 import { SectionTitle, SubTitle } from "components";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FaBriefcaseMedical, FaSackDollar } from "assets/icon";
 import { useEffect, useState } from "react";
 import PaymentForm from "./PeymentForm";
@@ -26,7 +26,15 @@ function Payments() {
     },
   });
 
-  useEffect(() => {}, [VersementPrice, totalPrice]);
+  useEffect(() => {
+    setRestPrice(() => {
+      return parseFloat(
+        parseFloat(totalPrice) +
+          parseFloat(detteValue) -
+          parseFloat(VersementPrice)
+      );
+    });
+  }, [VersementPrice, totalPrice]);
 
   // useEffect(() => {
   //   setRestPrice(() => {
@@ -47,6 +55,13 @@ function Payments() {
       paymentMethod: "CASH",
       paymentAct,
     });
+    if (parseFloat(totalPrice) + parseFloat(detteValue) < 0) {
+      Notify({
+        type: "error",
+        message: "le versement doit être supérieur à 0",
+      });
+      return;
+    }
     const response = await fetch("/api/payment/", {
       method: "POST",
       headers: {

@@ -1,7 +1,7 @@
 import { calculateAge } from "utils";
 import { useAuth } from "hooks";
 
-function OrdonnanceModel({ patientData, nbrJours, dateDebut, dateFin }) {
+function OrdonnanceModel({ patientData, selectedDate }) {
   const auth = useAuth();
   return (
     <div className="ordonnanceDocument hidden">
@@ -35,8 +35,9 @@ function OrdonnanceModel({ patientData, nbrJours, dateDebut, dateFin }) {
           <div className="traitmentDetails p-3 text-center my-10">
             je soussigné Dr, {auth.user.lastName} , certifie avoir <br />
             examiné (e) ce jour le (a) sus nomme(é) <br /> et atteste que son
-            état de santé nécessite <br /> un arrêt de travail de {nbrJours}
-            jours du {dateDebut} au {dateFin} .
+            état de santé nécessite <br /> un arrêt de travail du{" "}
+            {selectedDate.from}
+            au {selectedDate.to} .
           </div>
         </div>
         <div>

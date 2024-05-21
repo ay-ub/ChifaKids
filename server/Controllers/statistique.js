@@ -1,5 +1,6 @@
-const { patient, consultation, doctor, user } = require("../Models");
+const { patient, consultation, doctor, user, payment } = require("../Models");
 const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 const db = require("../config/dbConfig");
 
 const getAllStatistique = async (req, res) => {
@@ -41,12 +42,38 @@ const getAllStatistique = async (req, res) => {
     });
 
     const [mostAntecedent] =
-      await db.query(`SELECT a.name, COUNT(pa.antecedentId) AS count
-FROM patientAntecedents pa
-JOIN antecedents a ON pa.antecedentId = a.id
-GROUP BY pa.antecedentId, a.name
-ORDER BY count DESC
-LIMIT 5;`);
+      await db.query(`SELECT a.name AS label, COUNT(pa."antecedentId") AS value
+            FROM "patientAntecedents" pa
+            JOIN "antecedents" a ON "pa"."antecedentId" = a.id
+            GROUP BY "pa"."antecedentId", a.name
+            ORDER BY value DESC
+            LIMIT 4;`);
+
+    const [mostMedicament] =
+      await db.query(`SELECT m."name" AS label, COUNT(p."medicamentId") AS value
+                        FROM "prescriptions" p
+                        JOIN "medicaments" m ON p."medicamentId" = m.id
+                        GROUP BY p."medicamentId", m."name"
+                        ORDER BY value DESC
+                        LIMIT 4;`);
+
+    const today = new Date();
+    const lastMonth = new Date();
+    lastMonth.setMonth(today.getMonth() - 1);
+
+    const totalAmount = await payment.findAll({
+      attributes: [
+        [sequelize.fn("DATE", sequelize.col("date")), "x"],
+        [sequelize.fn("SUM", sequelize.col("receivedAmount")), "y"],
+      ],
+      where: {
+        date: {
+          [Op.gte]: lastMonth,
+        },
+      },
+      group: [sequelize.fn("DATE", sequelize.col("date"))],
+      order: [[sequelize.fn("DATE", sequelize.col("date")), "ASC"]],
+    });
 
     res.status(200).json({
       status: "success",
@@ -57,6 +84,8 @@ LIMIT 5;`);
         totalNbrConsultation,
         topDoctors,
         mostAntecedent,
+        mostMedicament,
+        totalAmount,
       },
     });
   } catch (error) {
