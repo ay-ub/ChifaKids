@@ -64,9 +64,37 @@ const deleteAppointment = async (req, res) => {
     return res.status(500).json({ staus: "error", error: error.message });
   }
 };
+
+const getNumbers = async (req, res) => {
+  try {
+    const today = new Date();
+    const twoDaysLater = new Date(today.getTime() + 2 * 24 * 60 * 60 * 1000);
+
+    const appointments = await appointment.findAll({
+      attributes: ["date", "time"],
+      where: {
+        date: twoDaysLater,
+      },
+      include: {
+        model: patient,
+        attributes: ["numberPhone", "firstName", "lastName"],
+      },
+    });
+
+    console.log("appointments:", appointments);
+    console.log("Notification sent");
+
+    return res.status(200).json({ status: "success", data: appointments });
+  } catch (error) {
+    console.error("Error sending notifications:", error);
+    return res.status(500).json({ status: "error", error: error.message });
+  }
+};
+
 module.exports = {
   createAppointment,
   getAllAppointments,
   updateAppointment,
   deleteAppointment,
+  getNumbers,
 };
