@@ -17,14 +17,17 @@ function OrdonnanceModel({ traitmentDetails, patientData }) {
             <div className="ordonnanceHeaderLeft">
               <p>Nom: {patientData.firstName}</p>
               <p>Prénom: {patientData.lastName}</p>
-              <p>Age: {calculateAge(new Date(), patientData.dateOfBirth)}</p>
+              <p>
+                Age: {calculateAge(new Date(), patientData.dateOfBirth)} mois
+              </p>
               <p>Date:{new Date().toLocaleDateString()}</p>
             </div>
-            <div className="ordonnanceHeaderRight">
-              <p>Doctor:......................................</p>
-              <p>Spécialité:.................................</p>
-              <p>Adresse:....................................</p>
-              <p>Tél:.............................................</p>
+            <div className="ordonnanceHeaderRight text-right">
+              <p>طب و استعجالات الاطفال</p>
+              <p>مرض السكري عند الأطفال</p>
+              <p>الحساسبة و الربو عند الأطفال </p>
+              <p>مخطط القلب ايكوغرافيا</p>
+              <p>العلاج الطبيعي التنفسي</p>
             </div>
           </div>
           <div className="text-2xl text-center font-bold italic text-blue-500">

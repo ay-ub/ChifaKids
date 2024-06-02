@@ -1,4 +1,5 @@
 import { InputError } from "components";
+import { useEffect } from "react";
 function PeymentForm({
   totalPrice,
   RestPrice,
@@ -7,6 +8,7 @@ function PeymentForm({
   errors,
   handleSubmit,
   onSubmit,
+  detteValue,
 }) {
   return (
     <div className="py-4  ">
@@ -35,14 +37,14 @@ function PeymentForm({
         </div>
         <div className="input-group flex-1 px-8">
           <label htmlFor="amounttobepaid" className="text-nowrap">
-            Montant à payer:
+            Montant à payer (total + dette) :
           </label>
           <input
             type="number"
             min={0}
             id="amounttobepaid"
             placeholder="0000 DA"
-            value={totalPrice}
+            value={parseFloat(totalPrice) + parseFloat(detteValue)}
             readOnly
             {...register("amountToBePaid", {
               required: {
@@ -69,18 +71,23 @@ function PeymentForm({
         </div>
         <div className="input-group flex-1 px-8 mt-6">
           <label htmlFor="leftToPay" className="text-nowrap">
-            Rest à payer:
+            Rest à payer :
           </label>
           <input
             type="number"
             readOnly
             id="leftToPay"
             placeholder="0000 DA"
+            min="0"
             value={RestPrice}
             {...register("leftToPay", {
               required: {
                 value: true,
                 message: "left To Pay is required",
+              },
+              max: {
+                value: parseFloat(totalPrice) + parseFloat(detteValue),
+                message: "le montant à payer est supérieur à la dette",
               },
             })}
             className={`${errors.leftToPay ? "inValid" : null}`}

@@ -44,7 +44,7 @@ function App() {
         <Route path="edit-patient/:id" element={<EditPatient />} />
         <Route path="waiting" element={<Waiting />} />
         <Route path="payments" element={<PaymenTable />} />
-        <Route path="payments/:id" element={<Payments />} />
+        <Route path="payments/:id/:detteValue" element={<Payments />} />
         <Route element={<DoctorAuth />}>
           <Route path="bilan" element={<Bilan />} />
           <Route path="consultation/:patientId" element={<Consultation />} />

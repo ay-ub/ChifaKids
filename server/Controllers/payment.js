@@ -1,9 +1,10 @@
 const { payment, patient, actPayment, act } = require("../Models");
+const { paymentData } = require("../data/dbData");
 const { Sequelize } = require("sequelize");
 const createPayment = async (req, res) => {
   try {
     const { patientId, receivedAmount, paymentMethod, actsData } = req.body;
-    if (!patientId || !receivedAmount) {
+    if (!patientId) {
       return res.status(400).json({
         status: "fail",
         message: "Veuillez remplir tous les champs",
@@ -27,7 +28,6 @@ const createPayment = async (req, res) => {
       receivedAmount,
       paymentMethod,
     });
-    // const acts = await act.bulkCreate(actsData);
     actsData.forEach(async (act) => {
       await actPayment.create({
         paymentId: newPayment.id,
@@ -64,15 +64,33 @@ const getPayments = async (req, res) => {
         {
           model: payment,
           attributes: [],
-          // include
+          // include: [
+          //   {
+          //     model: act,
+          //   },
+          // ],
         },
       ],
       group: ["patient.id", "patient.firstName", "patient.lastName"],
     });
 
+    const patientsWithPayment = await patient.findAll({
+      attributes: ["id", "firstName", "lastName"],
+      include: [
+        {
+          model: payment,
+          include: [
+            {
+              model: act,
+            },
+          ],
+        },
+      ],
+    });
     res.status(200).json({
       status: "success",
-      data: patients,
+      // patientsWithPayment,
+      data: patientsWithPayment,
     });
   } catch (error) {
     res.status(500).json({
@@ -81,6 +99,7 @@ const getPayments = async (req, res) => {
     });
   }
 };
+
 const getPaymentOfPatient = async (req, res) => {
   try {
     const { patientId } = req.params;

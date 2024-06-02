@@ -1,12 +1,28 @@
-import { SectionTitle, CardModel, PieChart } from "components";
+import { SectionTitle, CardModel, PieChart, Chart } from "components";
 import { FaFemale, FaStethoscope, FaMale, MdGroups } from "assets/icon";
 import { motion } from "framer-motion";
 const iconStyle = "text-3xl text-muted-foreground";
 const divStyle = "border rounded-md p-4 h-[410px]";
 import { useState, useEffect } from "react";
-import { container, item } from "data";
+import { container } from "data";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 function Statistics() {
   const [statisticsData, setStatisticsData] = useState([]);
+  const [mostAntecedent, setMostAntecedent] = useState([]);
+  const [mostMedicament, setMostMedicament] = useState([]);
+  const [peymentData, setPeymentData] = useState([]);
+  const formatData = (data, setFun) => {
+    const formatedData = [];
+    data.forEach((element) => {
+      const obj = {};
+      obj.id = element?.label;
+      obj.label = element?.label;
+      obj.value = element?.value;
+      formatedData.push(obj);
+    });
+    setFun(formatedData);
+  };
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
@@ -14,8 +30,23 @@ function Statistics() {
         const data = await response.json();
 
         if (data.status === "success" && data.data) {
-          console.log(data.data);
           setStatisticsData(data.data);
+          formatData(data.data.mostAntecedent, setMostAntecedent);
+          formatData(data.data.mostMedicament, setMostMedicament);
+          const obj = {
+            id: "Montant total",
+            label: "Montant total",
+            data: null,
+          };
+          let dataValues = [];
+          data?.data?.totalAmount.map((element, index) => {
+            dataValues.push({
+              x: index + 1,
+              y: element?.y,
+            });
+          });
+          obj.data = dataValues;
+          setPeymentData((prev) => [...prev, obj]);
         }
       } catch (error) {
         console.log(error);
@@ -55,7 +86,32 @@ function Statistics() {
         </div>
         <div className="flex gap-5 items-start mt-5">
           <div className={`left flex-1 ${divStyle}`}>
-            <PieChart />
+            <Tabs defaultValue="Antecedent" className="w-full">
+              <TabsList>
+                <TabsTrigger value="Antecedent">
+                  Antécédents et médicaments
+                </TabsTrigger>
+                <TabsTrigger value="Peyment">Montant total</TabsTrigger>
+              </TabsList>
+              <TabsContent value="Antecedent">
+                <div className="h-[330px] flex w-full gap-5">
+                  {mostAntecedent && <PieChart data={mostAntecedent} />}
+                  {mostMedicament && <PieChart data={mostMedicament} />}
+                </div>
+              </TabsContent>
+              <TabsContent value="Peyment">
+                <div className="h-[350px]">
+                  {peymentData && (
+                    <Chart
+                      data={peymentData}
+                      xTitle={"jours"}
+                      yTitle={"Montant total (Da)"}
+                      hight="h-full"
+                    />
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
           <div className={`right w-[380px] ${divStyle}`}>
             <SectionTitle title="Plus actif" />

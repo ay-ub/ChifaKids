@@ -149,7 +149,6 @@ function Settings() {
           <div className="flex-1 border rounded-sm overflow-hidden  p-4 flex flex-col gap-4">
             <div className="flex justify-between gap-3 items-center">
               <SectionTitle title="Actes " />
-
               <Dialog
                 btn={<Button variant="outline">Nouveau</Button>}
                 header={

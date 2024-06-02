@@ -1,5 +1,6 @@
 const { consultation, doctor, patient } = require("../Models");
 const { Op } = require("sequelize");
+const { ConsultationData } = require("../data/dbData");
 
 const createConsultation = async (req, res) => {
   try {
@@ -43,16 +44,8 @@ const createConsultation = async (req, res) => {
         },
       }
     );
-    await patient.update(
-      {
-        isWaiting: false,
-      },
-      {
-        where: {
-          id: patientId,
-        },
-      }
-    );
+    // const destroy = await consultation.destroy({ where: {} });
+    // const newConsultation = await consultation.bulkCreate(ConsultationData);
     return res.status(201).json({
       status: "success",
       data: newConsultation,
