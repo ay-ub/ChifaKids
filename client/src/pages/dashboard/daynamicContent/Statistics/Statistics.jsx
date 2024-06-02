@@ -86,18 +86,20 @@ function Statistics() {
         </div>
         <div className="flex gap-5 items-start mt-5">
           <div className={`left flex-1 ${divStyle}`}>
-            <Tabs defaultValue="account" className="w-full">
+            <Tabs defaultValue="Antecedent" className="w-full">
               <TabsList>
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
+                <TabsTrigger value="Antecedent">
+                  Antécédents et médicaments
+                </TabsTrigger>
+                <TabsTrigger value="Peyment">Montant total</TabsTrigger>
               </TabsList>
-              <TabsContent value="account">
+              <TabsContent value="Antecedent">
                 <div className="h-[330px] flex w-full gap-5">
                   {mostAntecedent && <PieChart data={mostAntecedent} />}
                   {mostMedicament && <PieChart data={mostMedicament} />}
                 </div>
               </TabsContent>
-              <TabsContent value="password">
+              <TabsContent value="Peyment">
                 <div className="h-[350px]">
                   {peymentData && (
                     <Chart

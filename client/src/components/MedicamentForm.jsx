@@ -42,6 +42,7 @@ function MedicamentForm({ medicament, submitFun }) {
       dosage: `${medicamentData.dosage}${dosageUnit}`,
       type: typeOfDrug,
     });
+    reset();
   };
 
   useEffect(() => {
@@ -133,21 +134,13 @@ function MedicamentForm({ medicament, submitFun }) {
           </Select>
         </div>
       </div>
-      <div className="flex gap-5">
+      <div className="flex justify-center">
         <button
           type="submit"
-          className="flex-1 bg-p mt-5 rounded-md text-white"
+          className="bg-p mt-5 rounded-md p-2 px-4 text-white"
         >
           {medicament.name ? "Modifier le médicament" : "Ajouter le médicament"}
         </button>
-        <Button
-          onClick={() => {
-            reset();
-          }}
-          className="flex-1 border bg-ph inline-block mt-5 p-2 rounded-md textColor"
-        >
-          RESET
-        </Button>
       </div>
     </form>
   );

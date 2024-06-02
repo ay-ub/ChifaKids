@@ -93,9 +93,9 @@ function PaymenTable() {
               )) ||
               (parseFloat(
                 patient?.totalActPrice - patient?.totalReceivedAmount
-              ) === 0 && (
+              ) <= 0 && (
                 <div className="bg-green-500 text-white px-2 py-1 rounded-full">
-                  complet
+                  Payé
                 </div>
               )) ||
               (parseFloat(
@@ -103,13 +103,6 @@ function PaymenTable() {
               ) > 0 && (
                 <div className="bg-red-500 text-white px-2 py-1 rounded-full">
                   Dette
-                </div>
-              )) ||
-              (parseFloat(
-                patient?.totalActPrice - patient?.totalReceivedAmount
-              ) < 0 && (
-                <div className="bg-green-500 text-white px-2 py-1 rounded-full">
-                  payé
                 </div>
               ))}
           </td>
@@ -149,7 +142,7 @@ function PaymenTable() {
           {patients.length > 0 && (
             <Btn
               btnFun={() => {
-                writeFile(patients, "patients");
+                writeFile(patients, "Règlement Liste");
               }}
               text="Exporter"
               icon={<SiMicrosoftexcel />}

@@ -144,7 +144,7 @@ export default function Chart({ data, xTitle, yTitle, hight }) {
           tickPadding: 5,
           tickRotation: 0,
           legend: yTitle,
-          legendOffset: -40,
+          legendOffset: -50,
           legendPosition: "middle",
           truncateTickAt: 0,
         }}

@@ -63,7 +63,8 @@ function DateRangeComponent({
             initialFocus
             mode="range"
             defaultMonth={date?.from}
-            toDate={nbrDays ? addDays(new Date(), nbrDays) : new Date()}
+            fromDate={addDays(new Date(), -90)}
+            toDate={new Date()}
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}

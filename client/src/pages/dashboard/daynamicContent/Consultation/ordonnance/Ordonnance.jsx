@@ -128,13 +128,14 @@ function Ordonnance({ consultationId, patientData }) {
       });
       const data = await res.json();
       if (data.status === "success") {
-        Notify({ type: "success", message: "ordonnance a été ajouté." });
         if (isSaved) {
           getSavedOrdonnance();
           setTitle("");
           setIsSaved(false);
         }
+        await getSavedOrdonnance();
         window.print();
+        Notify({ type: "success", message: "ordonnance a été ajouté." });
         setTraitmentDetails([]);
       } else {
         Notify({ type: "error", message: data.message });
@@ -463,7 +464,7 @@ function Ordonnance({ consultationId, patientData }) {
             </button>
             <button
               type="button"
-              className="flex-1 darkBg  rounded-lg hover:text-white"
+              className="flex-1 darkBg  rounded-lg text-black"
               onClick={() => setTraitmentDetails([])}
             >
               Annuler

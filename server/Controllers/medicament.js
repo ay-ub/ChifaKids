@@ -8,12 +8,11 @@ const addMedicament = async (req, res) => {
         message: "name, type, and dosage are required",
       });
     }
-    const deleteMedicament = await medicament.destroy({
-      where: {},
-    });
-    // const newMedicament = await medicament.create(req.body);
-
-    const newMedicament = await medicament.bulkCreate(medicaments);
+    // const deleteMedicament = await medicament.destroy({
+    //   where: {},
+    // });
+    // const newMedicament = await medicament.bulkCreate(medicaments);
+    const newMedicament = await medicament.create(req.body);
     return res.status(201).json({
       status: "success",
       data: { medicament: newMedicament },

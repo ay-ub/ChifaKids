@@ -3,16 +3,16 @@ const { patients } = require("../data/dbData.js");
 const { io } = require("../socket/socket.js");
 const addPatient = async (req, res) => {
   try {
-    // const newPatient = await patient.create(req.body);
+    const newPatient = await patient.create(req.body);
+    res.status(201).json({
+      status: "success",
+      data: newPatient,
+    });
+    // await patient.bulkCreate(patients);
     // res.status(201).json({
     //   status: "success",
     //   data: newPatient,
     // });
-    await patient.bulkCreate(patients);
-    res.status(201).json({
-      status: "success",
-      data: patients,
-    });
   } catch (error) {
     res.status(500).json({
       status: "error",

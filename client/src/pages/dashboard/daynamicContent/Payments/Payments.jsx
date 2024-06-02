@@ -6,7 +6,7 @@ import PaymentForm from "./PeymentForm";
 import OperationList from "./OperationList";
 import { Notify } from "utils";
 import { useParams } from "react-router-dom";
-
+import { calculateAge } from "utils";
 function Payments() {
   const { id, detteValue } = useParams();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -48,6 +48,18 @@ function Payments() {
   //   });
   // }, [VersementPrice, totalPrice]);
 
+  const [patientData, setPatientData] = useState({});
+  useEffect(() => {
+    const getPatientData = async () => {
+      const res = await fetch(`/api/patients/${id}`);
+      const data = await res.json();
+      if (data.status === "success") {
+        console.log(data.data.patient);
+        setPatientData(data.data.patient);
+      }
+    };
+    getPatientData();
+  }, [id]);
   const onSubmit = async (data) => {
     console.log({
       patientId: id,
@@ -93,7 +105,18 @@ function Payments() {
 
   return (
     <div className="payment">
-      <SectionTitle title="Règlement" />
+      <div className="consultationHeader flex items-center justify-between">
+        <SectionTitle title="Règlement" />
+        <div className="flex gap-4">
+          <div className="user-data text-xl capitalize">
+            <span>{`${patientData.firstName} ${patientData.lastName}`}</span>
+            <span>
+              {" "}
+              Âge : {calculateAge(new Date(), patientData.dateOfBirth)} mois.
+            </span>
+          </div>
+        </div>
+      </div>
       <div className="paymentsContent mt-4 p-4 flex items-center gap-7 flex-wrap">
         <div className="acts flex-1 bg-lightDark rounded-md h-[550px]">
           <div className="displayActs">

@@ -1,4 +1,5 @@
 const { payment, patient, actPayment, act } = require("../Models");
+const { paymentData } = require("../data/dbData");
 const { Sequelize } = require("sequelize");
 const createPayment = async (req, res) => {
   try {
@@ -27,7 +28,6 @@ const createPayment = async (req, res) => {
       receivedAmount,
       paymentMethod,
     });
-    // const acts = await act.bulkCreate(actsData);
     actsData.forEach(async (act) => {
       await actPayment.create({
         paymentId: newPayment.id,
