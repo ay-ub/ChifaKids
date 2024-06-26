@@ -17,23 +17,16 @@ const {
   serviceRoute,
   paymentRoute,
 } = require("./routes/index.js");
-// const { createServer } = require("http");
-// const { Server } = require("socket.io");
-// const app = express();
+
 const { app, server, io } = require("./socket/socket");
 
-// const server = createServer(app);
 app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
-// const io = new Server(server, {
-//   cors: {
-//     origin: ["http://localhost:5173"],
-//   },
-// });
+
 app.set("socketio", io);
 app.use(express.json());
 app.use(cookieParser());
