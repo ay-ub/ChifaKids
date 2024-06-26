@@ -9,8 +9,11 @@ import Logo from "assets/images/logo.svg";
 
 function SideBar() {
   const auth = useAuth();
-  const [isHidden, setIsHidden] = useState(null);
+  const [isHidden, setIsHidden] = useState(
+    localStorage.getItem("isHidden") === "true" ? true : false
+  );
   const handleSide = () => {
+    localStorage.setItem("isHidden", !isHidden);
     setIsHidden(!isHidden);
   };
 
