@@ -81,50 +81,50 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
   };
   return (
     <form
-      className="form w-full h-[485px] mt-0  overflow-y-auto px-5 py-2 rounded-md flex flex-col items-center"
+      className='form w-full h-[calc(100vh-235px)]   mt-0  overflow-y-auto px-5 py-2 rounded-md flex flex-col items-center'
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex gap-5 flex-wrap">
-        <div className="flex-1 min-w-[400px] max-w-[500px] flex flex-col">
-          <div className="input-group flex-1">
-            <label htmlFor="motif">Motif de consultation: </label>
+      <div className='flex gap-5 flex-wrap'>
+        <div className='flex-1 min-w-[400px] max-w-[500px] flex flex-col'>
+          <div className='input-group flex-1'>
+            <label htmlFor='motif'>Motif de consultation: </label>
             <input
-              type="text"
-              id="motif"
-              placeholder="Entrez Motif de consultation :"
+              type='text'
+              id='motif'
+              placeholder='Entrez Motif de consultation :'
               {...register("motif")}
               className={`${errors.motif ? "inValid" : null}`}
             />
             {<InputError error={errors.motif} />}
           </div>
-          <div className="input-group flex-1">
-            <label htmlFor="etat">Etat general :</label>
+          <div className='input-group flex-1'>
+            <label htmlFor='etat'>Etat general :</label>
             <input
-              type="text"
-              id="etat"
+              type='text'
+              id='etat'
               placeholder="Entrer l'etat general :"
               {...register("generalCondition")}
             />
             {<InputError error={errors.etat} />}
           </div>
-          <div className="flex items-center gap-4">
-            <div className="input-group flex-1">
-              <label htmlFor="taille">taille :</label>
+          <div className='flex items-center gap-4'>
+            <div className='input-group flex-1'>
+              <label htmlFor='taille'>taille :</label>
               <input
-                type="text"
-                id="taille"
-                placeholder="Entrer le taille :"
+                type='text'
+                id='taille'
+                placeholder='Entrer le taille :'
                 {...register("height")}
                 className={`${errors.height ? "inValid" : null}`}
               />
               {<InputError error={errors.height} />}
             </div>
-            <div className="input-group flex-1">
-              <label htmlFor="poids">poids :</label>
+            <div className='input-group flex-1'>
+              <label htmlFor='poids'>poids :</label>
               <input
-                type="text"
-                id="poids"
-                placeholder="Entrer le poids :"
+                type='text'
+                id='poids'
+                placeholder='Entrer le poids :'
                 {...register("weight")}
                 className={`${errors.weight ? "inValid" : null}`}
               />
@@ -132,73 +132,73 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
             </div>
           </div>
         </div>
-        <div className="flex-1 min-w-[400px] max-w-[500px] flex flex-col">
-          <div className="input-group flex-1">
-            <label htmlFor="urogénital">urogénital: </label>
+        <div className='flex-1 min-w-[400px] max-w-[500px] flex flex-col'>
+          <div className='input-group flex-1'>
+            <label htmlFor='urogénital'>urogénital: </label>
             <input
-              type="text"
-              id="urogénital"
-              placeholder="remarque :"
+              type='text'
+              id='urogénital'
+              placeholder='remarque :'
               {...register("urogenital")}
             />
           </div>
-          <div className="input-group flex-1">
-            <label htmlFor="genital">Génital :</label>
+          <div className='input-group flex-1'>
+            <label htmlFor='genital'>Génital :</label>
             <input
-              type="text"
-              id="genital"
-              placeholder="remarque :"
+              type='text'
+              id='genital'
+              placeholder='remarque :'
               {...register("genital")}
             />
           </div>
-          <div className="input-group flex-1">
-            <label htmlFor="abdominal">abdominal :</label>
+          <div className='input-group flex-1'>
+            <label htmlFor='abdominal'>abdominal :</label>
             <input
-              type="text"
-              id="abdominal"
-              placeholder="remarque :"
+              type='text'
+              id='abdominal'
+              placeholder='remarque :'
               {...register("abdominal")}
             />
           </div>
         </div>
-        <div className="flex-1 min-w-[400px] max-w-[500px] flex flex-col">
-          <div className="input-group flex-1">
-            <label htmlFor="ultrasound">echographie: </label>
+        <div className='flex-1 min-w-[400px] max-w-[500px] flex flex-col'>
+          <div className='input-group flex-1'>
+            <label htmlFor='ultrasound'>echographie: </label>
             <input
-              type="text"
-              id="ultrasound"
-              placeholder="remarque echographie:"
+              type='text'
+              id='ultrasound'
+              placeholder='remarque echographie:'
               {...register("ultrasound")}
             />
           </div>
-          <div className="input-group flex-1">
-            <label htmlFor="tdm">tdm :</label>
+          <div className='input-group flex-1'>
+            <label htmlFor='tdm'>tdm :</label>
             <input
-              type="text"
-              id="tdm"
-              placeholder="remarque :"
+              type='text'
+              id='tdm'
+              placeholder='remarque :'
               {...register("tdm")}
             />
           </div>
-          <div className="input-group flex-1">
-            <label htmlFor="irm">irm :</label>
+          <div className='input-group flex-1'>
+            <label htmlFor='irm'>irm :</label>
             <input
-              type="text"
-              id="irm"
-              placeholder="remarque :"
+              type='text'
+              id='irm'
+              placeholder='remarque :'
               {...register("irm")}
             />
           </div>
         </div>
-        <div className="flex-1 min-w-[400px] flex gap-5">
-          <div className="flex-1 flex flex-col gap-5">
-            <div className="flex gap-5">
-              <div className="input-group flex-1">
-                <label htmlFor="glycemie">glycemie: </label>
+        <div className='flex-1 min-w-[400px] flex gap-5'>
+          <div className='flex-1 flex flex-col gap-5'>
+            <div className='flex gap-5'>
+              <div className='input-group flex-1'>
+                <label htmlFor='glycemie'>glycemie: </label>
                 <input
-                  type="text"
-                  id="glycemie"
-                  placeholder="remarque glycemie:"
+                  type='text'
+                  id='glycemie'
+                  placeholder='remarque glycemie:'
                   {...register("glycemie", {
                     pattern: {
                       value: /^[0-9]+$|^[0-9]+[.][0-9]+$/,
@@ -209,12 +209,12 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
                 />
                 {<InputError error={errors.glycemie} />}
               </div>
-              <div className="input-group flex-1">
-                <label htmlFor="crp">crp :</label>
+              <div className='input-group flex-1'>
+                <label htmlFor='crp'>crp :</label>
                 <input
-                  type="text"
-                  id="crp"
-                  placeholder="remarque crp:"
+                  type='text'
+                  id='crp'
+                  placeholder='remarque crp:'
                   {...register("crp", {
                     pattern: {
                       value: /^[0-9]+$|^[0-9]+[.][0-9]+$/,
@@ -226,13 +226,13 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
                 {<InputError error={errors.crp} />}
               </div>
             </div>
-            <div className="flex gap-5">
-              <div className="input-group flex-1">
-                <label htmlFor="urea">urée :</label>
+            <div className='flex gap-5'>
+              <div className='input-group flex-1'>
+                <label htmlFor='urea'>urée :</label>
                 <input
-                  type="text"
-                  id="urea"
-                  placeholder="remarque urée:"
+                  type='text'
+                  id='urea'
+                  placeholder='remarque urée:'
                   {...register("urea", {
                     pattern: {
                       value: /^[0-9]+$|^[0-9]+[.][0-9]+$/,
@@ -243,12 +243,12 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
                 />
                 {<InputError error={errors.urea} />}
               </div>
-              <div className="input-group flex-1">
-                <label htmlFor="creatine">creatine :</label>
+              <div className='input-group flex-1'>
+                <label htmlFor='creatine'>creatine :</label>
                 <input
-                  type="text"
-                  id="creatine"
-                  placeholder="remarque creatine:"
+                  type='text'
+                  id='creatine'
+                  placeholder='remarque creatine:'
                   {...register("creatine", {
                     pattern: {
                       value: /^[0-9]+$|^[0-9]+[.][0-9]+$/,
@@ -261,34 +261,34 @@ function ConsultationForm({ setConsultationId, setConsultationData }) {
               </div>
             </div>
           </div>
-          <div className="flex-1 flex flex-col gap-5">
-            <div className="input-group flex-1">
-              <label htmlFor="fns">fns :</label>
+          <div className='flex-1 flex flex-col gap-5'>
+            <div className='input-group flex-1'>
+              <label htmlFor='fns'>fns :</label>
               <input
-                type="text"
-                id="fns"
-                placeholder="remarque fns:"
+                type='text'
+                id='fns'
+                placeholder='remarque fns:'
                 {...register("fns")}
               />
             </div>
 
-            <div className="input-group flex-1">
-              <label htmlFor="biologyOther">Autres :</label>
+            <div className='input-group flex-1'>
+              <label htmlFor='biologyOther'>Autres :</label>
               <input
-                type="text"
-                id="biologyOther"
-                placeholder="observation :"
+                type='text'
+                id='biologyOther'
+                placeholder='observation :'
                 {...register("biologyOther")}
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="flex gap-4 my-5 w-[500px]">
-        <button type="submit" className="btn bg-p">
+      <div className='flex gap-4 my-5 w-[500px]'>
+        <button type='submit' className='btn bg-p'>
           Ajouter consultation
         </button>
-        <button type="reset" className="btn bg-p ">
+        <button type='reset' className='btn bg-p '>
           Reset
         </button>
       </div>
