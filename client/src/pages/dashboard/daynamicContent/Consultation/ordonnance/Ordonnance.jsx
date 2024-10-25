@@ -173,17 +173,17 @@ function Ordonnance({ consultationId, patientData }) {
 
   return (
     <div>
-      <div className="ordonnanceMain flex justify-between items-start gap-3 w-full">
-        <div className="w-[350px] bg-lightDark  rounded-md h-[490px]">
-          <div className=" items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
-            <span className="flex flex-1 gap-2 items-center justify-center">
-              <span className="icon">
+      <div className='ordonnanceMain flex justify-between items-start gap-3 w-full'>
+        <div className='w-[350px] bg-lightDark  rounded-md h-[calc(100vh-235px)]  overflow-y-auto '>
+          <div className=' items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none'>
+            <span className='flex flex-1 gap-2 items-center justify-center'>
+              <span className='icon'>
                 <IoIosList />
               </span>
               <span>Traitement Prêt</span>
             </span>
           </div>
-          <ul className="h-[440px] overflow-y-auto overflow-x-hidden p-2">
+          <ul className='h-[calc(100vh-283px)]  overflow-y-auto overflow-x-hidden p-2'>
             {savedOrdonnance.map((item, index) => {
               return (
                 item?.medicaments.length > 0 && (
@@ -191,28 +191,28 @@ function Ordonnance({ consultationId, patientData }) {
                     initial={{ opacity: 0, x: 10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={({ duration: 0.3 }, { delay: 0.1 })}
-                    className="flex gap-2 items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white "
+                    className='flex gap-2 items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white '
                     key={index}
                   >
-                    <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
+                    <span className='bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white'>
                       {index + 1}
                     </span>
                     <span
-                      className="flex-1"
+                      className='flex-1'
                       onClick={() => selectSavedOrdonnance(item.medicaments)}
                     >
                       {item.title}
                     </span>
                     <Alert
-                      title="Voulez-vous vraiment supprimer ce traitement ?"
+                      title='Voulez-vous vraiment supprimer ce traitement ?'
                       btnFun={() => {
                         handleDeleteSavedOrdonnance(item.id);
                       }}
-                      description="Cette action ne peut pas être annulée. "
-                      confirmBtn="Oui, Supprimer"
+                      description='Cette action ne peut pas être annulée. '
+                      confirmBtn='Oui, Supprimer'
                     >
-                      <span className="text-red-400 select-none ">
-                        <AiOutlineDelete className="text-2xl" />
+                      <span className='text-red-400 select-none '>
+                        <AiOutlineDelete className='text-2xl' />
                       </span>
                     </Alert>
                   </motion.li>
@@ -221,16 +221,16 @@ function Ordonnance({ consultationId, patientData }) {
             })}
           </ul>
         </div>
-        <div className=" w-[350px] bg-lightDark  rounded-md h-[490px]">
-          <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
-            <span className="flex flex-1 gap-2 items-center justify-center">
-              <span className="icon">
+        <div className=' w-[350px] bg-lightDark  rounded-md h-[calc(100vh-235px)] overflow-y-auto '>
+          <div className='flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none'>
+            <span className='flex flex-1 gap-2 items-center justify-center'>
+              <span className='icon'>
                 <FaPlusCircle />
               </span>
               <span>Nouveau traitement</span>
             </span>
           </div>
-          <div className="px-2">
+          <div className='px-2'>
             <SelectMedicament
               selectedMed={selectedMed}
               medicamentList={medicamentList}
@@ -241,15 +241,15 @@ function Ordonnance({ consultationId, patientData }) {
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={({ duration: 0.3 }, { delay: 0.1 })}
-                className="flex flex-col mt-2 "
+                className='flex flex-col mt-2 '
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="input-group flex-1">
-                  <label htmlFor="période">la période de traitement: </label>
+                <div className='input-group flex-1'>
+                  <label htmlFor='période'>la période de traitement: </label>
                   <input
-                    type="text"
-                    id="période"
-                    placeholder="Exemple : 1 semaine ou 1 boite ..."
+                    type='text'
+                    id='période'
+                    placeholder='Exemple : 1 semaine ou 1 boite ...'
                     {...register("duration", {
                       required: {
                         value: true,
@@ -260,12 +260,12 @@ function Ordonnance({ consultationId, patientData }) {
                   />
                   {<InputError error={errors.duration} />}
                 </div>
-                <div className="input-group flex-1">
-                  <label htmlFor="nbrFois">Nombre de fois/jour :</label>
+                <div className='input-group flex-1'>
+                  <label htmlFor='nbrFois'>Nombre de fois/jour :</label>
                   <input
-                    type="text"
-                    id="nbrFois"
-                    placeholder="Exemple : 1 ou 2  ou 3 ..."
+                    type='text'
+                    id='nbrFois'
+                    placeholder='Exemple : 1 ou 2  ou 3 ...'
                     {...register("frequency", {
                       required: {
                         value: true,
@@ -281,85 +281,85 @@ function Ordonnance({ consultationId, patientData }) {
                   {<InputError error={errors.frequency} />}
                 </div>
                 <RadioGroup
-                  defaultValue="Avant"
-                  className="mb-3 flex items-center justify-evenly flex-wrap"
+                  defaultValue='Avant'
+                  className='mb-3 flex items-center justify-evenly flex-wrap'
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className='flex items-center space-x-2'>
                     <RadioGroupItem
-                      value="AVANT"
-                      id="Avant"
+                      value='AVANT'
+                      id='Avant'
                       onClick={handleRadioChange}
                     />
-                    <Label htmlFor="Avant">Avant</Label>
+                    <Label htmlFor='Avant'>Avant</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className='flex items-center space-x-2'>
                     <RadioGroupItem
-                      value="PENDANT"
-                      id="pendant"
+                      value='PENDANT'
+                      id='pendant'
                       onClick={handleRadioChange}
                     />
-                    <Label htmlFor="pendant">Pendant</Label>
+                    <Label htmlFor='pendant'>Pendant</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className='flex items-center space-x-2'>
                     <RadioGroupItem
-                      value="APRES"
-                      id="après"
+                      value='APRES'
+                      id='après'
                       onClick={handleRadioChange}
                     />
-                    <Label htmlFor="après">Après</Label>
+                    <Label htmlFor='après'>Après</Label>
                   </div>
                 </RadioGroup>
-                <div className="input-group flex-1">
-                  <label htmlFor="remarque">Remarque :</label>
+                <div className='input-group flex-1'>
+                  <label htmlFor='remarque'>Remarque :</label>
                   <input
-                    type="text"
-                    id="remarque"
-                    placeholder="Exemple : qsp ..."
+                    type='text'
+                    id='remarque'
+                    placeholder='Exemple : qsp ...'
                     {...register("notes")}
                   />
                 </div>
-                <div className="flex mt-[50px] gap-4">
-                  <button type="submit" className="btn bg-[#8b63e9] flex-1 ">
+                <div className='flex mt-[50px] gap-4'>
+                  <button type='submit' className='btn bg-[#8b63e9] flex-1 '>
                     confirmer
                   </button>
                   <button
-                    type="reset"
-                    className="flex-1 bg-ph rounded-lg hover:text-white"
+                    type='reset'
+                    className='flex-1 bg-ph rounded-lg hover:text-white'
                   >
                     Annuler
                   </button>
                 </div>
               </motion.form>
             ) : (
-              <p className="text-center text-red-500">
+              <p className='text-center text-red-500'>
                 Veuillez choisir un médicament
               </p>
             )}
           </div>
         </div>
-        <div className=" flex-1 bg-lightDark  rounded-md h-[490px]">
-          <div className="flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none">
-            <span className="flex flex-1 gap-2 items-center justify-center">
-              <span className="icon">
+        <div className=' flex-1 bg-lightDark  rounded-md h-[calc(100vh-235px)] overflow-y-auto '>
+          <div className='flex items-center  text-2xl bg-p rounded-md rounded-b-none p-2 text-white select-none'>
+            <span className='flex flex-1 gap-2 items-center justify-center'>
+              <span className='icon'>
                 <MdDescription />
               </span>
               <span>Détails du traitement</span>
             </span>
           </div>
-          <ul className="h-[337px] overflow-y-auto overflow-x-hidden px-2 py-1">
+          <ul className='h-[337px] overflow-y-auto overflow-x-hidden px-2 py-1'>
             {traitmentDetails.length > 0 ? (
               traitmentDetails.map((traitment, index) => (
                 <motion.li
                   initial={{ opacity: 0, x: 10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={({ duration: 0.3 }, { delay: 0.1 })}
-                  className="flex gap-x-2 justify-between items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white "
+                  className='flex gap-x-2 justify-between items-center darkBg bg-ph p-2 rounded-sm mt-1 select-none hover:text-white '
                   key={index}
                 >
-                  <div className="flex-1 flex flex-col items-start justify-between flex-wrap">
-                    <div className="flex justify-between items-center  w-full">
-                      <div className="flex gap-1 items-center">
-                        <span className="bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white">
+                  <div className='flex-1 flex flex-col items-start justify-between flex-wrap'>
+                    <div className='flex justify-between items-center  w-full'>
+                      <div className='flex gap-1 items-center'>
+                        <span className='bg-black rounded-full w-[20px] aspect-square flex items-center justify-center text-white'>
                           {index + 1}
                         </span>
                         {`${traitment.name} ${traitment.dosage}`}
@@ -370,7 +370,7 @@ function Ordonnance({ consultationId, patientData }) {
                           : traitment.duration
                       }`}
                     </div>
-                    <div className=" w-full flex justify-evenly items-center">
+                    <div className=' w-full flex justify-evenly items-center'>
                       <div>{`${
                         traitment?.savedPrescription
                           ? traitment.savedPrescription.frequency
@@ -388,16 +388,16 @@ function Ordonnance({ consultationId, patientData }) {
                     </div>
                   </div>
                   <Alert
-                    title="Voulez-vous supprimer ce traitement ?"
+                    title='Voulez-vous supprimer ce traitement ?'
                     btnFun={() =>
                       setTraitmentDetails((prev) =>
                         prev.filter((_, i) => i !== index)
                       )
                     }
-                    description="Cette action ne peut pas être annulée. "
-                    confirmBtn="Oui, Supprimer"
+                    description='Cette action ne peut pas être annulée. '
+                    confirmBtn='Oui, Supprimer'
                   >
-                    <span className="text-red-400 select-none text-2xl">
+                    <span className='text-red-400 select-none text-2xl'>
                       <AiOutlineDelete />
                     </span>
                   </Alert>
@@ -408,25 +408,25 @@ function Ordonnance({ consultationId, patientData }) {
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={({ duration: 0.3 }, { delay: 0.1 })}
-                className="flex items-start justify-center  p-2 rounded-sm mt-1 select-none "
+                className='flex items-start justify-center  p-2 rounded-sm mt-1 select-none '
               >
                 Aucun traitement
               </motion.li>
             )}
           </ul>
-          <div className="flex items-center px-3  gap-10 h-8 m-2">
-            <div className="flex-1 flex items-center  space-x-2">
+          <div className='flex items-center px-3  gap-10 h-8 m-2'>
+            <div className='flex-1 flex items-center  space-x-2'>
               <Checkbox
-                id="terms2"
+                id='terms2'
                 onCheckedChange={(e) => {
                   setIsSaved(e);
                 }}
                 checked={isSaved}
-                className="darkBg w-6 h-6"
+                className='darkBg w-6 h-6'
               />
               <label
-                htmlFor="terms2"
-                className="text-sm select-none font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                htmlFor='terms2'
+                className='text-sm select-none font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
               >
                 Enregistrez ce modèle
               </label>
@@ -436,15 +436,15 @@ function Ordonnance({ consultationId, patientData }) {
                 initial={{ opacity: 0, x: 10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={({ duration: 0.3 }, { delay: 0.1 })}
-                className="flex-1 flex items-center gap-2"
+                className='flex-1 flex items-center gap-2'
               >
                 <input
-                  type="text"
-                  placeholder="Nom du modèle"
+                  type='text'
+                  placeholder='Nom du modèle'
                   value={title}
                   maxLength={30}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="flex-1 border darkBg py-1 rounded-md px-2"
+                  className='flex-1 border darkBg py-1 rounded-md px-2'
                 />
               </motion.div>
             )}
@@ -453,18 +453,18 @@ function Ordonnance({ consultationId, patientData }) {
             initial={{ opacity: 0, x: 10 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={({ duration: 0.3 }, { delay: 0.1 })}
-            className="flex mt-2 gap-4 px-2"
+            className='flex mt-2 gap-4 px-2'
           >
             <button
-              type="button"
-              className="btn bg-p flex-1"
+              type='button'
+              className='btn bg-p flex-1'
               onClick={createOrdonnance}
             >
               Enregistrer et imprimer
             </button>
             <button
-              type="button"
-              className="flex-1 darkBg  rounded-lg text-black"
+              type='button'
+              className='flex-1 darkBg  rounded-lg text-black'
               onClick={() => setTraitmentDetails([])}
             >
               Annuler

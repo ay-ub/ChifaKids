@@ -82,12 +82,15 @@ function Courbes({ patientData }) {
 
   return (
     <>
-      <div className="flex gap-4 items-center ">
-        <div className="left h-[450px] bg-transparent w-1/2">
-          <Chart data={height} xTitle="Mois" yTitle="Taille" />
+      <div
+        className='flex gap-5 items-center flex-col h-[calc(100vh-235px)] w-full overflow-y-auto 
+      '
+      >
+        <div className='left h-[450px] bg-transparent w-full '>
+          <Chart data={height} xTitle='Mois' yTitle='Taille' />
         </div>
-        <div className="right h-[450px] bg-transparent w-1/2">
-          <Chart data={weight} xTitle="Semaine" yTitle="Poids" />
+        <div className='right h-[450px] bg-transparent w-full'>
+          <Chart data={weight} xTitle='Semaine' yTitle='Poids' />
         </div>
       </div>
     </>
