@@ -84,12 +84,12 @@ cd ChifaKids
 # Installer les dépendances et démarrer le client
 cd client
 pnpm install  # ou npm install
-pnpm start
+pnpm run dev
 
 # Installer les dépendances et démarrer le serveur
 cd ../server
 pnpm install  # ou npm install
-pnpm run dev
+pnpm start
 ```
 
 ## 🤝 Contribuer
